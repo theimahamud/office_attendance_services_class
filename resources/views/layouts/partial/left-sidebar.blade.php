@@ -2,11 +2,11 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link text-decoration-none">
-{{--        @if(\App\Models\Setting::get('site_logo'))--}}
-{{--            <img src="{{asset('/uploads/settings/'.\App\Models\Setting::get('site_logo'))}}" width="90px" alt="">--}}
-{{--        @else--}}
-            <img src="{{asset('assets/admin/logo/logo.svg')}}" width="90px" alt="">
-{{--        @endif--}}
+        {{--        @if(\App\Models\Setting::get('site_logo'))--}}
+        {{--            <img src="{{asset('/uploads/settings/'.\App\Models\Setting::get('site_logo'))}}" width="90px" alt="">--}}
+        {{--        @else--}}
+        <img src="{{asset('assets/admin/logo/logo.svg')}}" width="90px" alt="">
+        {{--        @endif--}}
     </a>
 
     <!-- Sidebar -->
@@ -67,8 +67,7 @@
                 {{-- users section end --}}
 
 
-
-                {{--                <li class="nav-item menu-open">--}}
+{{--                <li class="nav-item menu-open">--}}
 {{--                    <a href="#" class="nav-link active">--}}
 {{--                        <i class="nav-icon fas fa-tachometer-alt"></i>--}}
 {{--                        <p>--}}
@@ -78,13 +77,13 @@
 {{--                    </a>--}}
 {{--                    <ul class="nav nav-treeview">--}}
 {{--                        <li class="nav-item">--}}
-{{--                            <a href="./index.html" class="nav-link">--}}
+{{--                            <a href="./index.html" class="nav-link active">--}}
 {{--                                <i class="far fa-circle nav-icon"></i>--}}
 {{--                                <p>Dashboard v1</p>--}}
 {{--                            </a>--}}
 {{--                        </li>--}}
 {{--                        <li class="nav-item">--}}
-{{--                            <a href="./index2.html" class="nav-link active">--}}
+{{--                            <a href="./index2.html" class="nav-link">--}}
 {{--                                <i class="far fa-circle nav-icon"></i>--}}
 {{--                                <p>Dashboard v2</p>--}}
 {{--                            </a>--}}
@@ -327,7 +326,7 @@
                 <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">
                     <a href="pages/calendar.html" class="nav-link">
-                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Calendar
                             <span class="badge badge-info right">2</span>

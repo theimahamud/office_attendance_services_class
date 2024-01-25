@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
+use App\Models\Department;
+use App\Models\Designation;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\Count;
 
 class UserController extends Controller
 {
@@ -19,7 +23,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $departments = Department::orderBy('title')->get();
+        $designations = Designation::orderBy('title')->get();
+        $countries = Country::orderBy('name')->get();
+        return view('users.create',compact('departments','designations','countries'));
     }
 
     /**

@@ -6,7 +6,7 @@
     <title>Dashboard</title>
     @include('layouts.assets.style')
 </head>
-<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
     @include('layouts.partial.navbar')
@@ -23,5 +23,6 @@
 </div>
 <!-- ./wrapper -->
 @include('layouts.assets.script')
+@yield('script')
 </body>
 </html>
