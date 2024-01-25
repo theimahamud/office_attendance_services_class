@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -22,21 +23,21 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-           'name'=>'Admin',
-           'email'=>'admin@test.com',
-           'username'=>'admin',
-            'role'=>Role::ADMIN,
-            'status'=>Status::ACTIVE,
-            'password'=>Hash::make('password'),
-            'type'=> Type::FULL_TIME,
-            'hire_date'=>date('Y-m-d'),
-            'phone'=>'01747139997',
-            'birth_date' => '1999-02-12',
-            'address'=>'Dhaka',
-            'country_id'=> Country::first()->id,
-            'department_id'=>Department::first()->id,
+            'uuid' => Str::uuid(),
+            'name' => 'Admin',
+            'email' => 'admin@test.com',
+            'username' => 'admin',
+            'role' => Role::ADMIN,
+            'status' => Status::ACTIVE,
+            'password' => Hash::make('password'),
+            'type' => Type::FULL_TIME,
+            'hire_date' => Carbon::now()->format('d/m/Y'),
+            'phone' => '01747139997',
+            'birth_date' => Carbon::now()->subYears(25)->format('d/m/Y'),
+            'address' => 'Dhaka',
+            'country_id' => Country::first()->id,
+            'department_id' => Department::first()->id,
             'designation_id' => Designation::first()->id,
-
         ]);
     }
 }

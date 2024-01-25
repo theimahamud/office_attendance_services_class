@@ -6,6 +6,7 @@ use App\Constants\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -16,21 +17,22 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique();
             $table->string('role')->default(Role::USER);
             $table->string('status')->default(Status::ACTIVE);
             $table->string('type')->default(Type::FULL_TIME);
-            $table->date('hire_date');
-            $table->date('birth_date');
+            $table->string('hire_date')->nullable();
+            $table->string('birth_date')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('blood_group')->nullable();
             $table->string('gender')->nullable();
             $table->string('marital_status')->nullable();
             $table->string('address')->nullable();
-            $table->foreignId('country_id')->constrained('countries')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('designation_id')->constrained('designations')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamp('email_verified_at')->nullable();

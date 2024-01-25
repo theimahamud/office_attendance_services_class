@@ -35,7 +35,7 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="name">Name <span class="text-danger">*</span></label>
@@ -46,152 +46,208 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="username">Username <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" name="username" value="{{ old('username') }}" id="username" placeholder="Enter username">
+                                                @error('username')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="email">Email <span class="text-danger">*</span></label>
-                                                <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="email" placeholder="Enter email">
+                                                @error('email')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="password">Password <span class="text-danger">*</span></label>
+                                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
+                                                @error('password')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="birth_date">Birth date <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="birth_date" id="birth_date" placeholder="Birth date">
+                                                    <input type="text" class="form-control datepicker" name="birth_date" value="{{ old('birth_date') }}" id="birth_date" autocomplete="off" placeholder="Birth date">
+                                                    @error('birth_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="hire_date">Hire Date <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="hire_date" id="hire_date" placeholder="Hire Date">
+                                                <input type="text" class="form-control datepicker" name="hire_date" value="{{ old('hire_date') }}" id="hire_date" autocomplete="off" placeholder="Hire Date">
+                                                @error('hire_date')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="role">Role <span class="text-danger">*</span></label>
+                                                <select class="form-control select2" name="role" id="role">
+                                                    <option value="" selected disabled>Select One</option>
+                                                    @foreach(\App\Constants\Role::roles as $roles)
+                                                        <option {{ old('role') == $roles ? 'selected' : '' }} value="{{ $roles }}" >{{ $roles }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('role')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="department_id">Department <span class="text-danger">*</span></label>
+                                                <select class="form-control select2" name="department_id" id="department_id">
+                                                    <option value="" selected disabled>Select One</option>
+                                                    @foreach($departments as $department)
+                                                        <option  {{ old('department_id') == $department->id ? 'selected' : '' }} value="{{ $department->id }}">{{ $department->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('department_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="designation_id">Designation <span class="text-danger">*</span></label>
+                                                <select class="form-control select2" name="designation_id" id="designation_id">
+                                                    <option value="" selected disabled>Select One</option>
+                                                    @foreach($designations as $designation)
+                                                        <option  {{ old('designation_id') == $designation->id ? 'selected' : '' }}  value="{{ $designation->id }}">{{ $designation->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('designation_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
                                                 <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone">
+                                                @error('phone')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" name="address" id="address" placeholder="Address">
+                                                @error('address')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="role">Role</label>
-                                                <select class="form-control select2" name="role" id="role">
-                                                    <option value="{{ \App\Constants\Role::USER }}" selected="selected" >User</option>
-                                                    <option value="{{ \App\Constants\Role::ADMIN }}" >Admin</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="status">Status</label>
                                                 <select class="form-control select2" name="status" id="status">
-                                                    <option value="{{ \App\Constants\Status::ACTIVE }}" selected="selected" >Active</option>
-                                                    <option value="{{ \App\Constants\Status::INACTIVE }}" >Inactive</option>
+                                                    <option value="" selected disabled>Select One</option>
+                                                    @foreach(\App\Constants\Status::status as $status)
+                                                    <option {{ old('status') == $status ? 'selected' : '' }} value="{{ $status }}" >{{ $status }}</option>
+                                                    @endforeach
                                                 </select>
+                                                @error('status')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group" >
                                                 <label for="gender">Gender</label>
                                                 <select class="form-control select2" name="gender" id="gender" >
                                                     <option value="" selected disabled>Select One</option>
-                                                    <option value="{{ \App\Constants\Gender::MALE }}" >Male</option>
-                                                    <option value="{{ \App\Constants\Gender::FEMALE }}" >Male</option>
-                                                    <option value="{{ \App\Constants\Gender::OTHER }}" >Male</option>
+                                                    @foreach(\App\Constants\Gender::gender as $gender)
+                                                    <option {{ old('gender') == $gender ? 'selected' : '' }} value="{{ $gender }}" >{{ $gender }}</option>
+                                                    @endforeach
                                                 </select>
+                                                @error('gender')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group" >
                                                 <label for="marital_status">Marital Status</label>
                                                 <select class="form-control select2" name="marital_status" id="marital_status">
                                                     <option value="" selected disabled>Select One</option>
-                                                    <option value="{{ \App\Constants\MaritalStatus::SINGLE }}">Active</option>
-                                                    <option value="{{ \App\Constants\MaritalStatus::MARRIED }}">Active</option>
+                                                    @foreach(\App\Constants\MaritalStatus::marital_status as $marital_status)
+                                                    <option {{ old('marital_status') == $marital_status ? 'selected' : '' }} value="{{ $marital_status }}">{{ $marital_status }}</option>
+                                                    @endforeach
                                                 </select>
+                                                @error('marital_status')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="type">Type</label>
                                                 <select class="form-control select2" name="type" id="type">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach(\App\Constants\Type::types as $type)
-                                                        <option value="{{ $type }}">{{ $type }}</option>
+                                                        <option {{ old('type') == $type ? 'selected' : '' }} value="{{ $type }}">{{ $type }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('type')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="blood_group">Blood Group</label>
                                                 <select class="form-control select2" name="blood_group" id="blood_group">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach(\App\Constants\BloodGroup::blood_group as $b_group)
-                                                        <option value="{{ $b_group }}">{{ $b_group }}</option>
+                                                        <option  {{ old('blood_group') == $b_group ? 'selected' : '' }} value="{{ $b_group }}">{{ $b_group }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('blood_group')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="department_id">Department</label>
-                                                <select class="form-control select2" name="department_id" id="department_id">
-                                                    <option value="" selected disabled>Select One</option>
-                                                    @foreach($departments as $department)
-                                                        <option value="{{ $department->id }}">{{ $department->title }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="designation_id">Designation</label>
-                                                <select class="form-control select2" name="designation_id" id="designation_id">
-                                                    <option value="" selected disabled>Select One</option>
-                                                    @foreach($designations as $designation)
-                                                        <option value="{{ $designation->id }}">{{ $designation->title }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="country_id">Country</label>
                                                 <select class="form-control select2" name="country_id" id="country_id">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach($countries as $country)
-                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                        <option  {{ old('country_id') == $country->id ? 'selected' : '' }}  value="{{ $country->id }}">{{ $country->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('country_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="image">Image</label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input image-upload-input" id="image">
+                                                        <input type="file" class="custom-file-input image-upload-input" name="image" id="image">
                                                         <label class="custom-file-label" for="image">Choose file</label>
                                                     </div>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">Upload</span>
+                                                    <div class="p-3">
+                                                        <img class="rounded img-fluid image-preview" src="{{ asset('assets/admin/dist/img/placeholder.jpeg') }}" width="80%" alt="image">
                                                     </div>
-                                                </div>
-                                                <div class="p-3">
-                                                    <img class="rounded img-fluid image-preview" src="{{ asset('assets/admin/dist/img/placeholder.jpeg') }}" width="100%" height="300px" alt="image">
                                                 </div>
                                             </div>
                                         </div>

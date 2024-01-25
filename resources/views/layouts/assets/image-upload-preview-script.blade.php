@@ -1,13 +1,13 @@
 <script>
-    $(document).ready(() => {
-        $('.image-upload-input').change(function () {
+    $(document).ready(()=>{
+        $('.image-upload-input').change(function(){
             const file = this.files[0];
-            const previewer = $(this).closest('.form-group').find('.image-preview img');
-
-            if (file) {
+            //console.log(file);
+            if (file){
                 let reader = new FileReader();
-                reader.onload = function (event) {
-                    previewer.attr('src', event.target.result);
+                reader.onload = function(event){
+                    console.log(event.target.result);
+                    $('.image-preview').attr('src', event.target.result);
                 }
                 reader.readAsDataURL(file);
             }

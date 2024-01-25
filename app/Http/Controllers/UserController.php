@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\Designation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Constraint\Count;
 
@@ -15,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index');
+        $users = User::with(['department','designation'])->get();
+        return view('users.index',compact('users'));
     }
 
     /**

@@ -24,6 +24,7 @@ class User extends Authenticatable implements HasMedia
      * @var array<int, string>
      */
     protected $fillable = [
+        'uuid',
         'name',
         'email',
         'username',
@@ -62,4 +63,16 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
+
+    public function designation(){
+        return $this->belongsTo(Designation::class);
+    }
+
+
+
 }
