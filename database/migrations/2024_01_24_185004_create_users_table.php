@@ -6,7 +6,6 @@ use App\Constants\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -35,9 +34,11 @@ return new class extends Migration
             $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('designation_id')->constrained('designations')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('deleted_by')->nullable()->constrained('users');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

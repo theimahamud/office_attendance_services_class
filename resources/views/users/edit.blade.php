@@ -24,11 +24,7 @@
                                 {!! session('success') !!}
                             </div>
                         @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
+
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -45,15 +41,16 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ route('register') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('users.update',$user) }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                @method('PUT')
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="name">Name <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Enter name">
+                                                    <input type="text" class="form-control" name="name" value="{{ old('name',$user->name) }}" id="name" placeholder="Enter name">
                                                     @error('name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -63,7 +60,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="username">Username <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="username" value="{{ old('username') }}" id="username" placeholder="Enter username">
+                                                <input type="text" class="form-control" name="username" value="{{ old('username',$user->username) }}" id="username" placeholder="Enter username">
                                                 @error('username')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -72,7 +69,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="email">Email <span class="text-danger">*</span></label>
-                                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="email" placeholder="Enter email">
+                                                <input type="email" class="form-control" name="email" value="{{ old('email',$user->email) }}" id="email" placeholder="Enter email">
                                                 @error('email')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -91,7 +88,7 @@
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="birth_date">Birth date <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control datepicker" name="birth_date" value="{{ old('birth_date') }}" id="birth_date" autocomplete="off" placeholder="Birth date">
+                                                    <input type="text" class="form-control datepicker" name="birth_date" value="{{ old('birth_date',$user->birth_date) }}" id="birth_date" autocomplete="off" placeholder="Birth date">
                                                     @error('birth_date')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -101,7 +98,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="hire_date">Hire Date <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control datepicker" name="hire_date" value="{{ old('hire_date') }}" id="hire_date" autocomplete="off" placeholder="Hire Date">
+                                                <input type="text" class="form-control datepicker" name="hire_date" value="{{ old('hire_date',$user->hire_date) }}" id="hire_date" autocomplete="off" placeholder="Hire Date">
                                                 @error('hire_date')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -112,7 +109,7 @@
                                                 <label for="role">Role <span class="text-danger">*</span></label>
                                                 <select class="form-control select2" name="role" id="role">
                                                     @foreach(\App\Constants\Role::roles as $roles)
-                                                        <option {{ old('role') == $roles ? 'selected' : '' }} value="{{ $roles }}" >{{ $roles }}</option>
+                                                        <option {{ old('role',$user->role) == $roles ? 'selected' : '' }} value="{{ $roles }}" >{{ $roles }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('role')
@@ -126,7 +123,7 @@
                                                 <select class="form-control select2" name="department_id" id="department_id">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach($departments as $department)
-                                                        <option  {{ old('department_id') == $department->id ? 'selected' : '' }} value="{{ $department->id }}">{{ $department->title }}</option>
+                                                        <option  {{ old('department_id',$user->department_id) == $department->id ? 'selected' : '' }} value="{{ $department->id }}">{{ $department->title }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('department_id')
@@ -140,7 +137,7 @@
                                                 <select class="form-control select2" name="designation_id" id="designation_id">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach($designations as $designation)
-                                                        <option  {{ old('designation_id') == $designation->id ? 'selected' : '' }}  value="{{ $designation->id }}">{{ $designation->title }}</option>
+                                                        <option  {{ old('designation_id',$user->designation_id) == $designation->id ? 'selected' : '' }}  value="{{ $designation->id }}">{{ $designation->title }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('designation_id')
@@ -151,7 +148,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
-                                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" id="phone" placeholder="Phone">
+                                                <input type="text" class="form-control" name="phone" value="{{ old('phone',$user->phone) }}" id="phone" placeholder="Phone">
                                                 @error('phone')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -160,7 +157,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="address">Address</label>
-                                                <input type="text" class="form-control" name="address" value="{{ old('address') }}" id="address" placeholder="Address">
+                                                <input type="text" class="form-control" name="address" value="{{ old('address',$user->address) }}" id="address" placeholder="Address">
                                                 @error('address')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -171,7 +168,7 @@
                                                 <label for="status">Status</label>
                                                 <select class="form-control select2" name="status" id="status">
                                                     @foreach(\App\Constants\Status::status as $status)
-                                                    <option {{ old('status') == $status ? 'selected' : '' }} value="{{ $status }}" >{{ $status }}</option>
+                                                        <option {{ old('status',$user->status) == $status ? 'selected' : '' }} value="{{ $status }}" >{{ $status }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('status')
@@ -185,7 +182,7 @@
                                                 <select class="form-control select2" name="gender" id="gender" >
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach(\App\Constants\Gender::gender as $gender)
-                                                    <option {{ old('gender') == $gender ? 'selected' : '' }} value="{{ $gender }}" >{{ $gender }}</option>
+                                                        <option {{ old('gender',$user->gender) == $gender ? 'selected' : '' }} value="{{ $gender }}" >{{ $gender }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('gender')
@@ -199,7 +196,7 @@
                                                 <select class="form-control select2" name="marital_status" id="marital_status">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach(\App\Constants\MaritalStatus::marital_status as $marital_status)
-                                                    <option {{ old('marital_status') == $marital_status ? 'selected' : '' }} value="{{ $marital_status }}">{{ $marital_status }}</option>
+                                                        <option {{ old('marital_status',$user->marital_status) == $marital_status ? 'selected' : '' }} value="{{ $marital_status }}">{{ $marital_status }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('marital_status')
@@ -213,7 +210,7 @@
                                                 <select class="form-control select2" name="type" id="type">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach(\App\Constants\Type::types as $type)
-                                                        <option {{ old('type') == $type ? 'selected' : '' }} value="{{ $type }}">{{ $type }}</option>
+                                                        <option {{ old('type',$user->type) == $type ? 'selected' : '' }} value="{{ $type }}">{{ $type }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('type')
@@ -227,7 +224,7 @@
                                                 <select class="form-control select2" name="blood_group" id="blood_group">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach(\App\Constants\BloodGroup::blood_group as $b_group)
-                                                        <option  {{ old('blood_group') == $b_group ? 'selected' : '' }} value="{{ $b_group }}">{{ $b_group }}</option>
+                                                        <option  {{ old('blood_group',$user->blood_group) == $b_group ? 'selected' : '' }} value="{{ $b_group }}">{{ $b_group }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('blood_group')
@@ -241,7 +238,7 @@
                                                 <select class="form-control select2" name="country_id" id="country_id">
                                                     <option value="" selected disabled>Select One</option>
                                                     @foreach($countries as $country)
-                                                        <option  {{ old('country_id') == $country->id ? 'selected' : '' }}  value="{{ $country->id }}">{{ $country->name }}</option>
+                                                        <option  {{ old('country_id',$user->country_id) == $country->id ? 'selected' : '' }}  value="{{ $country->id }}">{{ $country->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('country_id')
@@ -267,7 +264,7 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </form>
                         </div>

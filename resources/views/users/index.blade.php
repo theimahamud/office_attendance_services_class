@@ -18,6 +18,20 @@
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {!! session('success') !!}
+                            </div>
+                        @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {!! session('error') !!}
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
@@ -74,8 +88,8 @@
                                                     <td>{{ $user->designation->title ?? '' }}</td>
                                                     <td>{{ $user->status ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('users.edit',$user->uuid) }}" class="btn btn-info btn-sm">Edit</a>
-                                                        <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                                        <a href="{{ route('users.edit',$user->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                                        <button data-delete-route="{{ route('users.destroy', $user->id) }}" class="btn btn-danger btn-sm delete-item-btn">Delete</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -84,45 +98,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
-                                            Showing 1 to 10 of 57 entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                                            <ul class="pagination">
-                                                <li class="paginate_button page-item previous disabled"
-                                                    id="example1_previous"><a href="#" aria-controls="example1"
-                                                                              data-dt-idx="0" tabindex="0"
-                                                                              class="page-link">Previous</a></li>
-                                                <li class="paginate_button page-item active"><a href="#"
-                                                                                                aria-controls="example1"
-                                                                                                data-dt-idx="1" tabindex="0"
-                                                                                                class="page-link">1</a></li>
-                                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                                                                          data-dt-idx="2" tabindex="0"
-                                                                                          class="page-link">2</a></li>
-                                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                                                                          data-dt-idx="3" tabindex="0"
-                                                                                          class="page-link">3</a></li>
-                                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                                                                          data-dt-idx="4" tabindex="0"
-                                                                                          class="page-link">4</a></li>
-                                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                                                                          data-dt-idx="5" tabindex="0"
-                                                                                          class="page-link">5</a></li>
-                                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                                                                          data-dt-idx="6" tabindex="0"
-                                                                                          class="page-link">6</a></li>
-                                                <li class="paginate_button page-item next" id="example1_next"><a href="#"
-                                                                                                                 aria-controls="example1"
-                                                                                                                 data-dt-idx="7"
-                                                                                                                 tabindex="0"
-                                                                                                                 class="page-link">Next</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <div class="col-sm-12 col-md-12">
+                                        {{ $users->links() }}
                                     </div>
                                 </div>
                             </div>
@@ -135,5 +112,10 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+@endsection
+
+@section('script')
+
+    @include('layouts.assets.delete-script')
 
 @endsection

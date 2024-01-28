@@ -21,6 +21,7 @@
     @include('layouts.partial.footer')
 
 </div>
+@include('layouts.alert')
 <!-- ./wrapper -->
 @include('layouts.assets.script')
 @yield('script')

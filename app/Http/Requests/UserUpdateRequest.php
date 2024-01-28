@@ -10,9 +10,10 @@ use App\Constants\Status;
 use App\Constants\Type;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class UserStoreRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,11 +30,13 @@ class UserStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('user');
+
         return [
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', Password::defaults()],
+            'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($userId)],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255',  Rule::unique(User::class)->ignore($userId)],
+            'password' => ['nullable', Password::defaults()],
             'birth_date' => ['required', 'date'],
             'hire_date' => ['required', 'date'],
             'role' => ['required', 'string', 'in:'.implode(',', Role::roles)],

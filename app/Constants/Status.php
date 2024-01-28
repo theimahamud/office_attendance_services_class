@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Constants;
-
 
 class Status
 {
     public const ACTIVE = 'Active';
+
     public const INACTIVE = 'Inactive';
 
-    public const status =[
+    public const status = [
         self::ACTIVE,
-        self::INACTIVE
+        self::INACTIVE,
     ];
 }
