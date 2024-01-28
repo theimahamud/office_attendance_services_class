@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use App\Constants\Role;
 use App\Models\Holiday;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class HolidayPolicy
 {
@@ -13,15 +13,15 @@ class HolidayPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Holiday $holyday): bool
+    public function view(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**
@@ -29,23 +29,23 @@ class HolidayPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Holiday $holyday): bool
+    public function update(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Holiday $holyday): bool
+    public function delete(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**

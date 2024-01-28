@@ -89,6 +89,7 @@
                                                     <td>{{ $user->status ?? '' }}</td>
                                                     <td>
                                                         <a href="{{ route('users.edit',$user->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                                        <a href="{{ route('users.show',$user->id) }}" class="btn btn-primary btn-sm">View</a>
                                                         <button data-delete-route="{{ route('users.destroy', $user->id) }}" class="btn btn-danger btn-sm delete-item-btn">Delete</button>
                                                     </td>
                                                 </tr>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Constants\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,7 +45,7 @@ class User extends Authenticatable implements HasMedia
         'department_id',
         'designation_id',
         'deleted_by',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -67,6 +68,11 @@ class User extends Authenticatable implements HasMedia
         'password' => 'hashed',
     ];
 
+    public function isAdmin()
+    {
+        return $this->role === Role::ADMIN;
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class);
@@ -75,5 +81,10 @@ class User extends Authenticatable implements HasMedia
     public function designation()
     {
         return $this->belongsTo(Designation::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 }

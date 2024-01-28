@@ -44,7 +44,7 @@
                 @endphp
 
                 <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link active">
+                    <a href="#" class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Users
@@ -80,6 +80,33 @@
                         </p>
                     </a>
                 </li>
+{{--                holiday start section--}}
+
+                @php
+                    $current_route = Illuminate\Support\Facades\Route::currentRouteName();
+                    $routes = ['holiday.index', 'holiday.create'];
+                @endphp
+
+                <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-snowflake"></i>
+                        <p>
+                            Holiday
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach(['holiday.index' => 'Holiday List', 'holiday.create' => 'Holiday Create'] as $route => $label)
+                            <li class="nav-item">
+                                <a href="{{ route($route) }}" class="nav-link {{ $current_route == $route ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ $label }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+                {{-- holiday section end --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>

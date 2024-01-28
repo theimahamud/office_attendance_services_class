@@ -11,41 +11,48 @@ class DepartmentController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', Department::class);
+
         $departments = Department::orderBy('created_at', 'DESC')->paginate(5);
-        return view('departments.index',compact('departments'));
+
+        return view('departments.index', compact('departments'));
     }
 
-
-    public function store(DepartmentStoreUpdateRequest $request,DepartmentService $departmentService)
+    public function store(DepartmentStoreUpdateRequest $request, DepartmentService $departmentService)
     {
+        $this->authorize('create', Department::class);
         $validated = $request->validated();
 
         $departmentService->storeDepartment($validated);
 
         Session::flash('success', 'Department created successfully');
+
         return redirect()->route('departments.index');
     }
 
-    public function update(DepartmentStoreUpdateRequest $request, Department $department ,DepartmentService $departmentService)
+    public function update(DepartmentStoreUpdateRequest $request, Department $department, DepartmentService $departmentService)
     {
+        $this->authorize('update', $department);
         $validated = $request->validated();
 
         $departmentService->updateDepartment($validated, $department);
 
         Session::flash('success', 'Department created successfully');
+
         return redirect()->route('departments.index');
     }
 
-
     public function edit(Department $department)
     {
+        $this->authorize('view', $department);
         $departments = Department::orderBy('created_at', 'DESC')->paginate(5);
-        return view('departments.index',compact('department','departments'));
+
+        return view('departments.index', compact('department', 'departments'));
     }
 
-
-    public function destroy(Department $department,DepartmentService $departmentService)
+    public function destroy(Department $department, DepartmentService $departmentService)
     {
+        $this->authorize('delete', $department);
         $departmentService->destroyDepartment($department);
 
         return response('Department deleted');

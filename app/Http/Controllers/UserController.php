@@ -19,6 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', User::class);
+
         $users = User::with(['department', 'designation'])->orderBy('created_at', 'DESC')->paginate(10);
 
         return view('users.index', compact('users'));
@@ -29,6 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('view', User::class);
         $departments = Department::orderBy('title')->get();
         $designations = Designation::orderBy('title')->get();
         $countries = Country::orderBy('name')->get();
@@ -41,6 +44,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request, UserService $userService): RedirectResponse
     {
+        $this->authorize('create', User::class);
         $validated = $request->validated();
 
         $result = $userService->storeUser($validated);
@@ -60,9 +64,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        $this->authorize('view', $user);
+        $user->load('department', 'designation');
+
+        return view('users.view', compact('user'));
     }
 
     /**
@@ -70,6 +77,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('view', $user);
         $departments = Department::orderBy('title')->get();
         $designations = Designation::orderBy('title')->get();
         $countries = Country::orderBy('name')->get();
@@ -82,6 +90,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user, UserService $userService)
     {
+        $this->authorize('update', $user);
         $validated = $request->validated();
 
         $result = $userService->updateUser($validated, $user);
@@ -103,6 +112,7 @@ class UserController extends Controller
      */
     public function destroy(User $user, UserService $userService)
     {
+        $this->authorize('delete', $user);
         $userService->destroyUser($user);
 
         return response('User deleted');

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\Department;
 
@@ -13,7 +11,7 @@ class DepartmentService
         Department::create($data);
     }
 
-    public function updateDepartment(array $data,Department $department)
+    public function updateDepartment(array $data, Department $department)
     {
         $department->update($data);
     }

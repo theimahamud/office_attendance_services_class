@@ -24,9 +24,10 @@ class DesignationStoreUpdateRequest extends FormRequest
     public function rules(): array
     {
         $designation_id = $this->route('designation');
+
         return [
             'title' => ['required', Rule::unique(Designation::class)->ignore($designation_id)],
-            'description' => ['nullable']
+            'description' => ['nullable'],
         ];
     }
 }

@@ -24,9 +24,10 @@ class DepartmentStoreUpdateRequest extends FormRequest
     public function rules(): array
     {
         $department_id = $this->route('department');
+
         return [
             'title' => ['required', Rule::unique(Department::class)->ignore($department_id)],
-            'description' => ['nullable']
+            'description' => ['nullable'],
         ];
     }
 }

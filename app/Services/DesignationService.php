@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\Designation;
 
@@ -13,7 +11,7 @@ class DesignationService
         Designation::create($data);
     }
 
-    public function updateDesignation(array $data,Designation $designation)
+    public function updateDesignation(array $data, Designation $designation)
     {
         $designation->update($data);
     }
