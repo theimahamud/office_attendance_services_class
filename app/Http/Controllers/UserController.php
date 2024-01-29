@@ -10,6 +10,7 @@ use App\Models\Designation;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -77,7 +78,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('view', $user);
+
+        $this->authorize('viewAny', $user);
         $departments = Department::orderBy('title')->get();
         $designations = Designation::orderBy('title')->get();
         $countries = Country::orderBy('name')->get();
@@ -90,7 +92,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user, UserService $userService)
     {
-        $this->authorize('update', $user);
+        $this->authorize('update', [$user, Auth::user()]);
         $validated = $request->validated();
 
         $result = $userService->updateUser($validated, $user);
@@ -98,7 +100,7 @@ class UserController extends Controller
         if ($result) {
             Session::flash('success', 'User updated successfully');
 
-            return redirect()->route('users.index');
+            return redirect()->back();
         } else {
             Session::flash('error', 'User not updated successfully');
 

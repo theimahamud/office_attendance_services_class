@@ -30,6 +30,14 @@ class DesignationController extends Controller
         return redirect()->route('designations.index');
     }
 
+    public function edit(Designation $designation)
+    {
+        $this->authorize('view', $designation);
+        $designations = Designation::orderBy('created_at', 'DESC')->paginate(5);
+
+        return view('designations.index', compact('designation', 'designations'));
+    }
+
     public function update(DesignationStoreUpdateRequest $request, Designation $designation, DesignationService $designationService)
     {
         $this->authorize('update', $designation);
@@ -40,14 +48,6 @@ class DesignationController extends Controller
         Session::flash('success', 'Designation created successfully');
 
         return redirect()->route('designations.index');
-    }
-
-    public function edit(Designation $designation)
-    {
-        $this->authorize('view', $designation);
-        $designations = Designation::orderBy('created_at', 'DESC')->paginate(5);
-
-        return view('designations.index', compact('designation', 'designations'));
     }
 
     public function destroy(Designation $designation, DesignationService $designationService)

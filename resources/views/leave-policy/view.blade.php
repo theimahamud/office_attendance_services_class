@@ -56,7 +56,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <h3 class="card-title">User</h3>
+                                <h3 class="card-title">Leave Policy</h3>
                             </div>
                             <div class="col-md-6 text-right">
                                 <a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Back</a>
@@ -70,53 +70,29 @@
                                 <div class="holiday-details">
                                     <table class="table">
                                         <tr>
-                                            <th>Name</th>
-                                            <td>{{ $user->name ?? '' }}</td>
+                                            <th>Title</th>
+                                            <td>{{ $leavepolicy->title ?? '' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Email</th>
-                                            <td>{{ $user->email ?? '' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Username</th>
-                                            <td>{{ $user->username ?? '' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Birth Date</th>
-                                            <td>{{ $user->birth_date ? \Carbon\Carbon::createFromFormat('d/m/Y', $user->birth_date)->format('d F, Y') : '' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Hire Date</th>
-                                            <td>{{ $user->hire_date ? \Carbon\Carbon::createFromFormat('d/m/Y', $user->hire_date)->format('d F, Y') : '' }}</td>
+                                            <th>Start Date</th>
+                                            <td>{{ $leavepolicy->start_date ? \Carbon\Carbon::parse($leavepolicy->start_date)->format('d F, Y') : '' }}</td>
                                         </tr>
 
                                         <tr>
-                                            <th>Role</th>
-                                            <td>{{ $user->role ?? '' }}</td>
+                                            <th>End Date</th>
+                                            <td>{{ $leavepolicy->end_date ? \Carbon\Carbon::parse($leavepolicy->end_date)->format('d F, Y') : '' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Department</th>
-                                            <td>{{ $user->department->title ?? '' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Designation</th>
-                                            <td>{{ $user->designation->title ?? '' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Country</th>
-                                            <td>{{ $user->country->name ?? '' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Phone</th>
-                                            <td>{{ $user->phone ?? '' }}</td>
+                                            <th>Maximum In Year</th>
+                                            <td>{{ $leavepolicy->maximum_in_year ?? '' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Status</th>
-                                            <td>{{ $user->status ?? '' }}</td>
+                                            <td>{{ $leavepolicy->status ?? '' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Blood Group</th>
-                                            <td>{{ $user->blood_group ?? '' }}</td>
+                                            <th>Description</th>
+                                            <td>{{ $leavepolicy->description ?? '' }}</td>
                                         </tr>
                                     </table>
                                 </div>

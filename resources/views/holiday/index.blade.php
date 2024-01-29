@@ -39,10 +39,18 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card">
+                <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Holiday List</h3>
+                       <div class="row align-items-center">
+                           <div class="col-md-6">
+                               <h3 class="card-title">Holiday List</h3>
+                           </div>
+                           <div class="col-md-6 text-right">
+                               <a href="{{ route('holiday.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Add Holiday</a>
+                           </div>
+                       </div>
                     </div>
+
                     <!-- /.card-header -->
                     <div class="card-body">
                         @if($holidays->count() <= 0)
@@ -82,9 +90,9 @@
                                                     <td>{{ $holiday->end_date ? \Carbon\Carbon::parse($holiday->end_date)->format('d F, Y') : '' }}</td>
                                                     <td>{{ $holiday->status ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('holiday.edit',$holiday->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                                        <a href="{{ route('holiday.show',$holiday->id) }}" class="btn btn-primary btn-sm">View</a>
-                                                        <button data-delete-route="{{ route('holiday.destroy', $holiday->id) }}" class="btn btn-danger btn-sm delete-item-btn">Delete</button>
+                                                        <a href="{{ route('holiday.edit',$holiday->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('holiday.show',$holiday->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                        <button data-delete-route="{{ route('holiday.destroy', $holiday->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
 
                                                     </td>
                                                 </tr>

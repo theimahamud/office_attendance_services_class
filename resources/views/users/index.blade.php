@@ -39,9 +39,16 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card">
+                <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">User List</h3>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="card-title">User List</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ route('users.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Add User</a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -88,9 +95,9 @@
                                                     <td>{{ $user->designation->title ?? '' }}</td>
                                                     <td>{{ $user->status ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('users.edit',$user->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                                        <a href="{{ route('users.show',$user->id) }}" class="btn btn-primary btn-sm">View</a>
-                                                        <button data-delete-route="{{ route('users.destroy', $user->id) }}" class="btn btn-danger btn-sm delete-item-btn">Delete</button>
+                                                        <a href="{{ route('users.edit',$user->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('users.show',$user->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                        <button data-delete-route="{{ route('users.destroy', $user->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             @endforeach

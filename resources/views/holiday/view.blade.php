@@ -52,9 +52,16 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card">
+                <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Holiday</h3>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="card-title">Holiday</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Back</a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

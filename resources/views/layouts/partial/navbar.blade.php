@@ -127,11 +127,33 @@
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
+        <!-- Bright Icon for Dark and White Screens -->
         <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-                <i class="fas fa-th-large"></i>
+            <a id="brightness-toggle" class="nav-link" href="javascript:void(0)" role="button">
+                <i class="fas fa-sun"></i>
             </a>
         </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)">
+                <i class="fas fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
+                <a href="{{ route('profile.view') }}" class="dropdown-item">
+                    <i class="fas fa-user-circle mr-2"></i> Profile
+                </a>
+                <a href="{{ route('profile.edit') }}" class="dropdown-item">
+                    <i class="fas fa-lock mr-2"></i> Change Password
+                </a>
+                <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();" class=" btn btn-danger btn-block mt-2">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="post" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        </li>
+
     </ul>
 </nav>
 <!-- /.navbar -->

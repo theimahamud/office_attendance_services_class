@@ -28,7 +28,7 @@ class HolidayController extends Controller
      */
     public function create()
     {
-        $this->authorize('view', Holiday::class);
+        $this->authorize('view', User::class);
 
         return view('holiday.create');
     }

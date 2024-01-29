@@ -76,7 +76,7 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary float-right">
+                                    <button type="submit" class="btn btn-primary float-right"><i class="fas fa-check"></i>
                                         {{ isset($designation->id) ? 'Update' : 'Submit' }}
                                     </button>
                                 </div>
@@ -92,7 +92,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-info">
+                <div class="card card-secondary">
                     <div class="card-header">
                         <h3 class="card-title">Designation List</h3>
                     </div>
@@ -133,8 +133,8 @@
                                                     <td>{{ \Illuminate\Support\Str::limit($designation->description) ?? '' }}</td>
                                                     <td>{{ $designation->created_at ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('designations.edit',$designation->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                                        <button data-delete-route="{{ route('designations.destroy', $designation->id) }}" class="btn btn-danger btn-sm delete-item-btn">Delete</button>
+                                                        <a href="{{ route('designations.edit',$designation->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                        <button data-delete-route="{{ route('designations.destroy', $designation->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             @endforeach

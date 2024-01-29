@@ -30,6 +30,14 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index');
     }
 
+    public function edit(Department $department)
+    {
+        $this->authorize('view', $department);
+        $departments = Department::orderBy('created_at', 'DESC')->paginate(5);
+
+        return view('departments.index', compact('department', 'departments'));
+    }
+
     public function update(DepartmentStoreUpdateRequest $request, Department $department, DepartmentService $departmentService)
     {
         $this->authorize('update', $department);
@@ -40,14 +48,6 @@ class DepartmentController extends Controller
         Session::flash('success', 'Department created successfully');
 
         return redirect()->route('departments.index');
-    }
-
-    public function edit(Department $department)
-    {
-        $this->authorize('view', $department);
-        $departments = Department::orderBy('created_at', 'DESC')->paginate(5);
-
-        return view('departments.index', compact('department', 'departments'));
     }
 
     public function destroy(Department $department, DepartmentService $departmentService)

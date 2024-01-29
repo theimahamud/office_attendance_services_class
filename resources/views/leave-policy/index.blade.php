@@ -36,69 +36,24 @@
         </div>
         <!-- /.content-header -->
 
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Department Form</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <form action="{{ route(isset($department->id) ? 'departments.update' : 'departments.store', $department->id ?? '') }}" method="post">
-                                @csrf
-                                @if(isset($department->id))
-                                    @method('PUT')
-                                @endif
-
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="title">Title <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="title" value="{{ old('title', $department->title ?? '') }}" id="title" placeholder="Enter title">
-                                                @error('title')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="description">Description</label>
-                                                <textarea name="description" class="form-control" id="description" cols="30" rows="2">{{ $department->description ?? '' }}</textarea>
-                                                @error('description')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary float-right"> <i class="fas fa-check"></i>
-                                        {{ isset($department->id) ? 'Update' : 'Submit' }}
-                                    </button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Department List</h3>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="card-title">Leave Policy List</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ route('leave-policy.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Add Leave Policy</a>
+                            </div>
+                        </div>
                     </div>
+
                     <!-- /.card-header -->
                     <div class="card-body">
-                        @if($departments->count() <= 0)
+                        @if($leavePolicies->count() <= 0)
                             <div class="text-center">
                                 <img src="{{ asset('assets/admin/dist/img/no-result.png') }}" alt="No result">
                                 <h3 class="p-6 text-center">
@@ -120,21 +75,27 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Title</th>
-                                                <th>Description</th>
-                                                <th>Created At</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Maximum In Year</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($departments as $department)
+                                            @foreach($leavePolicies as $leavePolicy)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $department->title ?? '' }}</td>
-                                                    <td>{{ \Illuminate\Support\Str::limit($department->description) ?? '' }}</td>
-                                                    <td>{{ $department->created_at ?? '' }}</td>
+                                                    <td>{{ $leavePolicy->title ?? '' }}</td>
+                                                    <td>{{ $leavePolicy->start_date ? \Carbon\Carbon::parse($leavePolicy->start_date)->format('d F, Y') : '' }}</td>
+                                                    <td>{{ $leavePolicy->end_date ? \Carbon\Carbon::parse($leavePolicy->end_date)->format('d F, Y') : '' }}</td>
+                                                    <td>{{ $leavePolicy->maximum_in_year ?? '' }}</td>
+                                                    <td>{{ $leavePolicy->status ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('departments.edit',$department->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        <button data-delete-route="{{ route('departments.destroy', $department->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                        <a href="{{ route('leave-policy.edit',$leavePolicy->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('leave-policy.show',$leavePolicy->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                        <button data-delete-route="{{ route('leave-policy.destroy', $leavePolicy->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -144,7 +105,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12">
-                                        {{ $departments->links() }}
+                                        {{ $leavePolicies->links() }}
                                     </div>
                                 </div>
                             </div>
