@@ -13,7 +13,7 @@ class UserService
 
     }
 
-    public function storeUser(array $data)
+    public function storeUser(array $data, $image = null)
     {
 
         $data['password'] = Hash::make($data['password']);
@@ -22,10 +22,14 @@ class UserService
         $data['uuid'] = Str::uuid();
         $user = User::create($data);
 
+        if ($image) {
+            $user->addMedia($image)->toMediaCollection();
+        }
+
         return $user;
     }
 
-    public function updateUser(array $data, User $user)
+    public function updateUser(array $data, User $user, $image = null)
     {
         if (isset($data['password']) && $data['password'] !== null) {
             $data['password'] = Hash::make($data['password']);
@@ -33,7 +37,13 @@ class UserService
             unset($data['password']);
         }
 
-        $user = $user->update($data);
+        $user = tap($user)->update($data);
+
+        if ($image) {
+            $user->clearMediaCollection();
+            $user->addMedia($image)
+                ->toMediaCollection();
+        }
 
         return $user;
     }

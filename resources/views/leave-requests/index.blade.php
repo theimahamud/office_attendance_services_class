@@ -43,17 +43,17 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <h3 class="card-title">Leave Policy List</h3>
+                                <h3 class="card-title">Leave Request List</h3>
                             </div>
                             <div class="col-md-6 text-right">
-                                <a href="{{ route('leave-policy.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Add Leave Policy</a>
+                                <a href="{{ route('leave-request.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Add Leave Request</a>
                             </div>
                         </div>
                     </div>
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        @if($leavePolicies->count() <= 0)
+                        @if($leaveRequest->count() <= 0)
                             <div class="text-center">
                                 <img src="{{ asset('assets/admin/dist/img/no-result.png') }}" alt="No result">
                                 <h3 class="p-6 text-center">
@@ -69,33 +69,40 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 responsive">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Title</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Maximum In Year</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                @foreach(['ID','Employee Name','Leave Type','Start Date','End Date','Day','Reference By','Status','Leave Reason','Comment By Authority','Action'] as $label)
+                                                <th>{{ $label }}</th>
+                                                @endforeach
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($leavePolicies as $leavePolicy)
+                                            @foreach($leaveRequest as $leave_request)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $leavePolicy->title ?? '' }}</td>
-                                                    <td>{{ $leavePolicy->start_date ? getDateFormat($leavePolicy->start_date) : '' }}</td>
-                                                    <td>{{ $leavePolicy->end_date ? getDateFormat($leavePolicy->end_date) : '' }}</td>
-                                                    <td>{{ $leavePolicy->maximum_in_year ?? '' }}</td>
-                                                    <td>{{ $leavePolicy->status ?? '' }}</td>
+                                                    <td>{{ $leave_request->user->name ?? '' }}</td>
+                                                    <td>{{ $leave_request->leavePolicy->title ?? '' }}</td>
+                                                    <td>{{ $leave_request->start_date ? getDateFormat($leave_request->start_date) : '' }}</td>
+                                                    <td>{{ $leave_request->end_date ? getDateFormat($leave_request->end_date) : '' }}</td>
+                                                    <td>{{ $leave_request->days ?? '' }}</td>
+                                                    <td>{{ $leave_request->referredBy->name ?? '' }}</td>
+                                                    <td>{{ $leave_request->status ?? '' }}</td>
+                                                    <td>{{ $leave_request->leave_reason ?? '' }}</td>
+                                                    <td>{{ $leave_request->comment ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('leave-policy.edit',$leavePolicy->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        <a href="{{ route('leave-policy.show',$leavePolicy->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                                        <button data-delete-route="{{ route('leave-policy.destroy', $leavePolicy->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                        @if(auth()->user()->role === \App\Constants\Role::ADMIN || (auth()->user()->role === \App\Constants\Role::USER && ($leave_request->status !== \App\Constants\LeaveStatus::APPROVED && $leave_request->status !== \App\Constants\LeaveStatus::REJECTED)))
+                                                            <a href="{{ route('leave-request.edit', $leave_request->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                        @else
+                                                            <a href="javascript:void(0)" class="btn btn-info btn-sm" disabled><i class="fas fa-edit"></i></a>
+                                                        @endif
 
+                                                        <a href="{{ route('leave-request.show',$leave_request->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+
+                                                        @if(auth()->user()->isAdmin())
+                                                        <button data-delete-route="{{ route('leave-request.destroy', $leave_request->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -105,11 +112,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-md-6">
-                                        Showing {{ $leavePolicies->firstItem() }} to {{ $leavePolicies->lastItem() }} of {{ $leavePolicies->total() }} entries
+                                        Showing {{ $leaveRequest->firstItem() }} to {{ $leaveRequest->lastItem() }} of {{ $leaveRequest->total() }} entries
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="float-right">
-                                            {{ $leavePolicies->links() }}
+                                            {{ $leaveRequest->links() }}
                                         </div>
                                     </div>
                                 </div>

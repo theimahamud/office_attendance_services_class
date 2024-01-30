@@ -5,6 +5,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\LeavepolicyController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('designations', DesignationController::class)->except('show');
     Route::resource('holiday', HolidayController::class);
     Route::resource('leave-policy', LeavepolicyController::class);
+    Route::resource('leave-request', LeaveRequestController::class);
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

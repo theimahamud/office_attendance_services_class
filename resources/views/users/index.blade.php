@@ -106,8 +106,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        {{ $users->links() }}
+                                    <div class="col-sm-6 col-md-6">
+                                        Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="float-right">
+                                            {{ $users->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

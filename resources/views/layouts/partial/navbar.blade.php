@@ -136,7 +136,16 @@
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)">
-                <i class="fas fa-user"></i>
+                @if($currentUser->getFirstMediaUrl())
+                    <div class="profile_img">
+                        <img src="{{ $currentUser->getFirstMediaUrl() }}"  alt="">
+                    </div>
+                @else
+                    <div class="profile_img">
+                        <img src="{{ asset('assets/admin/dist/img/profile.png') }}"  alt="">
+                    </div>
+                @endif
+
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
                 <a href="{{ route('profile.view') }}" class="dropdown-item">

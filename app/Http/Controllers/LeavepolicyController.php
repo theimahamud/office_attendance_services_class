@@ -77,7 +77,7 @@ class LeavepolicyController extends Controller
 
         $leavepolicy = Leavepolicy::findOrfail($id);
 
-        return view('leave-policy.edit',compact('leavepolicy'));
+        return view('leave-policy.edit', compact('leavepolicy'));
 
     }
 
@@ -86,7 +86,7 @@ class LeavepolicyController extends Controller
      */
     public function update(UpdateLeavepolicyRequest $request, string $id, LeavePolicyService $leavePolicyService)
     {
-        $this->authorize('update',[Auth::user(),Leavepolicy::class]);
+        $this->authorize('update', [Auth::user(), Leavepolicy::class]);
 
         $validated = $request->validated();
 
@@ -105,7 +105,6 @@ class LeavepolicyController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
@@ -118,7 +117,6 @@ class LeavepolicyController extends Controller
         $leavePolicyService->destroyLeavePolicy($leavepolicy);
 
         return response('Leave Policy deleted successfully');
-
 
     }
 }

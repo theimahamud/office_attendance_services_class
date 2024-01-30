@@ -41,4 +41,6 @@
 <!-- summernote -->
 <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote-bs4.min.css') }}">
 
+<link rel="stylesheet" href="{{ asset('assets/admin/custom.css') }}">
+
 @yield('style')

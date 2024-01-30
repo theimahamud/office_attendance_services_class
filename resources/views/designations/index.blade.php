@@ -143,8 +143,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        {{ $designations->links() }}
+                                    <div class="col-sm-6 col-md-6">
+                                        Showing {{ $designations->firstItem() }} to {{ $designations->lastItem() }} of {{ $designations->total() }} entries
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="float-right">
+                                            {{ $designations->links() }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -35,7 +35,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <h3 class="card-title">Holiday</h3>
+                                <h3 class="card-title">Leave Policy</h3>
                             </div>
                             <div class="col-md-6 text-right">
                                 <a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Back</a>
@@ -44,42 +44,48 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-8">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-10">
                                 <div class="holiday-details">
                                     <table class="table">
                                         <tr>
-                                            <th>Title</th>
-                                            <td>{{ $holiday->title ?? '' }}</td>
+                                            <th>Name</th>
+                                            <td>{{ $leaveRequest->user->name ?? '' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Start Date</th>
-                                            <td>{{ $holiday->start_date ? \Carbon\Carbon::parse($holiday->start_date)->format('d F, Y') : '' }}</td>
+                                            <td>{{ $leaveRequest->start_date ? getDateFormat($leaveRequest->start_date) : '' }}</td>
                                         </tr>
 
                                         <tr>
                                             <th>End Date</th>
-                                            <td>{{ $holiday->end_date ? \Carbon\Carbon::parse($holiday->end_date)->format('d F, Y') : '' }}</td>
+                                            <td>{{ $leaveRequest->start_date ? getDateFormat($leaveRequest->start_date) : '' }}</td>
                                         </tr>
-
+                                        <tr>
+                                            <th>Days</th>
+                                            <td>{{ $leaveRequest->days ?? '' }}</td>
+                                        </tr>
                                         <tr>
                                             <th>Status</th>
-                                            <td>{{ $holiday->status ?? '' }}</td>
+                                            <td>{{ $leaveRequest->status ?? '' }}</td>
                                         </tr>
+                                        @if($leaveRequest->referred_by)
                                         <tr>
-                                            <th>Description</th>
-                                            <td>{{ $holiday->description ?? '' }}</td>
+                                            <th>Reference By</th>
+                                            <td>{{ $leaveRequest->referredBy->name ?? '' }}</td>
                                         </tr>
+                                        @endif
+                                        <tr>
+                                            <th>Leave Reason</th>
+                                            <td>{{ $leaveRequest->leave_reason ?? '' }}</td>
+                                        </tr>
+                                        @if($leaveRequest->comment)
+                                        <tr>
+                                            <th>Comment By Authority</th>
+                                            <td>{{ $leaveRequest->comment ?? '' }}</td>
+                                        </tr>
+                                        @endif
                                     </table>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="">
-                                            <img class="rounded img-fluid image-preview" src="{{ asset($holiday->image_url) }}" width="80%" alt="image">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

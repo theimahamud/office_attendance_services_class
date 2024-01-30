@@ -2,27 +2,6 @@
 
 @section('style')
     <style>
-        .holiday-details table {
-            width: 100%;
-        }
-
-        .holiday-details th, .holiday-details td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        .holiday-details th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-
-        .holiday-details td {
-            background-color: #fff;
-        }
-
-        .holiday-details tr:hover {
-            background-color: #f5f5f5;
-        }
 
     </style>
 @endsection

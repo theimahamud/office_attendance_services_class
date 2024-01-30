@@ -108,11 +108,43 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
+                                                    <label for="department_id">Department <span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-control select2" name="department_id"
+                                                            id="department_id">
+                                                        @foreach($departments as $department)
+                                                            <option
+                                                                {{ old('department_id',$department->id) == $department->id ? 'selected' : '' }} value="{{ $department->id }}">{{ $department->title }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('role')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="designation_id">Designation <span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-control select2" name="designation_id"
+                                                            id="designation_id">
+                                                        @foreach($designations as $designation)
+                                                            <option
+                                                                {{ old('designation_id',$designation->id) == $designation->id ? 'selected' : '' }} value="{{ $designation->id }}">{{ $designation->title }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('role')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
                                                     <label for="role">Role <span class="text-danger">*</span></label>
                                                     <select class="form-control select2" name="role" id="role">
-                                                        @foreach(\App\Constants\Role::roles as $roles)
+                                                        @foreach(\App\Constants\Role::roles as $role)
                                                             <option
-                                                                {{ old('role',$user->role) == $roles ? 'selected' : '' }} value="{{ $roles }}">{{ $roles }}</option>
+                                                                {{ old('role',$user->role) == $role ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('role')
@@ -253,18 +285,23 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="image">Image</label>
+                                                <label for="image">
+                                                    Image
+                                                    @error('image')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input image-upload-input"
-                                                               name="image" id="image">
+                                                               name="image" id="image" accept="image/*">
                                                         <label class="custom-file-label" for="image">Choose file</label>
                                                     </div>
-                                                    <div class="p-3">
-                                                        <img class="rounded img-fluid image-preview"
-                                                             src="{{ old('image', asset('assets/admin/dist/img/placeholder.jpeg')) }}"
-                                                             width="80%" alt="image">
-                                                    </div>
+                                                </div>
+                                                <div class="preview_image">
+                                                    @if($user->image_url)
+                                                        <img class="image-preview" src="{{ asset($user->image_url) }}"  alt="image">
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +311,8 @@
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Update
                                     </button>
-                                    <a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Back</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-info"><i
+                                            class="fas fa-arrow-left"></i> Back</a>
                                 </div>
                             </form>
                         </div>

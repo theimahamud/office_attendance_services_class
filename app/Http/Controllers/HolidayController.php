@@ -42,7 +42,7 @@ class HolidayController extends Controller
 
         $validated = $request->validated();
 
-        $result = $holiDayService->storeHoliday($validated);
+        $result = $holiDayService->storeHoliday($validated, $request->hasFile('image') ? $request->file('image') : null);
 
         if ($result) {
             Session::flash('success', 'Holiday created successfully');
@@ -85,7 +85,7 @@ class HolidayController extends Controller
 
         $validated = $request->validated();
 
-        $result = $holiDayService->updateHoliday($validated, $holiday);
+        $result = $holiDayService->updateHoliday($validated, $holiday, $request->hasFile('image') ? $request->file('image') : null);
 
         if ($result) {
             Session::flash('success', 'Holiday updated successfully');

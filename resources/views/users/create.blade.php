@@ -251,15 +251,20 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="image">Image</label>
+                                                <label for="image">
+                                                    Image
+                                                    @error('image')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input image-upload-input" name="image" id="image">
                                                         <label class="custom-file-label" for="image">Choose file</label>
                                                     </div>
-                                                    <div class="p-3">
-                                                        <img class="rounded img-fluid image-preview" src="{{ old('image', asset('assets/admin/dist/img/placeholder.jpeg')) }}" width="80%" alt="image">
-                                                    </div>
+                                                </div>
+                                                <div class="preview_image">
+                                                    <img class="image-preview" src="{{ old('image', asset(\App\Models\User::PLACEHOLDER_IMAGE_PATH)) }}"  alt="image">
                                                 </div>
                                             </div>
                                         </div>

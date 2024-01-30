@@ -45,10 +45,11 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request, UserService $userService): RedirectResponse
     {
+
         $this->authorize('create', User::class);
         $validated = $request->validated();
 
-        $result = $userService->storeUser($validated);
+        $result = $userService->storeUser($validated, $request->hasFile('image') ? $request->file('image') : null);
 
         if ($result) {
             Session::flash('success', 'User created successfully');
@@ -95,7 +96,7 @@ class UserController extends Controller
         $this->authorize('update', [$user, Auth::user()]);
         $validated = $request->validated();
 
-        $result = $userService->updateUser($validated, $user);
+        $result = $userService->updateUser($validated, $user, $request->hasFile('image') ? $request->file('image') : null);
 
         if ($result) {
             Session::flash('success', 'User updated successfully');

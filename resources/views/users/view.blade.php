@@ -2,27 +2,6 @@
 
 @section('style')
     <style>
-        .holiday-details table {
-            width: 100%;
-        }
-
-        .holiday-details th, .holiday-details td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        .holiday-details th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-
-        .holiday-details td {
-            background-color: #fff;
-        }
-
-        .holiday-details tr:hover {
-            background-color: #f5f5f5;
-        }
 
     </style>
 @endsection
@@ -65,8 +44,8 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="row justify-content-center">
-                            <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-8">
                                 <div class="holiday-details">
                                     <table class="table">
                                         <tr>
@@ -119,6 +98,15 @@
                                             <td>{{ $user->blood_group ?? '' }}</td>
                                         </tr>
                                     </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="">
+                                            <img class="rounded img-fluid image-preview" src="{{ asset($user->image_url) }}" width="80%" alt="image">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

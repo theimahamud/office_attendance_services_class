@@ -107,13 +107,15 @@
                                                 <label for="image">Image</label>
                                                 <div class="input-group">
                                                     <div class="custom-file">
-                                                        <input type="file" class="custom-file-input image-upload-input" name="image" id="image">
+                                                        <input type="file" class="custom-file-input image-upload-input" name="image" id="image" accept="image/*">
                                                         <label class="custom-file-label" for="image">Choose file</label>
                                                     </div>
-                                                    <div class="p-3">
-                                                        <img class="rounded img-fluid image-preview" src="{{ old('image', asset('assets/admin/dist/img/placeholder.jpeg')) }}" width="80%" alt="image">
-                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="preview_image">
+                                                @if($holiday->image_url)
+                                                    <img class="image-preview" src="{{ asset($holiday->image_url) }}" alt="image">
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

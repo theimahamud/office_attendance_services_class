@@ -68,6 +68,13 @@ class User extends Authenticatable implements HasMedia
         'password' => 'hashed',
     ];
 
+    public const PLACEHOLDER_IMAGE_PATH = 'assets/admin/dist/img/placeholder.jpeg';
+
+    public function getImageUrlAttribute(): string
+    {
+        return $this->hasMedia() ? $this->getFirstMediaUrl() : self::PLACEHOLDER_IMAGE_PATH;
+    }
+
     public function isAdmin()
     {
         return $this->role === Role::ADMIN;
