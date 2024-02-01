@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 table-responsive">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
@@ -86,8 +86,8 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $holiday->title ?? '' }}</td>
-                                                    <td>{{ $holiday->start_date ? \Carbon\Carbon::parse($holiday->start_date)->format('d F, Y') : '' }}</td>
-                                                    <td>{{ $holiday->end_date ? \Carbon\Carbon::parse($holiday->end_date)->format('d F, Y') : '' }}</td>
+                                                    <td>{{ $holiday->start_date ? getDateFormat($holiday->start_date) : '' }}</td>
+                                                    <td>{{ $holiday->end_date ? getDateFormat($holiday->end_date) : '' }}</td>
                                                     <td>{{ $holiday->status ?? '' }}</td>
                                                     <td>
                                                         <a href="{{ route('holiday.edit',$holiday->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

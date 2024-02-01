@@ -30,17 +30,14 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <h3 class="card-title">Leave Policy List</h3>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <a href="{{ route('leave-policy.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Add Leave Policy</a>
+                                <h3 class="card-title">Yearly Leave List</h3>
                             </div>
                         </div>
                     </div>
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        @if($leavePolicies->count() <= 0)
+                        @if($yearlyLeave->count() <= 0)
                             <div class="text-center">
                                 <img src="{{ asset('assets/admin/dist/img/no-result.png') }}" alt="No result">
                                 <h3 class="p-6 text-center">
@@ -50,53 +47,63 @@
                         @else
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        <div  class="dataTables_filter "><label>Search:<input
-                                                    type="search" class="form-control form-control-sm"></label></div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-sm-12 table-responsive">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Title</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Maximum In Year</th>
+                                                <th>Leave Type</th>
+                                                <th>Total Days</th>
+                                                <th>Leave Spent</th>
+                                                <th>Available Days</th>
+                                                <th>Leave Period (From-To)</th>
+                                                <th>In Days</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($leavePolicies as $leavePolicy)
+                                            @foreach($yearlyLeave as $leavePolicy)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $leavePolicy->title ?? '' }}</td>
-                                                    <td>{{ $leavePolicy->start_date ? getDateFormat($leavePolicy->start_date) : '' }}</td>
-                                                    <td>{{ $leavePolicy->end_date ? getDateFormat($leavePolicy->end_date) : '' }}</td>
-                                                    <td>{{ $leavePolicy->maximum_in_year ?? '' }}</td>
-                                                    <td>{{ $leavePolicy->status ?? '' }}</td>
-                                                    <td>
-                                                        <a href="{{ route('leave-policy.edit',$leavePolicy->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        <a href="{{ route('leave-policy.show',$leavePolicy->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                                        <button data-delete-route="{{ route('leave-policy.destroy', $leavePolicy->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                    @php
+                                                        $leave_spent = \App\Helper\Helper::leaveSpent($leavePolicy->id, $leavePolicy->start_date, $leavePolicy->end_date);
+                                                        $available_days = \App\Helper\Helper::availableDays($leavePolicy->maximum_in_year, $leave_spent);
+                                                        $total_days = \Carbon\Carbon::parse($leavePolicy->start_date)->diffInDays($leavePolicy->end_date);
+                                                    @endphp
 
+                                                    <td>{{ ucfirst($leavePolicy->title) ?? '' }}</td>
+                                                    <td class="text-center">
+                                                        <h5><span class="badge badge-primary">{{ $leavePolicy->maximum_in_year ?? '' }}</span></h5>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <h5><span class="badge badge-danger">{{ $leave_spent }}</span></h5>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <h5><span class="badge badge-warning">{{ $available_days }}</span></h5>
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($leavePolicy->start_date)->format('d-m-Y') .' - '.\Carbon\Carbon::parse($leavePolicy->end_date)->format('d-m-Y') ?? '' }}</td>
+                                                    <td>{{ $total_days }}</td>
+                                                    <td>
+                                                        <div>
+                                                            @if($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date)
+                                                                <h5><span class="badge badge-success">Active</span></h5>
+                                                            @else
+                                                                <h5><span class="badge badge-danger">Expired</span></h5>
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-md-6">
-                                        Showing {{ $leavePolicies->firstItem() }} to {{ $leavePolicies->lastItem() }} of {{ $leavePolicies->total() }} entries
+                                        Showing {{ $yearlyLeave->firstItem() }} to {{ $yearlyLeave->lastItem() }} of {{ $yearlyLeave->total() }} entries
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <div class="float-right">
-                                            {{ $leavePolicies->links() }}
+                                            {{ $yearlyLeave->links() }}
                                         </div>
                                     </div>
                                 </div>

@@ -49,3 +49,5 @@
 {{--custom js --}}
 <script src="{{ asset('assets/admin/custom.js') }}"></script>
 
+@include('layouts.alert')
+

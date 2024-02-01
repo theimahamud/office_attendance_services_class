@@ -21,7 +21,7 @@ class UpdateleaveRequestRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'leave_policy_id' => ['required'],
             'start_date' => ['required'],
             'end_date' => ['required'],
@@ -29,7 +29,14 @@ class UpdateleaveRequestRequest extends FormRequest
             'referred_by' => ['required'],
             'user_id' => ['nullable'],
             'status' => ['nullable'],
-            'comment' => ['required'],
         ];
+
+        if (auth()->user()->isAdmin()) {
+            $rules['comment'] = ['required'];
+        } else {
+            $rules['comment'] = ['nullable'];
+        }
+
+        return $rules;
     }
 }

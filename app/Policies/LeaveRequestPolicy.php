@@ -2,8 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\leaveRequest;
+use App\Constants\LeaveStatus;
+use App\Constants\Role;
+use App\Models\LeaveRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LeaveRequestPolicy
 {
@@ -12,23 +15,24 @@ class LeaveRequestPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, leaveRequest $leaveRequest): bool
+    public function viewMy(User $user)
     {
-        //
+        return $user->role === Role::USER;
     }
+
 
     /**
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === Role::ADMIN || $user->role ===Role::USER;
     }
 
     /**
@@ -36,7 +40,7 @@ class LeaveRequestPolicy
      */
     public function update(User $user, leaveRequest $leaveRequest): bool
     {
-        //
+        return $user->role === Role::ADMIN || ($user->role === Role::USER && $user->id === $leaveRequest->user_id && $leaveRequest->status === LeaveStatus::PENDING);
     }
 
     /**
@@ -44,7 +48,7 @@ class LeaveRequestPolicy
      */
     public function delete(User $user, leaveRequest $leaveRequest): bool
     {
-        //
+        return $user->role === Role::ADMIN;
     }
 
     /**

@@ -169,15 +169,17 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @foreach(['leave-request.index' => 'Leave Request List', 'leave-request.create' => 'Leave Request Create'] as $route => $label)
+                            @foreach([
+                                    auth()->user()->isAdmin() ? 'leave-request.index' : 'my-leave-request' => auth()->user()->isAdmin() ? 'Leave Request List' : 'My Leave Request',
+                                    'leave-request.create' => 'Leave Request Create', 'yearly-leave'=>'Yearly Leave'] as $route => $label)
                                 <li class="nav-item">
-                                    <a href="{{ route($route) }}"
-                                       class="nav-link {{ $current_route == $route ? 'active' : '' }}">
+                                    <a href="{{ route($route) }}" class="nav-link {{ $current_route == $route ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{ $label }}</p>
                                     </a>
                                 </li>
                             @endforeach
+
                         </ul>
                     </li>
                     {{-- leave request section end --}}

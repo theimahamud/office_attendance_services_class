@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('holiday', HolidayController::class);
     Route::resource('leave-policy', LeavepolicyController::class);
     Route::resource('leave-request', LeaveRequestController::class);
+    Route::get('my-leave-request',[LeaveRequestController::class,'myLeaveRequest'])->name('my-leave-request');
+    Route::get('yearly-leave',[LeavepolicyController::class,'yearlyLeave'])->name('yearly-leave');
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

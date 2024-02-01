@@ -6,9 +6,10 @@ use App\Constants\Role;
 use App\Http\Requests\StoreleaveRequestRequest;
 use App\Http\Requests\UpdateleaveRequestRequest;
 use App\Models\Leavepolicy;
-use App\Models\leaveRequest;
+use App\Models\LeaveRequest;
 use App\Models\User;
 use App\Services\LeaveRequestService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class LeaveRequestController extends Controller
@@ -18,15 +19,24 @@ class LeaveRequestController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',LeaveRequest::class);
+
         $authUser = auth()->user();
 
-        if($authUser->role  === Role::ADMIN){
+        $leaveRequest = LeaveRequest::with(['user', 'referredBy', 'leavePolicy'])->orderBy('created_at', 'DESC')->paginate(5);
 
-            $leaveRequest = leaveRequest::with(['user', 'referredBy', 'leavePolicy'])->orderBy('created_at', 'DESC')->paginate(5);
-        }
-        else{
-            $leaveRequest = leaveRequest::with(['user', 'referredBy', 'leavePolicy'])->orderBy('created_at', 'DESC')->where('user_id',$authUser->id)->paginate(5);
-        }
+        return view('leave-requests.index', compact('leaveRequest'));
+    }
+
+
+    public function myLeaveRequest()
+    {
+
+        $this->authorize('viewMy',LeaveRequest::class);
+
+        $authUser = auth()->user();
+
+        $leaveRequest = LeaveRequest::with(['user', 'referredBy', 'leavePolicy'])->orderBy('created_at', 'DESC')->where('user_id',$authUser->id)->paginate(5);
 
         return view('leave-requests.index', compact('leaveRequest'));
     }
@@ -36,6 +46,8 @@ class LeaveRequestController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',LeaveRequest::class);
+
         $users = User::orderBy('name')->get();
         $leavePolicies = Leavepolicy::orderBy('title')->get();
 
@@ -47,6 +59,8 @@ class LeaveRequestController extends Controller
      */
     public function store(StoreleaveRequestRequest $request, LeaveRequestService $leaveRequestService)
     {
+        $this->authorize('create',LeaveRequest::class);
+
         $validated = $request->validated();
 
         $result = $leaveRequestService->storeLeaveRequest($validated);
@@ -66,8 +80,10 @@ class LeaveRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(leaveRequest $leaveRequest)
+    public function show(LeaveRequest $leaveRequest)
     {
+        $this->authorize('create',$leaveRequest);
+
         $leaveRequest->load(['user', 'referredBy', 'leavePolicy']);
 
         return view('leave-requests.view', compact('leaveRequest'));
@@ -76,8 +92,11 @@ class LeaveRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(leaveRequest $leaveRequest)
+    public function edit(LeaveRequest $leaveRequest)
     {
+
+        $this->authorize('update', $leaveRequest);
+
         $users = User::orderBy('name')->get();
         $leavePolicies = Leavepolicy::orderBy('title')->get();
 
@@ -87,8 +106,10 @@ class LeaveRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateleaveRequestRequest $request, leaveRequest $leaveRequest, LeaveRequestService $leaveRequestService)
+    public function update(UpdateleaveRequestRequest $request, LeaveRequest $leaveRequest, LeaveRequestService $leaveRequestService)
     {
+        $this->authorize('update', $leaveRequest);
+
         $validated = $request->validated();
 
         $result = $leaveRequestService->updateLeaveRequest($validated, $leaveRequest);
@@ -107,7 +128,7 @@ class LeaveRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(leaveRequest $leaveRequest,LeaveRequestService $leaveRequestService)
+    public function destroy(LeaveRequest $leaveRequest,LeaveRequestService $leaveRequestService)
     {
         $leaveRequestService->destroyLeaveRequest($leaveRequest);
 

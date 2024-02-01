@@ -21,14 +21,20 @@ class StoreleaveRequestRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'leave_policy_id' => ['required'],
             'start_date' => ['required'],
             'end_date' => ['required'],
             'leave_reason' => ['required'],
             'referred_by' => ['required'],
-            'user_id' => ['nullable'],
             'status' => ['nullable'],
         ];
+
+        if (auth()->user()->isAdmin()) {
+            $rules['user_id'] = ['required'];
+        } else {
+            $rules['user_id'] = ['nullable'];
+        }
+        return $rules;
     }
 }

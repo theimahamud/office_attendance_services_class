@@ -18,20 +18,20 @@
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
+{{--                <div class="row">--}}
+{{--                    <div class="col-sm-12">--}}
+{{--                        @if(session('success'))--}}
+{{--                            <div class="alert alert-success">--}}
+{{--                                {!! session('success') !!}--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                        @if(session('error'))--}}
+{{--                            <div class="alert alert-danger">--}}
+{{--                                {!! session('error') !!}--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
@@ -114,13 +114,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 table-responsive">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Title</th>
-                                                <th>Description</th>
+                                                <th width="40%">Description</th>
                                                 <th>Created At</th>
                                                 <th>Action</th>
                                             </tr>
@@ -131,7 +131,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $department->title ?? '' }}</td>
                                                     <td>{{ \Illuminate\Support\Str::limit($department->description) ?? '' }}</td>
-                                                    <td>{{ $department->created_at ?? '' }}</td>
+                                                    <td>{{ isset($department->created_at) ? getDateFormat($department->created_at) : '' }}</td>
                                                     <td>
                                                         <a href="{{ route('departments.edit',$department->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                                         <button data-delete-route="{{ route('departments.destroy', $department->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>

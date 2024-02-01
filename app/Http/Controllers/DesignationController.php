@@ -45,7 +45,7 @@ class DesignationController extends Controller
 
         $designationService->updateDesignation($validated, $designation);
 
-        Session::flash('success', 'Designation created successfully');
+        Session::flash('success', 'Designation updated successfully');
 
         return redirect()->route('designations.index');
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateLeavepolicyRequest;
 use App\Models\Leavepolicy;
 use App\Models\User;
 use App\Services\LeavePolicyService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -22,6 +23,15 @@ class LeavepolicyController extends Controller
         $leavePolicies = Leavepolicy::orderBy('created_at', 'DESC')->paginate(5);
 
         return view('leave-policy.index', compact('leavePolicies'));
+    }
+
+    public function yearlyLeave()
+    {
+        $current_date = Carbon::now()->format('m/d/y');
+
+        $yearlyLeave = Leavepolicy::with('leaveRequest')->orderBy('created_at','DESC')->paginate(10);
+
+        return view('leave-policy.yearly-leave',compact('current_date','yearlyLeave'));
     }
 
     /**

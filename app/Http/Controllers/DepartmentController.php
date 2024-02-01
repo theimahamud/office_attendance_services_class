@@ -45,7 +45,7 @@ class DepartmentController extends Controller
 
         $departmentService->updateDepartment($validated, $department);
 
-        Session::flash('success', 'Department created successfully');
+        Session::flash('success', 'Department updated successfully');
 
         return redirect()->route('departments.index');
     }

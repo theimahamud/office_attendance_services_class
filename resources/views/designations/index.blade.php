@@ -18,20 +18,6 @@
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
@@ -114,13 +100,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 table-responsive">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Title</th>
-                                                <th>Description</th>
+                                                <th width="40%">Description</th>
                                                 <th>Created At</th>
                                                 <th>Action</th>
                                             </tr>

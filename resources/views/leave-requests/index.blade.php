@@ -18,20 +18,6 @@
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
@@ -69,7 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 responsive">
+                                    <div class="col-sm-12 table-responsive">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>

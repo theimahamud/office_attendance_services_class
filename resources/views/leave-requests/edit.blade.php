@@ -17,20 +17,6 @@
                         </ol>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -47,7 +33,7 @@
                             <!-- form start -->
                             <form action="{{ route('leave-request.update',$leaveRequest->id) }}" method="post">
                                 @csrf
-                                @method('PUt')
+                                @method('PUT')
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
