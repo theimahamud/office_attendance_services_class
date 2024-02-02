@@ -64,7 +64,11 @@
 
                                         <tr>
                                             <th>Status</th>
-                                            <td>{{ $holiday->status ?? '' }}</td>
+                                            <td>
+                                                <span class="badge @if($holiday->status === \App\Constants\Status::PUBLISHED) badge-success @else badge-warning @endif p-2">
+                                                            {{ $holiday->status ?? '' }}
+                                                </span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Description</th>

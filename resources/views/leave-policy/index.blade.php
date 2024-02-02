@@ -77,7 +77,12 @@
                                                     <td>{{ $leavePolicy->start_date ? getDateFormat($leavePolicy->start_date) : '' }}</td>
                                                     <td>{{ $leavePolicy->end_date ? getDateFormat($leavePolicy->end_date) : '' }}</td>
                                                     <td>{{ $leavePolicy->maximum_in_year ?? '' }}</td>
-                                                    <td>{{ $leavePolicy->status ?? '' }}</td>
+                                                    <td>
+                                                    <td>
+                                                        <span class="badge @if($leavePolicy->status === \App\Constants\Status::ACTIVE) badge-success @else badge-warning @endif p-2">
+                                                             {{ $leavePolicy->status ?? '' }}
+                                                        </span>
+                                                    </td>
                                                     <td>
                                                         <a href="{{ route('leave-policy.edit',$leavePolicy->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                                         <a href="{{ route('leave-policy.show',$leavePolicy->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>

@@ -88,7 +88,11 @@
                                                     <td>{{ $holiday->title ?? '' }}</td>
                                                     <td>{{ $holiday->start_date ? getDateFormat($holiday->start_date) : '' }}</td>
                                                     <td>{{ $holiday->end_date ? getDateFormat($holiday->end_date) : '' }}</td>
-                                                    <td>{{ $holiday->status ?? '' }}</td>
+                                                    <td>
+                                                        <span class="badge @if($holiday->status === \App\Constants\Status::PUBLISHED) badge-success @else badge-warning @endif p-2">
+                                                            {{ $holiday->status ?? '' }}
+                                                        </span>
+                                                    </td>
                                                     <td>
                                                         <a href="{{ route('holiday.edit',$holiday->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                                         <a href="{{ route('holiday.show',$holiday->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>

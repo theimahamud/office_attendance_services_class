@@ -10,10 +10,10 @@ use App\Models\LeaveRequest;
 class Helper
 {
 
-    public static function leaveSpent($leave_policy_id,$start_date,$end_date)
+    public static function leaveSpent($leave_policy_id,$start_date,$end_date,$user_id = null)
     {
         $leave_request = LeaveRequest::where('status',LeaveStatus::APPROVED)
-            ->where('user_id',auth()->user()->id)
+            ->where('user_id',isset($user_id) ? $user_id : auth()->user()->id)
             ->where('leave_policy_id',$leave_policy_id)
             ->where('start_date', '>=' ,$start_date)
             ->where('end_date','<=',$end_date)->get();

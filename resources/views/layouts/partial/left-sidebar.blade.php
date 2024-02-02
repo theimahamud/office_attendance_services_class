@@ -15,11 +15,11 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 @if($currentUser->getFirstMediaUrl())
-                <img src="{{ $currentUser->getFirstMediaUrl() }}" class="img-circle elevation-2"
-                     alt="profile">
+                    <img src="{{ $currentUser->getFirstMediaUrl() }}" class="img-circle elevation-2"
+                         alt="profile">
                 @else
-                <img src="{{ asset('assets/admin/dist/img/profile.png') }}" class="img-circle elevation-2"
-                     alt="profile">
+                    <img src="{{ asset('assets/admin/dist/img/profile.png') }}" class="img-circle elevation-2"
+                         alt="profile">
                 @endif
             </div>
             <div class="info">
@@ -50,7 +50,8 @@
                     @endphp
 
                     <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
-                        <a href="javascript:void(0)" class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <a href="javascript:void(0)"
+                           class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Users
@@ -94,7 +95,8 @@
                     @endphp
 
                     <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
-                        <a href="javascript:void(0)" class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <a href="javascript:void(0)"
+                           class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-snowflake"></i>
                             <p>
                                 Holiday
@@ -122,7 +124,8 @@
                     @endphp
 
                     <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
-                        <a href="javascript:void(0)" class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <a href="javascript:void(0)"
+                           class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-calendar-alt"></i>
                             <p>
                                 Leave Policy
@@ -154,35 +157,47 @@
                     </li>
                 @endif
 
-                    {{-- leave request start section--}}
-                    @php
-                        $current_route = Illuminate\Support\Facades\Route::currentRouteName();
-                        $routes = ['leave-request.index', 'leave-request.create'];
-                    @endphp
+                {{-- leave request start section--}}
+                @php
+                    $current_route = Illuminate\Support\Facades\Route::currentRouteName();
+                    $routes = ['leave-request.index', 'leave-request.create'];
+                @endphp
 
-                    <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
-                        <a href="javascript:void(0)" class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-clock"></i>
-                            <p>
-                                Leave Request
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @foreach([
-                                    auth()->user()->isAdmin() ? 'leave-request.index' : 'my-leave-request' => auth()->user()->isAdmin() ? 'Leave Request List' : 'My Leave Request',
-                                    'leave-request.create' => 'Leave Request Create', 'yearly-leave'=>'Yearly Leave'] as $route => $label)
-                                <li class="nav-item">
-                                    <a href="{{ route($route) }}" class="nav-link {{ $current_route == $route ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ $label }}</p>
-                                    </a>
-                                </li>
-                            @endforeach
+                <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
+                    <a href="javascript:void(0)"
+                       class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-clock"></i>
+                        <p>
+                            Leave Request
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach([
+                                auth()->user()->isAdmin() ? 'leave-request.index' : 'my-leave-request' => auth()->user()->isAdmin() ? 'Leave Request List' : 'My Leave Request',
+                                'leave-request.create' => 'Leave Request Create'] as $route => $label)
+                            <li class="nav-item">
+                                <a href="{{ route($route) }}"
+                                   class="nav-link {{ $current_route == $route ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ $label }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                        @if(auth()->user()->role === \App\Constants\Role::USER)
+                            <li class="nav-item">
+                                <a href="{{ route('yearly-leave') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                       Yearly Leave
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
 
-                        </ul>
-                    </li>
-                    {{-- leave request section end --}}
+                    </ul>
+                </li>
+                {{-- leave request section end --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

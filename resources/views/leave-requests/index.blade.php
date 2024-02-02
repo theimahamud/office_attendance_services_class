@@ -74,14 +74,16 @@
                                                     <td>{{ $leave_request->end_date ? getDateFormat($leave_request->end_date) : '' }}</td>
                                                     <td>{{ $leave_request->days ?? '' }}</td>
                                                     <td>{{ $leave_request->referredBy->name ?? '' }}</td>
-                                                    <td>{{ $leave_request->status ?? '' }}</td>
+                                                    <td>
+                                                        <span class="badge @if($leave_request->status === \App\Constants\LeaveStatus::APPROVED)  badge-success @elseif($leave_request->status === \App\Constants\LeaveStatus::REJECTED)  badge-warning @else badge-danger  @endif p-2">
+                                                            {{ $leave_request->status ?? '' }}
+                                                        </span>
+                                                    </td>
                                                     <td>{{ $leave_request->leave_reason ?? '' }}</td>
                                                     <td>{{ $leave_request->comment ?? '' }}</td>
                                                     <td>
                                                         @if(auth()->user()->role === \App\Constants\Role::ADMIN || (auth()->user()->role === \App\Constants\Role::USER && ($leave_request->status !== \App\Constants\LeaveStatus::APPROVED && $leave_request->status !== \App\Constants\LeaveStatus::REJECTED)))
                                                             <a href="{{ route('leave-request.edit', $leave_request->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        @else
-                                                            <a href="javascript:void(0)" class="btn btn-info btn-sm" disabled><i class="fas fa-edit"></i></a>
                                                         @endif
 
                                                         <a href="{{ route('leave-request.show',$leave_request->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>

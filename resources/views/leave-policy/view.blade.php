@@ -67,7 +67,11 @@
                                         </tr>
                                         <tr>
                                             <th>Status</th>
-                                            <td>{{ $leavepolicy->status ?? '' }}</td>
+                                            <td>
+                                                 <span class="badge @if($leavepolicy->status === \App\Constants\Status::ACTIVE) badge-success @else badge-warning @endif p-2">
+                                                             {{ $leavepolicy->status ?? '' }}
+                                                        </span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Description</th>

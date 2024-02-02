@@ -138,9 +138,9 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="comment">Comment</label>
+                                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                                     <textarea class="form-control" name="comment" id="comment"
-                                                              cols="30" rows="2">{{ old('comment',$leaveRequest->comment) }}</textarea>
+                                                              cols="30" required rows="2">{{ old('comment',$leaveRequest->comment) }}</textarea>
                                                     @error('comment')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror

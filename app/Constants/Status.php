@@ -8,8 +8,17 @@ class Status
 
     public const INACTIVE = 'Inactive';
 
+    public const PUBLISHED = 'Published';
+
+    public const DRAFT = 'Draft';
+
     public const status = [
         self::ACTIVE,
         self::INACTIVE,
+    ];
+
+    public const published_draft_status = [
+        self::PUBLISHED,
+        self::DRAFT,
     ];
 }

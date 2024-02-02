@@ -79,7 +79,11 @@
                                                     <td>{{ $user->role ?? '' }}</td>
                                                     <td>{{ $user->department->title ?? '' }}</td>
                                                     <td>{{ $user->designation->title ?? '' }}</td>
-                                                    <td>{{ $user->status ?? '' }}</td>
+                                                    <td>
+                                                        <span class="badge @if($user->status === \App\Constants\Status::ACTIVE) badge-success @else badge-danger @endif p-2">
+                                                            {{ $user->status ?? '' }}
+                                                        </span>
+                                                    </td>
                                                     <td>
                                                         <a href="{{ route('users.edit',$user->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                                         <a href="{{ route('users.show',$user->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>

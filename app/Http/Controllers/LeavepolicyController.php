@@ -29,7 +29,7 @@ class LeavepolicyController extends Controller
     {
         $current_date = Carbon::now()->format('m/d/y');
 
-        $yearlyLeave = Leavepolicy::with('leaveRequest')->orderBy('created_at','DESC')->paginate(10);
+        $yearlyLeave = Leavepolicy::orderBy('created_at','DESC')->paginate(10);
 
         return view('leave-policy.yearly-leave',compact('current_date','yearlyLeave'));
     }
