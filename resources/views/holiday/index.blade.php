@@ -14,24 +14,10 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard v1</li>
+                            <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->

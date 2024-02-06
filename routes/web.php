@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('leave-request', LeaveRequestController::class);
     Route::get('my-leave-request',[LeaveRequestController::class,'myLeaveRequest'])->name('my-leave-request');
     Route::get('yearly-leave',[LeavepolicyController::class,'yearlyLeave'])->name('yearly-leave');
+    Route::get('all-attendance',[AttendanceController::class,'allAttendance'])->name('all-attendance');
+    Route::get('my-attendance',[AttendanceController::class,'myAttendance'])->name('my-attendance');
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

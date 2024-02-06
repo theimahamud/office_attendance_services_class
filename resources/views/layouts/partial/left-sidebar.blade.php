@@ -77,6 +77,7 @@
                             <i class="nav-icon ion ion-ios-briefcase"></i>
                             <p>
                                 Department
+                                <i class="right fas fa-angle-right"></i>
                             </p>
                         </a>
                     </li>
@@ -85,6 +86,7 @@
                             <i class="nav-icon ion ion-ios-briefcase"></i>
                             <p>
                                 Designation
+                                <i class="right fas fa-angle-right"></i>
                             </p>
                         </a>
                     </li>
@@ -152,6 +154,7 @@
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>
                                 Settings
+                                <i class="right fas fa-angle-right"></i>
                             </p>
                         </a>
                     </li>
@@ -160,7 +163,7 @@
                 {{-- leave request start section--}}
                 @php
                     $current_route = Illuminate\Support\Facades\Route::currentRouteName();
-                    $routes = ['leave-request.index', 'leave-request.create'];
+                    $routes = ['leave-request.index', 'leave-request.create','my-leave-request','yearly-leave'];
                 @endphp
 
                 <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
@@ -186,7 +189,7 @@
                         @endforeach
                         @if(auth()->user()->role === \App\Constants\Role::USER)
                             <li class="nav-item">
-                                <a href="{{ route('yearly-leave') }}" class="nav-link">
+                                <a href="{{ route('yearly-leave') }}" class="nav-link {{ $current_route == "yearly-leave" ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>
                                        Yearly Leave
@@ -198,6 +201,37 @@
                     </ul>
                 </li>
                 {{-- leave request section end --}}
+
+
+                {{-- attendance start section--}}
+                @php
+                    $current_route = Illuminate\Support\Facades\Route::currentRouteName();
+                    $routes = ['all-attendance', 'my-attendance'];
+                @endphp
+
+                <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
+                    <a href="javascript:void(0)"
+                       class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-calendar-check"></i>
+                        <p>
+                            Attendance
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach([
+                                auth()->user()->isAdmin() ? 'all-attendance' : 'my-attendance' => auth()->user()->isAdmin() ? 'All Attendance' : 'My Attendance'] as $route => $label)
+                            <li class="nav-item">
+                                <a href="{{ route($route) }}"
+                                   class="nav-link {{ $current_route == $route ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ $label }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+                {{-- attendance section end --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
