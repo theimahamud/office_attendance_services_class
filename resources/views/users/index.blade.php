@@ -47,10 +47,49 @@
                            </div>
                         @else
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        <div  class="dataTables_filter "><label>Search:<input
-                                                    type="search" class="form-control form-control-sm"></label></div>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <form action="" method="GET">
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-10">
+                                                   <div class="d-flex justify-content-between">
+                                                       <div  class="">
+                                                           <select class="form-control select2" name="department" id="department">
+                                                               <option value="">Select One</option>
+                                                               @foreach($departments as $department)
+                                                                   <option value="{{ $department->id }}">{{ $department->title }}</option>
+                                                               @endforeach
+                                                           </select>
+                                                       </div>
+                                                       <div  class="">
+                                                           <select class="form-control select2" name="designation" id="designation">
+                                                               <option value="">Select One</option>
+                                                               @foreach($designations as $designation)
+                                                                   <option value="{{ $designation->id }}">{{ $designation->title }}</option>
+                                                               @endforeach
+                                                           </select>
+                                                       </div>
+                                                       <div  class="">
+                                                           <select class="form-control select2" name="status" id="status">
+                                                               <option value="">Select One</option>
+                                                               @foreach(\App\Constants\Status::status as $status)
+                                                                   <option value="{{ $status }}">{{ $status }}</option>
+                                                               @endforeach
+                                                           </select>
+                                                       </div>
+                                                       <div  class="">
+                                                           <input type="text" class="form-control" name="search" value="{{ request()->query('search') }}" placeholder="search....">
+                                                       </div>
+                                                       <div  class="">
+                                                           <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
+                                                       </div>
+                                                       <div  class="">
+                                                           <a href="{{ url()->current() }}" class="btn btn-danger">Clear Filter</a>
+                                                       </div>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="row">
