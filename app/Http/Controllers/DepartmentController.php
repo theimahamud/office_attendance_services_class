@@ -13,7 +13,7 @@ class DepartmentController extends Controller
     {
         $this->authorize('view', Department::class);
 
-        $departments = Department::orderBy('created_at', 'DESC')->paginate(5);
+        $departments = Department::orderBy('created_at', 'DESC')->get();
 
         return view('departments.index', compact('departments'));
     }

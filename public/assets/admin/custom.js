@@ -19,6 +19,8 @@ $(function () {
         $('body').toggleClass('dark-mode');
     }
 
+    let table = new DataTable('#datatables');
+
 
 });
 

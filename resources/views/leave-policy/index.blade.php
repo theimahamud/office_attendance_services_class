@@ -50,14 +50,8 @@
                         @else
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        <div  class="dataTables_filter "><label>Search:<input
-                                                    type="search" class="form-control form-control-sm"></label></div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-sm-12 table-responsive">
-                                        <table class="table table-bordered table-striped">
+                                        <table class="table table-bordered table-striped" id="datatables">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -78,7 +72,6 @@
                                                     <td>{{ $leavePolicy->end_date ? getDateFormat($leavePolicy->end_date) : '' }}</td>
                                                     <td>{{ $leavePolicy->maximum_in_year ?? '' }}</td>
                                                     <td>
-                                                    <td>
                                                         <span class="badge @if($leavePolicy->status === \App\Constants\Status::ACTIVE) badge-success @else badge-warning @endif p-2">
                                                              {{ $leavePolicy->status ?? '' }}
                                                         </span>
@@ -87,22 +80,11 @@
                                                         <a href="{{ route('leave-policy.edit',$leavePolicy->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                                         <a href="{{ route('leave-policy.show',$leavePolicy->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                                         <button data-delete-route="{{ route('leave-policy.destroy', $leavePolicy->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
-
                                                     </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6">
-                                        Showing {{ $leavePolicies->firstItem() }} to {{ $leavePolicies->lastItem() }} of {{ $leavePolicies->total() }} entries
-                                    </div>
-                                    <div class="col-sm-6 col-md-6">
-                                        <div class="float-right">
-                                            {{ $leavePolicies->links() }}
-                                        </div>
                                     </div>
                                 </div>
                             </div>

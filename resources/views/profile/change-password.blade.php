@@ -58,7 +58,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="current_password">Current Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" name="current_password" id="current_password"
+                                        <input type="password" class="form-control" name="current_password" required id="current_password"
                                                placeholder="Enter current password">
                                         @error('current_password')
                                         <span class="text-danger">{{ $message }}</span>
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="password">New Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" name="password" id="password"
+                                        <input type="password" class="form-control" name="password" required id="password"
                                                placeholder="Enter new password">
                                         @error('password')
                                         <span class="text-danger">{{ $message }}</span>
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="password_confirmation">Confirm Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"
+                                        <input type="password" class="form-control" name="password_confirmation" required id="password_confirmation"
                                                placeholder="Enter confirm password">
                                         @error('password_confirmation')
                                         <span class="text-danger">{{ $message }}</span>

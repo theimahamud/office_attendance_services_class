@@ -1,5 +1,8 @@
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('assets/admin/plugins/jquery/jquery.min.js') }}"></script>
+{{--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--}}
+{{--datatables--}}
+<script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- SweetAlert2 -->

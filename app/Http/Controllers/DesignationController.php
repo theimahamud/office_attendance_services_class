@@ -13,7 +13,7 @@ class DesignationController extends Controller
     {
         $this->authorize('view', Designation::class);
 
-        $designations = Designation::orderBy('created_at', 'DESC')->paginate(5);
+        $designations = Designation::orderBy('created_at', 'DESC')->get();
 
         return view('designations.index', compact('designations'));
     }

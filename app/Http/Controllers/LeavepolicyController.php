@@ -20,7 +20,7 @@ class LeavepolicyController extends Controller
     {
         $this->authorize('view', User::class);
 
-        $leavePolicies = Leavepolicy::orderBy('created_at', 'DESC')->paginate(5);
+        $leavePolicies = Leavepolicy::orderBy('created_at', 'DESC')->get();
 
         return view('leave-policy.index', compact('leavePolicies'));
     }

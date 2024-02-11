@@ -23,7 +23,7 @@ class UserController extends Controller
         $this->authorize('view', User::class);
         $departments = Department::orderBy('title')->get();
         $designations = Designation::orderBy('title')->get();
-        $users = User::with(['department', 'designation'])->orderBy('created_at', 'DESC')->paginate(10);
+        $users = User::with(['department', 'designation'])->orderBy('created_at', 'DESC')->get();
 
         return view('users.index', compact('users','designations','departments'));
     }

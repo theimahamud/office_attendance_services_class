@@ -16,16 +16,11 @@ class PasswordController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
+
         $validator = Validator::make($request->all(), [
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
-
-        if ($validator->fails()) {
-            $validator->errors()->add('current_password', 'The provided current password is incorrect.');
-
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
 
         $validated = $validator->validated();
 

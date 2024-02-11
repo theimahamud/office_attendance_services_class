@@ -24,7 +24,7 @@ class LeaveRequestController extends Controller
 
         $authUser = auth()->user();
 
-        $leaveRequest = LeaveRequest::with(['user', 'referredBy', 'leavePolicy'])->orderBy('created_at', 'DESC')->paginate(5);
+        $leaveRequest = LeaveRequest::with(['user', 'referredBy', 'leavePolicy'])->orderBy('created_at', 'DESC')->get();
 
         return view('leave-requests.index', compact('leaveRequest'));
     }

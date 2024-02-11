@@ -41,9 +41,9 @@ class LeaveRequestService
 
     public function destroyLeaveRequest(LeaveRequest $leaveRequest)
     {
-            $leaveRequest->update([
-                'deleted_at'=>now(),
-                'deleted_by'=> Auth::user()->id
-            ]);
+        $leaveRequest->update([
+            'deleted_at' => now(),
+            'deleted_by' => Auth::user()->id,
+        ]);
     }
 }

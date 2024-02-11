@@ -18,7 +18,7 @@ class HolidayController extends Controller
     {
         $this->authorize('view', User::class);
 
-        $holidays = Holiday::orderBy('created_at', 'DESC')->paginate(5);
+        $holidays = Holiday::orderBy('created_at', 'DESC')->get();
 
         return view('holiday.index', compact('holidays'));
     }

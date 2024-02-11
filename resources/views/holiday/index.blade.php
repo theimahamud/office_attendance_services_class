@@ -49,14 +49,8 @@
                         @else
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        <div  class="dataTables_filter "><label>Search:<input
-                                                    type="search" class="form-control form-control-sm"></label></div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-sm-12 table-responsive">
-                                        <table class="table table-bordered table-striped">
+                                        <table class="table table-bordered table-striped" id="datatables">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -89,11 +83,6 @@
                                             @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12">
-                                        {{ $holidays->links() }}
                                     </div>
                                 </div>
                             </div>
