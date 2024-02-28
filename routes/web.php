@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('yearly-leave',[LeavepolicyController::class,'yearlyLeave'])->name('yearly-leave');
     Route::get('all-attendance',[AttendanceController::class,'allAttendance'])->name('all-attendance');
     Route::get('my-attendance',[AttendanceController::class,'myAttendance'])->name('my-attendance');
+    Route::post('all-absent-present-attendance',[AttendanceController::class,'allAbsentPresentAttendance'])->name('all-absent-present-attendance');
+    Route::post('individual-attendance-update',[AttendanceController::class,'individualAttendance'])->name('individual-attendance-update');
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

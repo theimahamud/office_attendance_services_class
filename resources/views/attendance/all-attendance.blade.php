@@ -33,19 +33,15 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ route(isset($department->id) ? 'departments.update' : 'departments.store', $department->id ?? '') }}" method="post">
+                            <form action="{{ route('all-absent-present-attendance') }}" method="post">
                                 @csrf
-                                @if(isset($department->id))
-                                    @method('PUT')
-                                @endif
-
                                 <div class="card-body">
                                     <div class="row justify-content-center align-items-center text-center">
                                         <div class="col-md-4">
                                             <!-- radio -->
                                             <div class="form-group clearfix">
                                                 <div class="d-inline">
-                                                    <input type="text" class="form-control datepicker" id="date" name="date" placeholder="Attendance date">
+                                                    <input required type="text" class="form-control datepicker" id="date" name="check_in_out_date" placeholder="Attendance date" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
@@ -53,7 +49,7 @@
                                             <!-- radio -->
                                             <div class="form-group clearfix">
                                                 <div class="icheck-success d-inline">
-                                                    <input type="radio" id="present" name="r1" checked="">
+                                                    <input type="radio" id="present" name="status" value="Present" checked="">
                                                     <label for="present">
                                                     </label>
                                                 </div>
@@ -65,7 +61,7 @@
                                             </div>
                                             <div class="form-group clearfix">
                                                 <div class="icheck-danger d-inline">
-                                                    <input type="radio" id="absent" name="r1">
+                                                    <input type="radio" id="absent" name="status" value="Absent">
                                                     <label for="absent">
                                                     </label>
                                                 </div>
@@ -96,7 +92,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="" method="post">
+                            <form action="{{ route('individual-attendance-update') }}" method="post">
                                 @csrf
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -109,34 +105,39 @@
                                                 <th>Status</th>
                                             </tr>
                                             <tbody>
+                                            @foreach($absent_attendance as $absent)
+                                                <input type="hidden" name="attendance_id[]" value="{{$absent->id}}">
                                             <tr>
                                                 <td>
                                                     <div class="d-flex align-items-center align-content-center">
                                                         <div class="profile_img">
-                                                            <img src="{{ asset('assets/admin/dist/img/profile.png') }}" alt="">
+                                                            @if($absent->user->image_url)
+                                                               <img src="{{ asset($absent->user->image_url) }}" alt="">
+                                                            @endif
                                                         </div>
                                                         <div class="ml-2">
-                                                            Rubel
+                                                            {{ $absent->user->name }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="date" class="form-control datepicker" placeholder="Choose date">
+                                                    <input type="text" name="check_in_out_date[]" class="form-control datepicker" value="{{ $absent->check_in_out_date }}" placeholder="Choose date">
                                                 </td>
                                                 <td>
-                                                    <input type="time" name="check_in"  class="form-control" placeholder="Choose check in">
+                                                    <input type="time" name="check_in[]"  class="form-control" value="{{ $absent->check_in }}" placeholder="Choose check in">
                                                 </td>
                                                 <td>
-                                                    <input type="time" name="check_out" class="form-control" placeholder="Choose check out">
+                                                    <input type="time" name="check_out[]" class="form-control" value="{{ $absent->check_out }}" placeholder="Choose check out">
                                                 </td>
                                                 <td>
-                                                    <select name="status" id="status" class="form-control">
+                                                    <select name="status[]" id="status" class="form-control">
                                                         @foreach(\App\Constants\AttendanceStatus::ATTENDANCE_STATUS as $attendance_status )
-                                                            <option value="{{ $attendance_status }}">{{ $attendance_status }}</option>
+                                                            <option {{ $absent->status == $attendance_status ? 'selected':''  }} value="{{ $attendance_status }}">{{ $attendance_status }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                         <div class="">
@@ -162,40 +163,46 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <tr>
-                                            <th>Profile</th>
-                                            <th>Date</th>
-                                            <th>CheckIn</th>
-                                            <th>CheckOut</th>
-                                            <th>Status</th>
-                                        </tr>
+                                <div class="col-sm-12 table-responsive">
+                                    <table class="table table-bordered table-striped" id="datatables">
+                                       <thead>
+                                       <tr>
+                                           <th>Profile</th>
+                                           <th>Date</th>
+                                           <th>CheckIn</th>
+                                           <th>CheckOut</th>
+                                           <th>Status</th>
+                                       </tr>
+                                       </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center align-content-center">
-                                                    <div class="profile_img">
-                                                        <img src="{{ asset('assets/admin/dist/img/profile.png') }}" alt="">
+                                        @foreach($present_attendance as $present)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center align-content-center">
+                                                        <div class="profile_img">
+                                                            @if($present->user->image_url)
+                                                                <img src="{{ asset($present->user->image_url) }}" alt="">
+                                                            @endif
+                                                        </div>
+                                                        <div class="ml-2">
+                                                            {{ $present->user->name ?? ''  }}
+                                                        </div>
                                                     </div>
-                                                    <div class="ml-2">
-                                                        Rubel
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                02-03-2024
-                                            </td>
-                                            <td>
-                                                02-03-2024
-                                            </td>
-                                            <td>
-                                                02-03-2024
-                                            </td>
-                                            <td>
-                                                Present
-                                            </td>
-                                        </tr>
+                                                </td>
+                                                <td>
+                                                    {{ $present->check_in_out_date ?? '' }}
+                                                </td>
+                                                <td>
+                                                    {{ $present->check_in ?? '' }}
+                                                </td>
+                                                <td>
+                                                    {{ $present->check_out ?? '' }}
+                                                </td>
+                                                <td>
+                                                    {{ $present->status ?? '' }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
