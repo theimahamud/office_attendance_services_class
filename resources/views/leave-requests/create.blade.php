@@ -78,6 +78,7 @@
                                                 @error('end_date')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
+                                                <span id="dateValidationError" class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -134,7 +135,7 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit
+                                    <button type="submit" class="btn btn-primary" id="submitButton"><i class="fas fa-check"></i> Submit
                                     </button>
                                     <a href="{{ url()->previous() }}" class="btn btn-info"><i
                                             class="fas fa-arrow-left"></i> Back</a>
@@ -154,5 +155,23 @@
 @section('script')
 
     @include('layouts.assets.image-upload-preview-script')
+
+    <script>
+        $(document).ready(function () {
+            $('#start_date, #end_date').change(function () {
+                var startDate = new Date($('#start_date').val());
+                var endDate = new Date($('#end_date').val());
+
+                // Check if end date is before start date
+                if (endDate < startDate) {
+                    $('#dateValidationError').text('End date must be after start date.');
+                    $('#submitButton').prop('disabled', true); // Disable submit button
+                } else {
+                    $('#dateValidationError').text('');
+                    $('#submitButton').prop('disabled', false); // Enable submit button
+                }
+            });
+        });
+    </script>
 
 @endsection

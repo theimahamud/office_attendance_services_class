@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\LeaveRequest;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -26,9 +27,14 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $currentUser = Auth::user();
+            $unreadNotifications = [];
 
-            $view->with('currentUser', $currentUser);
+            // Check if there is an authenticated user
+            if ($currentUser) {
+                $unreadNotifications = $currentUser->unreadNotifications;
+            }
+
+            $view->with(['currentUser' => $currentUser, 'unreadNotifications' => $unreadNotifications]);
         });
-
     }
 }

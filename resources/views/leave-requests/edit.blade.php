@@ -81,6 +81,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @isset($leaveRequest->referred_by)
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="form-group">
@@ -89,8 +90,7 @@
                                                             id="referred_by">
                                                         <option value="" selected disabled>Select One</option>
                                                         @foreach($users as $user)
-                                                            <option
-                                                                {{ old('referred_by',$leaveRequest->referred_by) == $user->id ? 'selected':'' }} value="{{ $user->id }}">{{ $user->name }}</option>
+                                                            <option {{ $leaveRequest->referred_by !=$user->id ? 'disabled': ''   }} {{ old('referred_by',$leaveRequest->referred_by) == $user->id ? 'selected':'' }} value="{{ $user->id }}">{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('referred_by')
@@ -99,6 +99,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endisset
 
                                         @if(auth()->user()->isAdmin())
                                             <div class="col-md-6">
@@ -109,7 +110,7 @@
                                                                 id="user_id">
                                                             <option value="" selected disabled>Select One</option>
                                                             @foreach($users as $user)
-                                                                <option
+                                                                <option {{ $leaveRequest->user_id !=$user->id ? 'disabled': ''   }}
                                                                     {{ old('user_id',$leaveRequest->user_id) == $user->id ? 'selected':'' }} value="{{ $user->id }}">{{ $user->name }}</option>
                                                             @endforeach
                                                         </select>

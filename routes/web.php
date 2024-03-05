@@ -28,6 +28,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+//Route::get('/mail',function (){
+//    return view('emails.leave-request-send');
+//});
+
 Route::middleware('auth')->group(function () {
 
     Route::resource('users', UserController::class);
@@ -42,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('my-attendance',[AttendanceController::class,'myAttendance'])->name('my-attendance');
     Route::post('all-absent-present-attendance',[AttendanceController::class,'allAbsentPresentAttendance'])->name('all-absent-present-attendance');
     Route::post('individual-attendance-update',[AttendanceController::class,'individualAttendance'])->name('individual-attendance-update');
+
+    Route::get('see-all-notification',[DashboardController::class,'seeAllNotification'])->name('see-all-notification');
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

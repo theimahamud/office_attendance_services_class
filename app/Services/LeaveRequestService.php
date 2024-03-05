@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Leavepolicy;
 use App\Models\leaveRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,5 +47,26 @@ class LeaveRequestService
             'deleted_at' => now(),
             'deleted_by' => Auth::user()->id,
         ]);
+    }
+
+    public function getEmailData($data)
+    {
+        $user = User::where('id',$data->user_id)->first();
+        $leave_policy = Leavepolicy::where('id',$data->leave_policy_id)->first();
+        $referred_user = User::where('id',$data->referred_by)->first();
+
+        $data = [
+            'id' => $data->id,
+            'name' => $user->name,
+            'leave_policy_name' => $leave_policy->title,
+            'leave_reason' => $data->leave_reason,
+            'start_date' => $data->start_date,
+            'end_date' => $data->end_date,
+            'days' => $data->days,
+            'referred_by' => $referred_user->name,
+            'view_request_link' => route('leave-request.edit',$data->id)
+        ];
+
+        return $data;
     }
 }

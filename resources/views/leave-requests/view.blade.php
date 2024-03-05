@@ -60,7 +60,7 @@
 
                                         <tr>
                                             <th>End Date</th>
-                                            <td>{{ $leaveRequest->start_date ? getDateFormat($leaveRequest->start_date) : '' }}</td>
+                                            <td>{{ $leaveRequest->end_date ? getDateFormat($leaveRequest->end_date) : '' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Days</th>

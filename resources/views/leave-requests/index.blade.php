@@ -73,8 +73,8 @@
                                                             {{ $leave_request->status ?? '' }}
                                                         </span>
                                                     </td>
-                                                    <td>{{ $leave_request->leave_reason ?? '' }}</td>
-                                                    <td>{{ $leave_request->comment ?? '' }}</td>
+                                                    <td>{{ \Illuminate\Support\Str::limit($leave_request->leave_reason,30) ?? '' }}</td>
+                                                    <td>{{ \Illuminate\Support\Str::limit($leave_request->comment,30) ?? '' }}</td>
                                                     <td>
                                                         @if(auth()->user()->role === \App\Constants\Role::ADMIN || (auth()->user()->role === \App\Constants\Role::USER && ($leave_request->status !== \App\Constants\LeaveStatus::APPROVED && $leave_request->status !== \App\Constants\LeaveStatus::REJECTED)))
                                                             <a href="{{ route('leave-request.edit', $leave_request->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

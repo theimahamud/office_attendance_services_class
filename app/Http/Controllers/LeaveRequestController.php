@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Constants\Role;
 use App\Http\Requests\StoreleaveRequestRequest;
 use App\Http\Requests\UpdateleaveRequestRequest;
+use App\Mail\LeaveRequestSend;
 use App\Models\Leavepolicy;
 use App\Models\LeaveRequest;
 use App\Models\User;
+use App\Notifications\LeaveRequestSendNotification;
 use App\Services\LeaveRequestService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class LeaveRequestController extends Controller
@@ -66,7 +69,15 @@ class LeaveRequestController extends Controller
 
         $result = $leaveRequestService->storeLeaveRequest($validated);
 
+        $data = (object)$leaveRequestService->getEmailData($result);
+
         if ($result) {
+//             Mail::to(config('mail.admin_email'))->send(new LeaveRequestSend($data));  //This code is for email send
+
+            $user = User::where('role',Role::ADMIN)->first();
+
+            $user->notify(new LeaveRequestSendNotification($data));
+
             Session::flash('success', 'Leave policy created successfully');
 
             return redirect()->back();
@@ -90,6 +101,14 @@ class LeaveRequestController extends Controller
         $current_date = Carbon::now()->format('m/d/y');
 
         $yearlyLeave = Leavepolicy::orderBy('created_at','DESC')->get();
+
+        $unreadMessage = auth()->user()->unreadNotifications;
+
+        foreach ($unreadMessage as $notification) {
+            if (isset($notification->data['leave_request_id']) && $notification->data['leave_request_id'] === $leaveRequest->id) {
+                $notification->markAsRead();
+            }
+        }
 
         return view('leave-requests.view', compact('leaveRequest','current_date','yearlyLeave'));
     }
