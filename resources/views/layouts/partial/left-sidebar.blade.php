@@ -101,12 +101,12 @@
                            class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-snowflake"></i>
                             <p>
-                                Holiday
+                                Holiday Notice
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @foreach(['holiday.index' => 'Holiday List', 'holiday.create' => 'Holiday Create'] as $route => $label)
+                            @foreach(['holiday.index' => 'Notice List', 'holiday.create' => 'Notice Create'] as $route => $label)
                                 <li class="nav-item">
                                     <a href="{{ route($route) }}"
                                        class="nav-link {{ $current_route == $route ? 'active' : '' }}">
@@ -230,6 +230,16 @@
                             </li>
                         @endforeach
                     </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('see-all-notification') }}" class="nav-link">
+                        <i class="nav-icon fas fa-envelope"></i>
+                        <p>
+                            Notifications
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
                 </li>
                 {{-- attendance section end --}}
             </ul>

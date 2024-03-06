@@ -17,20 +17,6 @@
                         </ol>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -50,7 +36,7 @@
                                 @method('PUT')
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="title">Title <span class="text-danger">*</span></label>
@@ -61,27 +47,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for="start_date">Start date <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control datepicker" name="start_date" value="{{ old('start_date',$holiday->start_date) }}" id="start_date" autocomplete="off" placeholder="Start date">
-                                                    @error('start_date')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="end_date">End Date <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control datepicker" name="end_date" value="{{ old('end_date',$holiday->end_date) }}" id="end_date" autocomplete="off" placeholder="End Date">
-                                                @error('end_date')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="status">Status</label>
                                                 <select class="form-control select2" name="status" id="status">
@@ -93,16 +59,36 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="start_date">Start date <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control datepicker" name="start_date" value="{{ old('start_date',$holiday->start_date) }}" id="start_date" autocomplete="off" placeholder="Start date">
+                                                    @error('start_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="end_date">End Date <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control datepicker" name="end_date" value="{{ old('end_date',$holiday->end_date) }}" id="end_date" autocomplete="off" placeholder="End Date">
+                                                @error('end_date')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="description">Description <span class="text-danger">*</span></label>
-                                                <textarea class="form-control" name="description" id="description" cols="30" rows="2">{{ old('description',$holiday->description) }}</textarea>
+                                                <textarea class="form-control" name="description" id="description" cols="30" rows="3">{{ old('description',$holiday->description) }}</textarea>
                                                 @error('description')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="image">Image</label>
                                                 <div class="input-group">

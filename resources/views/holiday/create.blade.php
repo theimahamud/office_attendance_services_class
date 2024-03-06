@@ -17,20 +17,6 @@
                         </ol>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {!! session('success') !!}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {!! session('error') !!}
-                            </div>
-                        @endif
-                    </div>
-                </div>
             </div><!-- /.container-fluid -->
         </section>
 
@@ -49,7 +35,7 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="title">Title <span class="text-danger">*</span></label>
@@ -60,27 +46,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for="start_date">Start date <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control datepicker" name="start_date" value="{{ old('start_date') }}" id="start_date" autocomplete="off" placeholder="Start date">
-                                                    @error('start_date')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="end_date">End Date <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control datepicker" name="end_date" value="{{ old('end_date') }}" id="end_date" autocomplete="off" placeholder="End Date">
-                                                @error('end_date')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="status">Status</label>
                                                 <select class="form-control select2" name="status" id="status">
@@ -92,16 +58,37 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="start_date">Start date <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control datepicker" name="start_date" value="{{ old('start_date') }}" id="start_date" autocomplete="off" placeholder="Start date">
+                                                    @error('start_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="end_date">End Date <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control datepicker" name="end_date" value="{{ old('end_date') }}" id="end_date" autocomplete="off" placeholder="End Date">
+                                                @error('end_date')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <span id="dateValidationError" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="description">Description <span class="text-danger">*</span></label>
-                                                <textarea class="form-control" name="description" id="description" cols="30" rows="2">{{ old('description') }}</textarea>
+                                                <textarea class="form-control" name="description" id="description" cols="30" rows="3">{{ old('description') }}</textarea>
                                                 @error('description')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="image">Image</label>
                                                 <div class="input-group">
@@ -110,16 +97,16 @@
                                                         <label class="custom-file-label" for="image">Choose file</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="preview_image">
-                                                <img class="image-preview" src="{{ old('image', asset(\App\Models\Holiday::PLACEHOLDER_IMAGE_PATH)) }}" alt="image">
+                                                <div class="preview_image">
+                                                    <img class="image-preview" src="{{ old('image', asset(\App\Models\Holiday::PLACEHOLDER_IMAGE_PATH)) }}" alt="image">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Submit</button>
+                                    <button type="submit" class="btn btn-primary" id="submitButton"><i class="fas fa-check"></i> Submit</button>
                                     <a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Back</a>
                                 </div>
                             </form>
@@ -137,5 +124,23 @@
 @section('script')
 
     @include('layouts.assets.image-upload-preview-script')
+
+    <script>
+        $(document).ready(function () {
+            $('#start_date, #end_date').change(function () {
+                var startDate = new Date($('#start_date').val());
+                var endDate = new Date($('#end_date').val());
+
+                // Check if end date is before start date
+                if (endDate < startDate) {
+                    $('#dateValidationError').text('End date must be after start date.');
+                    $('#submitButton').prop('disabled', true); // Disable submit button
+                } else {
+                    $('#dateValidationError').text('');
+                    $('#submitButton').prop('disabled', false); // Enable submit button
+                }
+            });
+        });
+    </script>
 
 @endsection

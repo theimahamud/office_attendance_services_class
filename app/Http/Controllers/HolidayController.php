@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Status;
 use App\Http\Requests\StoreHolidayRequest;
 use App\Http\Requests\UpdateHolidayRequest;
+use App\Jobs\HolidayNoticeJob;
 use App\Models\Holiday;
 use App\Models\User;
+use App\Notifications\HolidayNoticeNotificationCreate;
 use App\Services\HoliDayService;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class HolidayController extends Controller
@@ -45,6 +49,11 @@ class HolidayController extends Controller
         $result = $holiDayService->storeHoliday($validated, $request->hasFile('image') ? $request->file('image') : null);
 
         if ($result) {
+
+            if($request->status === Status::PUBLISHED){
+                HolidayNoticeJob::dispatch($result);
+            }
+
             Session::flash('success', 'Holiday created successfully');
 
             return redirect()->back();
@@ -62,6 +71,14 @@ class HolidayController extends Controller
     public function show(Holiday $holiday)
     {
         $this->authorize('view', $holiday);
+
+        $unreadMessage = auth()->user()->unreadNotifications;
+
+        foreach ($unreadMessage as $notification) {
+            if (isset($notification->data['holiday_notice_id']) && $notification->data['holiday_notice_id'] === $holiday->id) {
+                $notification->markAsRead();
+            }
+        }
 
         return view('holiday.view', compact('holiday'));
     }
@@ -88,6 +105,11 @@ class HolidayController extends Controller
         $result = $holiDayService->updateHoliday($validated, $holiday, $request->hasFile('image') ? $request->file('image') : null);
 
         if ($result) {
+
+            if($request->status === Status::PUBLISHED){
+                HolidayNoticeJob::dispatch($result);
+            }
+
             Session::flash('success', 'Holiday updated successfully');
 
             return redirect()->back();

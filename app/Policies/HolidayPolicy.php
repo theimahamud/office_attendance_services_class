@@ -21,7 +21,7 @@ class HolidayPolicy
      */
     public function view(User $user): bool
     {
-        return $user->role === Role::ADMIN;
+        return $user->role === Role::ADMIN || $user->role === Role::USER;
     }
 
     /**

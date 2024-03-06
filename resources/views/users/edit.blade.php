@@ -288,7 +288,7 @@
                                                         <label class="custom-file-label" for="image">Choose file</label>
                                                     </div>
                                                 </div>
-                                                <div class="preview_image">
+                                                <div class="preview_image text-center">
                                                     @if($user->image_url)
                                                         <img class="image-preview" src="{{ asset($user->image_url) }}"  alt="image">
                                                     @endif

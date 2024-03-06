@@ -9,6 +9,7 @@ use App\Http\Controllers\LeavepolicyController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +27,21 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/xclean', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:cache');
+    dd('CACHE-CLEARED, VIEW-CLEARED,ROUTE-CLEARED & CONFIG-CACHED WAS SUCCESSFUL!');
+});
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 //Route::get('/mail',function (){
 //    return view('emails.leave-request-send');
 //});
+
 
 Route::middleware('auth')->group(function () {
 

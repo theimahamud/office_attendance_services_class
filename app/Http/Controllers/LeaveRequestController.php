@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\LeaveStatus;
 use App\Constants\Role;
+use App\Constants\Status;
 use App\Http\Requests\StoreleaveRequestRequest;
 use App\Http\Requests\UpdateleaveRequestRequest;
 use App\Mail\LeaveRequestSend;
 use App\Models\Leavepolicy;
 use App\Models\LeaveRequest;
 use App\Models\User;
+use App\Notifications\LeaveRequestApprovedRejectedNotification;
 use App\Notifications\LeaveRequestSendNotification;
 use App\Services\LeaveRequestService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class LeaveRequestController extends Controller
@@ -69,14 +73,16 @@ class LeaveRequestController extends Controller
 
         $result = $leaveRequestService->storeLeaveRequest($validated);
 
-        $data = (object)$leaveRequestService->getEmailData($result);
-
         if ($result) {
-//             Mail::to(config('mail.admin_email'))->send(new LeaveRequestSend($data));  //This code is for email send
 
-            $user = User::where('role',Role::ADMIN)->first();
+            // Mail::to(config('mail.admin_email'))->send(new LeaveRequestSend($data));  //This code is for email send
+            //$data = (object)$leaveRequestService->getEmailData($result);
 
-            $user->notify(new LeaveRequestSendNotification($data));
+            $leave_request_data = $result->load('user','leavePolicy','referredBy');
+
+            $users = User::where('role',Role::ADMIN)->get();
+
+            Notification::send($users,new LeaveRequestSendNotification($leave_request_data));
 
             Session::flash('success', 'Leave policy created successfully');
 
@@ -139,6 +145,15 @@ class LeaveRequestController extends Controller
         $result = $leaveRequestService->updateLeaveRequest($validated, $leaveRequest);
 
         if ($result) {
+
+            if($request->status === LeaveStatus::APPROVED || $request->status === LeaveStatus::REJECTED){
+
+                $leave_request_data = $leaveRequest->load('user','leavePolicy','referredBy');
+
+                $leave_request_data->user->notify(new LeaveRequestApprovedRejectedNotification($leave_request_data));
+
+            }
+
             Session::flash('success', 'Leave policy updated successfully');
 
             return redirect()->back();

@@ -49,9 +49,20 @@
                                                     <td>
                                                         @if(isset($notification->data['message']) && $notification->data['message'] == 'leave_request_send')
                                                             Leave Request from {{ $notification->data['name'] ?? '' }}
-                                                        @elseif(isset($notification->data['message']) && $notification->data['message'] == 'notice_for_all')
+                                                        @endif
+
+                                                        @if(isset($notification->data['status']) && $notification->data['status'] == \App\Constants\LeaveStatus::APPROVED)
+                                                            Leave Request  {{ $notification->data['status'] ?? '' }}
+                                                        @endif
+
+                                                        @if(isset($notification->data['status']) && $notification->data['status'] == \App\Constants\LeaveStatus::REJECTED)
+                                                            Leave Request  {{ $notification->data['status'] ?? '' }}
+                                                        @endif
+
+                                                        @if(isset($notification->data['message']) && $notification->data['message'] == 'notice_for_all')
                                                             Notice for all
-                                                        @endif</td>
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $notification->created_at }}</td>
                                                 </tr>
                                             @endforeach

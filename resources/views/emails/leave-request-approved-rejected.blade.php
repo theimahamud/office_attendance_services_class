@@ -50,12 +50,12 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>Application For Leave</h1>
+        <h1>Leave request {{ $data->status }}</h1>
     </div>
     <div class="content">
-        <p>Dear HR,</p>
-        @isset($data->user->name)
-            <p>You have received a leave request from <strong>{{ $data->user->name }}</strong>:</p>
+        <p>Dear {{ $data->user->name }},</p>
+        @isset($data->status)
+            <p>Your leave request has been <strong>{{ $data->status }}</strong></p>
         @endisset
         <ul>
             @isset($data->leavePolicy->name)
@@ -76,10 +76,12 @@
             @isset($data->leave_reason)
                 <li>Leave Reason: <strong>{{ $data->leave_reason }}</strong></li>
             @endisset
+                @isset($data->comment)
+                    <li>Comment By Admin: <strong>{{ $data->comment }}</strong></li>
+                @endisset
         </ul>
-        <p>Please review the request and take necessary action.</p>
         @isset($data->id)
-            <a href="{{ route('leave-request.show',$data->id) }}" class="button">View Request</a>
+            <a href="{{ route('leave-request.show',$data->id) }}" class="button">View details</a>
         @endisset
     </div>
 </div>

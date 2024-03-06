@@ -8,15 +8,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LeaveRequestSendNotification extends Notification
+class LeaveRequestApprovedRejectedNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-
-    public $data;
+    public  $data;
 
     public function __construct(LeaveRequest $leaveRequest)
     {
@@ -38,12 +37,10 @@ class LeaveRequestSendNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->view('emails.leave-request-send',['data'=>$this->data])->subject('Application For Leave');
-//                    ->greeting("Hello, {$notifiable->name}")
-//                    ->subject('Application For Leave')
-//                    ->line("You have received a leave request from {$this->data->name}.")
-//                    ->action('View request', route('leave-request.show',$this->data->id));
-
+        return (new MailMessage)->view('emails.leave-request-approved-rejected',['data'=>$this->data])->subject("Leave Request {$this->data->status}");
+//                    ->line('The introduction to the notification.')
+//                    ->action('Notification Action', url('/'))
+//                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -54,10 +51,10 @@ class LeaveRequestSendNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'leave_request_id'=>$this->data->id,
-            'message'=>'leave_request_send',
-            'name'=>$this->data->user->name,
-            'link'=>route('leave-request.show',$this->data->id),
+            'leave_request_id' => $this->data->id,
+            'link' => route('leave-request.show',$this->data->id),
+            'message' => 'leave_request_approved_rejected',
+            'status' => $this->data->status
         ];
     }
 }

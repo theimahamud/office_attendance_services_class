@@ -45,11 +45,23 @@
                 @foreach($unreadNotifications->take(5) as $notify)
                     <a href="{{ isset($notify->data['link']) ? $notify->data['link'] : '#' }}" class="dropdown-item">
                         <i class="fas fa-envelope mr-2"></i>
+
                         @if(isset($notify->data['message']) && $notify->data['message'] === 'leave_request_send')
                             Leave Request from {{ $notify->data['name'] ?? '' }}
-                        @elseif(isset($notify->data['message']) && $notify->data['message'] === 'notice_for_all')
-                            Notice for all
                         @endif
+
+                        @if(isset($notify->data['status']) && $notify->data['status'] == \App\Constants\LeaveStatus::APPROVED)
+                            Your leave request approved
+                        @endif
+
+                        @if(isset($notify->data['status']) && $notify->data['status'] ==  \App\Constants\LeaveStatus::REJECTED)
+                            Your leave request rejected
+                        @endif
+
+                        @if(isset($notify->data['message']) && $notify->data['message'] === 'notice_for_all')
+                            {{ isset($notify->data['title']) ? $notify->data['title'] :'Notice For All' }}
+                        @endif
+
                         <span class="float-right text-muted text-sm">{{ isset($notify->created_at) ? $notify->created_at->diffForHumans() : '' }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
