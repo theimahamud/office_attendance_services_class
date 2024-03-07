@@ -11,6 +11,10 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <!-- Select2 -->
 <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
+
+{{--tom select--}}
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
 <!-- overlayScrollbars -->
 <script src="{{ asset('assets/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 {{--date picker--}}

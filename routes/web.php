@@ -8,6 +8,7 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\LeavepolicyController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::post('individual-attendance-update',[AttendanceController::class,'individualAttendance'])->name('individual-attendance-update');
 
     Route::get('see-all-notification',[DashboardController::class,'seeAllNotification'])->name('see-all-notification');
+    Route::get('settings',[SettingsController::class,'index'])->name('settings.index');
+    Route::post('settings/store',[SettingsController::class,'store'])->name('settings.store');
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
