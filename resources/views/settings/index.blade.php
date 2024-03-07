@@ -107,14 +107,18 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="working_days">Working Days</label>
                                                     <select class="form-control select2" multiple name="working_days[]" id="working_days">
                                                         <option value="" disabled>Select One</option>
+                                                        @php
+                                                            $workingDaysSetting = unserialize(App\Models\Settings::get('working_days'));
+                                                        @endphp
                                                         @foreach(\App\Constants\WorkingDays::WORKINGDAYS as $working_days)
-                                                        <option {{ in_array($working_days,unserialize(App\Models\Settings::get('working_days'))) ? 'selected' : '' }} value="{{ $working_days }}">{{ ucwords($working_days) }}</option>
+                                                            <option {{ $workingDaysSetting && in_array($working_days, $workingDaysSetting) ? 'selected' : '' }} value="{{ $working_days }}">{{ ucwords($working_days) }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('working_days')
@@ -133,7 +137,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="preview_image">
-                                                    <img class="image-preview" src="{{ old('logo', asset(\App\Models\Holiday::PLACEHOLDER_IMAGE_PATH)) }}" alt="image">
+                                                    <img  class="image-preview" src="{{ asset(\App\Models\Settings::where('key','logo')->first()->getFirstMediaUrl('company_logo') ?? \App\Models\Settings::PLACEHOLDER_IMAGE_PATH) }}" alt="logo">
                                                 </div>
                                             </div>
                                         </div>

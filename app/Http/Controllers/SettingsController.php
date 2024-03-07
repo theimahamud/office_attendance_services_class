@@ -14,6 +14,7 @@ class SettingsController extends Controller
 
     public function store(Request $request)
     {
+
         Settings::set('title',$request->get('title'));
         Settings::set('company_email',$request->get('company_email'));
         Settings::set('check_in',$request->get('check_in'));
@@ -21,6 +22,14 @@ class SettingsController extends Controller
         Settings::set('grace_time',$request->get('grace_time'));
         Settings::set('ip_address',serialize($request->get('ip_address')));
         Settings::set('working_days',serialize($request->get('working_days')));
+
+        // Save logo using Spatie Media Library
+        if ($request->hasFile('logo')) {
+            $logo = Settings::set('logo', $request->get('logo')); // Save the path to the logo in the settings
+            $logo->clearMediaCollection('company_logo');
+            $logo->addMedia($request->file('logo'))->toMediaCollection('company_logo'); // Add the logo to media collection
+        }
+
         return redirect()->route('settings.index')->with('success','Settings has been updated successfully');
     }
 }

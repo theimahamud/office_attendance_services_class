@@ -51,11 +51,8 @@ class HolidayController extends Controller
         if ($result) {
 
             if($request->status === Status::PUBLISHED){
-
-                $startDate = $validated['start_date'];
-                $dispatchDate = \Carbon\Carbon::parse($startDate)->subHours(12);
                 // Dispatch job
-                HolidayNoticeJob::dispatch($result)->delay($dispatchDate);
+                HolidayNoticeJob::dispatch($result);
             }
 
             Session::flash('success', 'Holiday created successfully');
@@ -111,10 +108,8 @@ class HolidayController extends Controller
         if ($result) {
 
             if($request->status === Status::PUBLISHED){
-                $startDate = $validated['start_date'];
-                $dispatchDate = \Carbon\Carbon::parse($startDate)->subHours(12);
                 // Dispatch job
-                HolidayNoticeJob::dispatch($result)->delay($dispatchDate);
+                HolidayNoticeJob::dispatch($result);
             }
 
             Session::flash('success', 'Holiday updated successfully');
