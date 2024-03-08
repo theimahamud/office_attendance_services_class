@@ -35,6 +35,7 @@ class StoreleaveRequestRequest extends FormRequest
         } else {
             $rules['user_id'] = ['nullable'];
         }
+
         return $rules;
     }
 }

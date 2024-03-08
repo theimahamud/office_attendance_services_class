@@ -25,7 +25,7 @@ class UserController extends Controller
         $designations = Designation::orderBy('title')->get();
         $users = User::with(['department', 'designation'])->orderBy('created_at', 'DESC')->get();
 
-        return view('users.index', compact('users','designations','departments'));
+        return view('users.index', compact('users', 'designations', 'departments'));
     }
 
     /**

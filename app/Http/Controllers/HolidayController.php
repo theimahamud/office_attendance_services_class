@@ -8,9 +8,7 @@ use App\Http\Requests\UpdateHolidayRequest;
 use App\Jobs\HolidayNoticeJob;
 use App\Models\Holiday;
 use App\Models\User;
-use App\Notifications\HolidayNoticeNotificationCreate;
 use App\Services\HoliDayService;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class HolidayController extends Controller
@@ -50,7 +48,7 @@ class HolidayController extends Controller
 
         if ($result) {
 
-            if($request->status === Status::PUBLISHED){
+            if ($request->status === Status::PUBLISHED) {
                 // Dispatch job
                 HolidayNoticeJob::dispatch($result);
             }
@@ -107,7 +105,7 @@ class HolidayController extends Controller
 
         if ($result) {
 
-            if($request->status === Status::PUBLISHED){
+            if ($request->status === Status::PUBLISHED) {
                 // Dispatch job
                 HolidayNoticeJob::dispatch($result);
             }

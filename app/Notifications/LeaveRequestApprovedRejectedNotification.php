@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\LeaveRequest;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,7 +14,7 @@ class LeaveRequestApprovedRejectedNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public  $data;
+    public $data;
 
     public function __construct(LeaveRequest $leaveRequest)
     {
@@ -29,7 +28,7 @@ class LeaveRequestApprovedRejectedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail','database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -37,10 +36,10 @@ class LeaveRequestApprovedRejectedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->view('emails.leave-request-approved-rejected',['data'=>$this->data])->subject("Leave Request {$this->data->status}");
-//                    ->line('The introduction to the notification.')
-//                    ->action('Notification Action', url('/'))
-//                    ->line('Thank you for using our application!');
+        return (new MailMessage)->view('emails.leave-request-approved-rejected', ['data' => $this->data])->subject("Leave Request {$this->data->status}");
+        //                    ->line('The introduction to the notification.')
+        //                    ->action('Notification Action', url('/'))
+        //                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,9 +51,9 @@ class LeaveRequestApprovedRejectedNotification extends Notification
     {
         return [
             'leave_request_id' => $this->data->id,
-            'link' => route('leave-request.show',$this->data->id),
+            'link' => route('leave-request.show', $this->data->id),
             'message' => 'leave_request_approved_rejected',
-            'status' => $this->data->status
+            'status' => $this->data->status,
         ];
     }
 }

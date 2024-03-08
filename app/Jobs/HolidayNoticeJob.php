@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Notification;
 
 class HolidayNoticeJob implements ShouldQueue
 {
@@ -19,7 +18,6 @@ class HolidayNoticeJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-
     public $data;
 
     public function __construct(Holiday $holidayNotice)
@@ -32,19 +30,19 @@ class HolidayNoticeJob implements ShouldQueue
      */
     public function handle(): void
     {
-        try{
+        try {
 
             $users = User::all();
 
-            foreach ($users as $user){
+            foreach ($users as $user) {
 
                 $user->notify(new HolidayNoticeNotificationCreate($this->data));
 
             }
 
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
 
-            \Log::error('Failed to send holiday notice notification: ' . $exception->getMessage());
+            \Log::error('Failed to send holiday notice notification: '.$exception->getMessage());
         }
 
     }

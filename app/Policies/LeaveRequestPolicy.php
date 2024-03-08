@@ -6,7 +6,6 @@ use App\Constants\LeaveStatus;
 use App\Constants\Role;
 use App\Models\LeaveRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class LeaveRequestPolicy
 {
@@ -26,13 +25,12 @@ class LeaveRequestPolicy
         return $user->role === Role::USER;
     }
 
-
     /**
      * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
-        return $user->role === Role::ADMIN || $user->role ===Role::USER;
+        return $user->role === Role::ADMIN || $user->role === Role::USER;
     }
 
     /**

@@ -11,7 +11,7 @@ class Settings extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['key','value'];
+    protected $fillable = ['key', 'value'];
 
     public const PLACEHOLDER_IMAGE_PATH = 'assets/admin/dist/img/placeholder.jpeg';
 
@@ -23,12 +23,12 @@ class Settings extends Model implements HasMedia
     public static function get($key)
     {
         $value = static::where('key', $key)->pluck('value')->first();
-        return $value  ?? null;
+
+        return $value ?? null;
     }
 
-    public static function set($key = null,$value=null)
+    public static function set($key = null, $value = null)
     {
-       return static::updateOrCreate(['key' => $key], ['value' => $value]);
+        return static::updateOrCreate(['key' => $key], ['value' => $value]);
     }
-
 }

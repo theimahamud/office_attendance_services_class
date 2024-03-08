@@ -19,6 +19,9 @@
 <script src="{{ asset('assets/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 {{--date picker--}}
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/admin/dist/js/adminlte.js') }}"></script>
 

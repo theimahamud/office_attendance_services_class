@@ -13,7 +13,6 @@ class HolidayNoticeNotificationCreate extends Notification
     /**
      * Create a new notification instance.
      */
-
     public $data;
 
     public function __construct($holidayNotice)
@@ -28,7 +27,7 @@ class HolidayNoticeNotificationCreate extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail','database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -36,10 +35,10 @@ class HolidayNoticeNotificationCreate extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->view('emails.notice',['data'=>$this->data])->subject($this->data->title);
-//                    ->line('The introduction to the notification.')
-//                    ->action('Notification Action', url('/'))
-//                    ->line('Thank you for using our application!');
+        return (new MailMessage)->view('emails.notice', ['data' => $this->data])->subject($this->data->title);
+        //                    ->line('The introduction to the notification.')
+        //                    ->action('Notification Action', url('/'))
+        //                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -53,7 +52,7 @@ class HolidayNoticeNotificationCreate extends Notification
             'holiday_notice_id' => $this->data->id,
             'message' => 'notice_for_all',
             'title' => $this->data->title,
-            'link' => route('holiday.show',$this->data->id),
+            'link' => route('holiday.show', $this->data->id),
         ];
     }
 }

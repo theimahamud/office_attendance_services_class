@@ -22,8 +22,8 @@ class AttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'check_in_out_date'=>['required'],
-            'status'=>['required']
+            'check_in_out_date' => ['required'],
+            'status' => ['required'],
         ];
     }
 }

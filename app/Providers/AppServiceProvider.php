@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\LeaveRequest;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;

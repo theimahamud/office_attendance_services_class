@@ -2,9 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\LeaveRequest;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -17,7 +15,6 @@ class LeaveRequestSend extends Mailable
     /**
      * Create a new message instance.
      */
-
     public $data;
 
     public function __construct($data)
@@ -42,7 +39,7 @@ class LeaveRequestSend extends Mailable
     {
         return new Content(
             view: 'emails.leave-request-send',
-                 with: ['data' => $this->data],
+            with: ['data' => $this->data],
         );
     }
 

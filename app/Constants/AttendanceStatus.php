@@ -18,5 +18,4 @@ class AttendanceStatus
         self::HOLIDAY,
         self::LEAVE,
     ];
-
 }

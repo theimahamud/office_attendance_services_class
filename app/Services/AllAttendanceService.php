@@ -1,15 +1,12 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\Attendance;
 use App\Models\User;
 
 class AllAttendanceService
 {
-
     public function store(array $data)
     {
         $user_ids = User::pluck('id');
@@ -36,6 +33,4 @@ class AllAttendanceService
             }
         }
     }
-
-
 }

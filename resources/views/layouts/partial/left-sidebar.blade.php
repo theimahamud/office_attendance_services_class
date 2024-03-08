@@ -241,6 +241,37 @@
                     </a>
                 </li>
                 {{-- attendance section end --}}
+
+                    {{-- report section start --}}
+                    @php
+                        $current_route = Illuminate\Support\Facades\Route::currentRouteName();
+                        $routes = ['office.reports','attendance.reports'];
+                    @endphp
+
+                    <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
+                        <a href="javascript:void(0)"
+                           class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>
+                                Reports
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @foreach(['office.reports' => 'Office Report','attendance.reports' => 'Attendance Report'] as $route => $label)
+                                <li class="nav-item">
+                                    <a href="{{ route($route) }}"
+                                       class="nav-link {{ $current_route == $route ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ $label }}</p>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+
+                    {{-- report section end --}}
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
