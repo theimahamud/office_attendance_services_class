@@ -9,7 +9,9 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        return view('settings.index');
+        $logo = Settings::where('key', 'logo')->first();
+        $logoUrl = $logo ? $logo->getFirstMediaUrl('company_logo') : null;
+        return view('settings.index',compact('logoUrl'));
     }
 
     public function store(Request $request)

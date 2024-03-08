@@ -137,7 +137,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="preview_image">
-                                                    <img  class="image-preview" src="{{ asset(\App\Models\Settings::where('key','logo')->first()->getFirstMediaUrl('company_logo') ?? \App\Models\Settings::PLACEHOLDER_IMAGE_PATH) }}" alt="logo">
+                                                    <img class="image-preview" src="{{ asset($logoUrl ?? \App\Models\Settings::PLACEHOLDER_IMAGE_PATH) }}" alt="logo">
                                                 </div>
                                             </div>
                                         </div>
