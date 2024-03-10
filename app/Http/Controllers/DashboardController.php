@@ -15,7 +15,11 @@ class DashboardController extends Controller
         $department = Department::all();
         $designation = Designation::all();
 
-        return view('dashboard', compact('user', 'department', 'designation'));
+        $data = ['labels' => ['On Time','Absent','Late'],
+                 'data' => [25, 30, 15],
+                ];
+
+        return view('dashboard', compact('user', 'department', 'designation','data'));
     }
 
     public function seeAllNotification()

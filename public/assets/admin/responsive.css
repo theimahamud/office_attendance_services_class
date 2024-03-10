@@ -1,0 +1,13 @@
+
+/*1024*/
+@media only screen and (max-width : 1024px) {
+    .check_in_out_time_date {
+        width: 225px!important;
+        height: 85px!important;
+        border-radius: 10px!important;
+        background: grey!important;
+        margin-top: 30px!important;
+        text-align: center!important;
+        margin-left: 14px!important;
+    }
+}

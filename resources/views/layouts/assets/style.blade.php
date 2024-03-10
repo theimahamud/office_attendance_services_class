@@ -36,6 +36,7 @@
 
 <!-- Theme style -->
 <link rel="stylesheet" href="{{ asset('assets/admin/dist/css/adminlte.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/admin/responsive.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/admin/custom.css') }}">
 
 @yield('style')
