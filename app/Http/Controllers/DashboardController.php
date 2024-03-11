@@ -2,33 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AttendanceStatus;
+use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Designation;
+use App\Models\Settings;
 use App\Models\User;
+use App\Services\DashboardService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+
+    public $dashboardService;
+
+    public function __construct()
+    {
+        $this->dashboardService = new DashboardService();
+    }
+
+
+
     public function index()
     {
+        $current_month = Carbon::now()->month;
+        $current_year = Carbon::now()->year;
+        $check_in_time = Settings::get('check_in');
+
         $user = User::all();
         $department = Department::all();
         $designation = Designation::all();
 
-        $data = ['labels' => ['On Time','Absent','Late'],
-                 'data' => [25, 30, 15],
-                ];
+        $on_time = $this->dashboardService->OnTimeAttendance($check_in_time,$current_month,$current_year);
 
-        return view('dashboard', compact('user', 'department', 'designation','data'));
+        $absent = $this->dashboardService->absentAttendance($current_month,$current_year);
+
+        $late = $this->dashboardService->lateAttendance($check_in_time,$current_month,$current_year);
+
+        $total_attendance = $this->dashboardService->totalAttendance($current_month,$current_year);
+
+        $on_time_percentage = ($on_time / $total_attendance) * 100;
+        $absent_percentage = ($absent / $total_attendance) * 100;
+        $late_percentage = ($late / $total_attendance) * 100;
+
+        $chartData = [
+            'labels' => ["On Time({$on_time_percentage}%)", "Absent({$absent_percentage}%)", "Late({$late_percentage}%)"],
+            'data' => [$on_time_percentage, $absent_percentage, $late_percentage]
+        ];
+
+        return view('dashboard', compact('user', 'department', 'designation','chartData','on_time','absent','late'));
     }
 
     public function seeAllNotification()
     {
-
         $notifications = Auth::user()->notifications()->get();
-        //        dd($notifications);
         auth()->user()->unreadNotifications()->update(['read_at' => now()]);
 
         return view('notifications.index', ['notifications' => $notifications]);
     }
+
 }

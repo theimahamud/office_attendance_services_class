@@ -75,19 +75,21 @@
                        </div>
                    </div>
                    <div class="col-md-6 justify-content-center m-auto">
-                       <div class="check_in_out_main">
-                           <div class="status_button d-flex justify-content-around">
-                               <button class="btn btn-success btn-sm ">On Time</button>
-                               <button class="btn btn-danger btn-sm px-2">Absent</button>
-                               <button class="btn btn-warning btn-sm px-3">Late</button>
-                           </div>
-                           <div class="check_in_out_time_date">
-                               <h4 class="check_in_out_date">2024 March 11 MON</h4>
-                               <h2>12:23:22 AM</h2>
-                           </div>
-                           <div class="d-flex justify-content-around pt-3">
-                               <button class="btn btn-success btn-sm">Check In</button>
-                               <button class="btn btn-danger btn-sm">Check Out</button>
+                       <div class="check_in_out_main d-flex justify-content-center align-items-center">
+                           <div>
+                               <div class="status_button d-flex justify-content-around">
+                                   <button class="btn btn-success btn-sm ">On Time ( {{ $on_time }} )</button>
+                                   <button class="btn btn-danger btn-sm mx-2">Absent ( {{ $absent }} )</button>
+                                   <button class="btn btn-warning btn-sm ">Late ( {{ $late }} )</button>
+                               </div>
+                               <div class="check_in_out_time_date">
+                                   <h5 class="check_in_out_date">{{ \Carbon\Carbon::now()->format('Y F d D') }}</h5>
+                                   <h3 id="current_time"></h3>
+                               </div>
+                               <div class="d-flex justify-content-around">
+                                   <button class="btn btn-success btn-sm">Check In</button>
+                                   <button class="btn btn-danger btn-sm">Check Out</button>
+                               </div>
                            </div>
                        </div>
                    </div>
@@ -106,9 +108,9 @@
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: @json($data['labels']),
+                labels: @json($chartData['labels']),
                 datasets: [{
-                    data: @json($data['data']),
+                    data: @json($chartData['data']),
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.7)',  // On Time (Green)
                         'rgba(255, 99, 132, 0.7)',  // Absent (Red)
@@ -123,6 +125,15 @@
                 }]
             },
         });
+
+        function updateTime() {
+            var date = new Date();
+            var formattedTime = date.toLocaleTimeString('en-US', { hour12: true });
+            $('#current_time').text(formattedTime);
+        }
+        // Update the time every second (1000 milliseconds)
+        setInterval(updateTime, 1000);
     </script>
+
 
 @endsection
