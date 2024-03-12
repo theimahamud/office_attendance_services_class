@@ -66,12 +66,10 @@
 
                 <!-- /.row -->
                 <!-- Main row -->
-               <div class="row justify-content-center">
+               <div class="row justify-content-center my-4">
                    <div class="col-md-6">
-                       <div class="">
-                           <div style="width: 60%;  margin: auto;">
-                               <canvas id="doughnutChart"></canvas>
-                           </div>
+                       <div class="attendance_chart">
+                           <canvas id="doughnutChart"></canvas>
                        </div>
                    </div>
                    <div class="col-md-6 justify-content-center m-auto">
@@ -94,6 +92,14 @@
                        </div>
                    </div>
                </div>
+                <div class="row justify-content-center my-4">
+                    <div class="col-md-12">
+                        <div class="calendar-main">
+                            <div id="calendar_event"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
         </section>
@@ -133,6 +139,27 @@
         }
         // Update the time every second (1000 milliseconds)
         setInterval(updateTime, 1000);
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var events = @json($events);
+
+            $('#calendar_event').fullCalendar({
+                // editable:true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: events,
+                selectable: true,
+                selectHelper: true,
+                displayEventTime: false,
+                height: 600, // Set the height as per your requirement
+                aspectRatio: 1.5 // Set the aspect ratio to control the width (width = height * aspectRatio)
+            });
+        });
     </script>
 
 

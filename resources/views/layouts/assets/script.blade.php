@@ -22,6 +22,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/admin/dist/js/adminlte.js') }}"></script>
 

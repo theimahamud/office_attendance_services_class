@@ -6,6 +6,7 @@ use App\Constants\AttendanceStatus;
 use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Designation;
+use App\Models\Holiday;
 use App\Models\Settings;
 use App\Models\User;
 use App\Services\DashboardService;
@@ -26,6 +27,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $events = [];
         $current_month = Carbon::now()->month;
         $current_year = Carbon::now()->year;
         $check_in_time = Settings::get('check_in');
@@ -51,7 +53,14 @@ class DashboardController extends Controller
             'data' => [$on_time_percentage, $absent_percentage, $late_percentage]
         ];
 
-        return view('dashboard', compact('user', 'department', 'designation','chartData','on_time','absent','late'));
+        $holidays = Holiday::all();
+
+        foreach ($holidays as $holiday){
+            $events[]=['title'=>$holiday->title,'start'=>$holiday->start_date,'end'=>Carbon::parse($holiday->end_date)->addDay(1)];
+        }
+
+
+        return view('dashboard', compact('user', 'department', 'designation','chartData','on_time','absent','late','events'));
     }
 
     public function seeAllNotification()

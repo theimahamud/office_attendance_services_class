@@ -52,7 +52,7 @@ body.dark-mode {
 
 
 .check_in_out_main{
-    width: 80%;
+    width: 70%;
     background: pink;
     border-radius: 10px;
     margin: auto;
@@ -69,3 +69,26 @@ body.dark-mode {
     text-align: center;
 }
 
+
+.calendar-main{
+    border: 2px solid black;
+    padding: 0px 15px;
+}
+.fc-day-number{
+    font-weight: 600!important;
+}
+
+.fc-title{
+    font-size: 18px;
+    font-weight: 600;
+    padding: 5px;
+}
+.fc-unthemed td.fc-today {
+    background: tomato!important;
+}
+
+.attendance_chart{
+    width: 70%!important;
+    height: 380px!important;
+    margin: auto;
+}
