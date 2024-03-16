@@ -16,16 +16,8 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
 
-    public $dashboardService;
 
-    public function __construct()
-    {
-        $this->dashboardService = new DashboardService();
-    }
-
-
-
-    public function index()
+    public function index(DashboardService $dashboardService)
     {
         $events = [];
         $current_month = Carbon::now()->month;
@@ -36,13 +28,15 @@ class DashboardController extends Controller
         $department = Department::all();
         $designation = Designation::all();
 
-        $on_time = $this->dashboardService->OnTimeAttendance($check_in_time,$current_month,$current_year);
+        $on_time = $dashboardService->OnTimeAttendance($check_in_time,$current_month,$current_year);
 
-        $absent = $this->dashboardService->absentAttendance($current_month,$current_year);
+        $absent = $dashboardService->absentAttendance($current_month,$current_year);
 
-        $late = $this->dashboardService->lateAttendance($check_in_time,$current_month,$current_year);
+        $late = $dashboardService->lateAttendance($check_in_time,$current_month,$current_year);
 
-        $total_attendance = $this->dashboardService->totalAttendance($current_month,$current_year);
+        $total_attendance = $dashboardService->totalAttendance($current_month,$current_year);
+
+        $today_attendance =$dashboardService->todayAttendance();
 
         $on_time_percentage = ($on_time / $total_attendance) * 100;
         $absent_percentage = ($absent / $total_attendance) * 100;
@@ -53,6 +47,7 @@ class DashboardController extends Controller
             'data' => [$on_time_percentage, $absent_percentage, $late_percentage]
         ];
 
+
         $holidays = Holiday::all();
 
         foreach ($holidays as $holiday){
@@ -60,7 +55,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('dashboard', compact('user', 'department', 'designation','chartData','on_time','absent','late','events'));
+        return view('dashboard', compact('user', 'department', 'designation','chartData','on_time','absent','late','events','today_attendance'));
     }
 
     public function seeAllNotification()

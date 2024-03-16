@@ -9,17 +9,16 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Dashboard</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
@@ -99,13 +98,36 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
+                <div class="row justify-content-center my-4">
+                    <div class="col-md-12">
+                        <div class="today_attendance table-responsive">
+                           <div class="card">
+                               <h3 class="card-header">Today Attendance</h3>
+                               <div class="card-body">
+                                   <table class="table table-bordered">
+                                       <tr>
+                                           <td>Date</td>
+                                           <td>Check In</td>
+                                           <td>Check Out</td>
+                                           <td>Work Hour</td>
+                                       </tr>
+                                       <tbody>
+                                           <tr>
+                                               <td>{{ $today_attendance->check_in_out_date }}</td>
+                                               <td>{{ date('h:i A', strtotime($today_attendance->check_in)) }}</td>
+                                               <td>{{ date('h:i A', strtotime($today_attendance->check_out)) }}</td>
+                                               <td>{{ workHour($today_attendance->check_in,$today_attendance->check_out) }}</td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
 
 @section('script')
