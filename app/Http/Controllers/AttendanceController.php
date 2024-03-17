@@ -13,7 +13,7 @@ class AttendanceController extends Controller
 {
     public function allAttendance()
     {
-        $current_date = Carbon::now()->format('m/d/Y');
+        $current_date = Carbon::now()->format('Y-m-d');
         $present_attendance = Attendance::with('user')->where('status', AttendanceStatus::PRESENT)->where('check_in_out_date', $current_date)->get();
         $absent_attendance = Attendance::with('user')->where('status', AttendanceStatus::ABSENT)->where('check_in_out_date', $current_date)->get();
 

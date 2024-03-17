@@ -1,5 +1,14 @@
 {{--title icon --}}
-<link rel="icon" href="{{ asset('assets/admin/logo/logo.svg') }}" type="logo">
+@php
+    $logo = App\Models\Settings::where('key', 'logo')->first();
+   $logoUrl = $logo ? $logo->getFirstMediaUrl('company_logo') : null;
+@endphp
+@if($logoUrl)
+    <link rel="icon" href="{{ asset($logoUrl) }}" type="logo">
+@else
+    <link rel="icon" href="{{ asset('assets/admin/logo/logo.svg') }}" type="logo">
+@endif
+
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->

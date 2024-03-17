@@ -2,11 +2,15 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link text-decoration-none">
-        {{--        @if(\App\Models\Setting::get('site_logo'))--}}
-        {{--            <img src="{{asset('/uploads/settings/'.\App\Models\Setting::get('site_logo'))}}" width="90px" alt="">--}}
-        {{--        @else--}}
-        <img src="{{asset('assets/admin/logo/logo.svg')}}" width="90px" alt="">
-        {{--        @endif--}}
+        @php
+            $logo = App\Models\Settings::where('key', 'logo')->first();
+           $logoUrl = $logo ? $logo->getFirstMediaUrl('company_logo') : null;
+        @endphp
+        @if($logoUrl)
+            <img src="{{asset($logoUrl)}}" width="90px" alt="">
+        @else
+            <img src="{{asset('assets/admin/logo/logo.svg')}}" width="90px" alt="">
+        @endif
     </a>
 
     <!-- Sidebar -->
@@ -188,10 +192,11 @@
                         @endforeach
                         @if(auth()->user()->role === \App\Constants\Role::USER)
                             <li class="nav-item">
-                                <a href="{{ route('yearly-leave') }}" class="nav-link {{ $current_route == "yearly-leave" ? 'active' : '' }}">
+                                <a href="{{ route('yearly-leave') }}"
+                                   class="nav-link {{ $current_route == "yearly-leave" ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>
-                                       Yearly Leave
+                                        Yearly Leave
                                     </p>
                                 </a>
                             </li>
@@ -242,35 +247,35 @@
                 </li>
                 {{-- attendance section end --}}
 
-                    {{-- report section start --}}
-                    @php
-                        $current_route = Illuminate\Support\Facades\Route::currentRouteName();
-                        $routes = ['office.reports','attendance.reports'];
-                    @endphp
+                {{-- report section start --}}
+                @php
+                    $current_route = Illuminate\Support\Facades\Route::currentRouteName();
+                    $routes = ['office.reports','attendance.reports'];
+                @endphp
 
-                    <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
-                        <a href="javascript:void(0)"
-                           class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>
-                                Reports
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @foreach(['office.reports' => 'Office Report','attendance.reports' => 'Attendance Report'] as $route => $label)
-                                <li class="nav-item">
-                                    <a href="{{ route($route) }}"
-                                       class="nav-link {{ $current_route == $route ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ $label }}</p>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
+                <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
+                    <a href="javascript:void(0)"
+                       class="nav-link {{ in_array($current_route, $routes) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>
+                            Reports
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach(['office.reports' => 'Office Report','attendance.reports' => 'Attendance Report'] as $route => $label)
+                            <li class="nav-item">
+                                <a href="{{ route($route) }}"
+                                   class="nav-link {{ $current_route == $route ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ $label }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
 
-                    {{-- report section end --}}
+                {{-- report section end --}}
 
             </ul>
         </nav>

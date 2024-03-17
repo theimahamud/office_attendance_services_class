@@ -12,29 +12,51 @@ class LeaveRequestService
 {
     public function storeLeaveRequest(array $data)
     {
+        // Parse dates as Carbon instances
         $startDate = Carbon::parse($data['start_date']);
         $endDate = Carbon::parse($data['end_date']);
 
-        $days = $startDate->diffInDays($endDate);
+        // Calculate number of days for the leave request
+        $days = $startDate->diffInDays($endDate) + 1;
 
-        $data['user_id'] = isset($data['user_id']) ? $data['user_id'] : Auth::user()->id;
+        // Format dates to 'Y-m-d' for database storage
+        $startDateFormatted = $startDate->format('Y-m-d');
+        $endDateFormatted = $endDate->format('Y-m-d');
 
-        $data['days'] = $days + 1;
+        // Merge default data with provided data
+        $data = array_merge($data, [
+            'user_id' => $data['user_id'] ?? Auth::id(),
+            'days' => $days,
+            'start_date' => $startDateFormatted,
+            'end_date' => $endDateFormatted,
+        ]);
 
+        // Create and store the leave request
         $leaveRequest = LeaveRequest::create($data);
 
         return $leaveRequest;
-
     }
 
     public function updateLeaveRequest(array $data, LeaveRequest $leaveRequest)
     {
+        // Parse dates as Carbon instances
         $startDate = Carbon::parse($data['start_date']);
         $endDate = Carbon::parse($data['end_date']);
 
-        $days = $startDate->diffInDays($endDate);
+        // Calculate number of days for the leave request
+        $days = $startDate->diffInDays($endDate) + 1;
 
-        $data['days'] = $days + 1;
+        // Format dates to 'Y-m-d' for database storage
+        $startDateFormatted = $startDate->format('Y-m-d');
+        $endDateFormatted = $endDate->format('Y-m-d');
+
+        // Merge default data with provided data
+        $data = array_merge($data, [
+            'user_id' => $data['user_id'] ?? Auth::id(),
+            'days' => $days,
+            'start_date' => $startDateFormatted,
+            'end_date' => $endDateFormatted,
+        ]);
 
         $leaveRequest = $leaveRequest->update($data);
 

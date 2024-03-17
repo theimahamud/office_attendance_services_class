@@ -3,32 +3,42 @@
 namespace App\Services;
 
 use App\Models\Attendance;
+use App\Models\Settings;
 use App\Models\User;
+use Carbon\Carbon;
 
 class AllAttendanceService
 {
     public function store(array $data)
     {
-        $user_ids = User::pluck('id');
+        $userIds = User::pluck('id')->toArray();
 
-        foreach ($user_ids as $user_id) {
-            $attendanceData = array_merge($data, [
-                'user_id' => $user_id,
-                'check_in' => '09:00',
-                'check_out' => '18:00',
-            ]);
+        // Format the date outside the loop
+        $checkInOutDate = Carbon::parse($data['check_in_out_date'])->format('Y-m-d');
 
-            $attendanceExists = Attendance::where('check_in_out_date', $data['check_in_out_date'])
-                ->where('user_id', $user_id)
-                ->exists();
+        $checkIn = Settings::get('check_in') ?? '09:00';
+        $checkOut = Settings::get('check_out') ?? '18:00';
 
-            if ($attendanceExists) {
+        // Check existing attendances for all users
+        $existingAttendances = Attendance::whereIn('user_id', $userIds)
+            ->where('check_in_out_date', $checkInOutDate)
+            ->get()
+            ->keyBy('user_id');
 
-                Attendance::where('check_in_out_date', $data['check_in_out_date'])
-                    ->where('user_id', $user_id)
-                    ->update($attendanceData);
+        foreach ($userIds as $userId) {
+            $attendanceData = [
+                'user_id' => $userId,
+                'check_in' => $checkIn,
+                'check_out' => $checkOut,
+                'check_in_out_date' => $checkInOutDate,
+                'status' => $data['status'],
+            ];
+
+            // Check if attendance exists for the user
+            if (isset($existingAttendances[$userId])) {
+
+                $existingAttendances[$userId]->update($attendanceData);
             } else {
-
                 Attendance::create($attendanceData);
             }
         }
