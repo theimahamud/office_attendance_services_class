@@ -62,6 +62,9 @@ Route::middleware('auth')->group(function () {
         Route::get('attendance', [ReportController::class, 'attendanceReport'])->name('attendance.reports');
     });
 
+    Route::post('check-in-attendance', [AttendanceController::class, 'checkInAttendanceStore'])->name('check-in-attendance');
+    Route::post('check-out-attendance', [AttendanceController::class, 'checkOutAttendanceUpdate'])->name('check-out-attendance');
+
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

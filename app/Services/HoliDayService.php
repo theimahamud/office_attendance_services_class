@@ -13,9 +13,9 @@ class HoliDayService
         $startDate = Carbon::parse($data['start_date'])->format('Y-m-d');
         $endDate = Carbon::parse($data['end_date'])->format('Y-m-d');
 
-        $data = array_merge($data,[
+        $data = array_merge($data, [
             'start_date' => $startDate,
-            'end_date' => $endDate
+            'end_date' => $endDate,
         ]);
 
         $holiday = Holiday::create($data);
@@ -33,9 +33,9 @@ class HoliDayService
         $startDate = Carbon::parse($data['start_date'])->format('Y-m-d');
         $endDate = Carbon::parse($data['end_date'])->format('Y-m-d');
 
-        $data = array_merge($data,[
+        $data = array_merge($data, [
             'start_date' => $startDate,
-            'end_date' => $endDate
+            'end_date' => $endDate,
         ]);
 
         $holiday = tap($holiday)->update($data);

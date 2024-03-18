@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\AttendanceStatus;
 use App\Http\Requests\AttendanceRequest;
 use App\Models\Attendance;
-use App\Services\AllAttendanceService;
+use App\Services\AttendanceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -25,14 +25,14 @@ class AttendanceController extends Controller
         return view('attendance.my-attendance');
     }
 
-    public function allAbsentPresentAttendance(AttendanceRequest $request, AllAttendanceService $allAttendanceService)
+    public function allAbsentPresentAttendance(AttendanceRequest $request, AttendanceService $attendanceService)
     {
 
         $validated = $request->validated();
 
-        $attendance = $allAttendanceService->store($validated);
+        $attendance = $attendanceService->store($validated);
 
-        if ($request->status == 'Present') {
+        if ($request->status === 'Present') {
 
             return back()->with('success', 'All user have been present successfully');
         } else {
@@ -60,5 +60,19 @@ class AttendanceController extends Controller
 
         return redirect()->back()->with('success', 'Attendance records updated successfully.');
 
+    }
+
+    public function checkInAttendanceStore(Request $request, AttendanceService $attendanceService)
+    {
+        $response = $attendanceService->checkInAttendance();
+
+        return redirect()->back()->with($response['success'] ? 'success' : 'error', $response['message']);
+    }
+
+    public function checkOutAttendanceUpdate(Request $request, AttendanceService $attendanceService)
+    {
+        $response = $attendanceService->checkOutAttendance();
+
+        return redirect()->back()->with($response['success'] ? 'success' : 'error', $response['message']);
     }
 }

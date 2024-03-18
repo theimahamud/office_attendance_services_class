@@ -12,9 +12,9 @@ class LeavePolicyService
         $startDate = Carbon::parse($data['start_date'])->format('Y-m-d');
         $endDate = Carbon::parse($data['end_date'])->format('Y-m-d');
 
-        $data = array_merge($data,[
+        $data = array_merge($data, [
             'start_date' => $startDate,
-            'end_date' => $endDate
+            'end_date' => $endDate,
         ]);
 
         $leavePolicy = Leavepolicy::create($data);
@@ -27,9 +27,9 @@ class LeavePolicyService
         $startDate = Carbon::parse($data['start_date'])->format('Y-m-d');
         $endDate = Carbon::parse($data['end_date'])->format('Y-m-d');
 
-        $data = array_merge($data,[
+        $data = array_merge($data, [
             'start_date' => $startDate,
-            'end_date' => $endDate
+            'end_date' => $endDate,
         ]);
 
         $leavePolicy = $leavepolicy->update($data);

@@ -3,27 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Gender;
+use App\Models\Attendance;
+use App\Models\Department;
+use App\Models\Designation;
 use App\Models\User;
+use App\Services\OfficeReportService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    public function officeReport()
+    public function officeReport(OfficeReportService $officeReportService)
     {
-        $male = User::where('gender', Gender::MALE)->count();
-        $female = User::where('gender', Gender::FEMALE)->count();
-        $other = User::where('gender', Gender::OTHER)->count();
+        $reportData = $officeReportService->generateReportData();
 
-        $data = [
-            'labels' => Gender::gender,
-            'data' => [$male, $female, $other],
-            'colors' => ['#3366cc', '#ff9900', '#109618'],
-        ];
-
-        return view('reports.office-report', compact('data'));
+        return view('reports.office-report', $reportData);
     }
 
     public function attendanceReport()
     {
-
+        $users = User::all();
+        $years = Attendance::selectRaw('YEAR(check_in_out_date) as year')
+            ->distinct()
+            ->pluck('year');
+        return view('reports.attendance-report',compact('users','years'));
     }
+
 }

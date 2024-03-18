@@ -6,10 +6,10 @@
                 <div class="card-body table-responsive">
                     <table class="table table-bordered">
                         <tr>
-                            <td>Date</td>
-                            <td>Check In</td>
-                            <td>Check Out</td>
-                            <td>Work Hour</td>
+                            <th>Date</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Work Hour</th>
                         </tr>
                         <tbody>
                         <tr>

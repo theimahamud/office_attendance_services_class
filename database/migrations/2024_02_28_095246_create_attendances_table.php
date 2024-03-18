@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('check_in');
-            $table->string('check_out');
+            $table->string('check_in')->nullable();
+            $table->string('check_out')->nullable();
             $table->string('check_in_out_date');
             $table->string('status');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
