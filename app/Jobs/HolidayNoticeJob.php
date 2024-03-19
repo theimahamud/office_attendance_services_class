@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class HolidayNoticeJob implements ShouldQueue
 {
@@ -42,7 +43,7 @@ class HolidayNoticeJob implements ShouldQueue
 
         } catch (\Exception $exception) {
 
-            \Log::error('Failed to send holiday notice notification: '.$exception->getMessage());
+            Log::error('Failed to send holiday notice notification: '.$exception->getMessage());
         }
 
     }

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Constants\Status;
 use App\Jobs\HolidayNoticeJob;
 use App\Models\Holiday;
+use App\Services\CreateNoticeService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -27,18 +28,9 @@ class DispatchHolidayNoticeJob extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(CreateNoticeService $createNoticeService)
     {
-        $draftHolidays = Holiday::where('status', Status::DRAFT)
-            ->whereDate('start_date', '=', Carbon::now()->addHours(12)->toDateString())
-            ->get();
-
-        foreach ($draftHolidays as $holiday) {
-
-            dispatch(new HolidayNoticeJob($holiday));
-            $holiday->update(['status' => Status::PUBLISHED]);
-
-        }
+        $createNoticeService->createNotice();
 
         $this->info('Holiday notice jobs dispatched successfully.');
     }

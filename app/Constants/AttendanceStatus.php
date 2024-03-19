@@ -12,10 +12,13 @@ class AttendanceStatus
 
     public const LEAVE = 'Leave';
 
+    public const WEEKEND = 'Weekend';
+
     public const ATTENDANCE_STATUS = [
         self::PRESENT,
         self::ABSENT,
         self::HOLIDAY,
         self::LEAVE,
+        self::WEEKEND,
     ];
 }

@@ -2,18 +2,33 @@
 
 namespace App\Console;
 
+use App\Jobs\BirthdayWiseJob;
+use App\Jobs\CreateAttendanceJob;
+use App\Jobs\CreateNoticeJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
+//    protected $commands = [
+//        Commands\CreateAttendanceCommand::class,
+//        Commands\DispatchHolidayNoticeJob::class,
+//    ];
+
+
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('holiday:dispatch')->everyMinute();
+        //$schedule->command('inspire')->hourly();
+        //$schedule->command('holiday:dispatch')->everyMinute();
+        //$schedule->command('attendance:dispatch')->dailyAt('00:00');
+
+        $schedule->job(CreateNoticeJob::dispatch())->hourly();
+        $schedule->job(CreateAttendanceJob::dispatch())->dailyAt('00:00');
+        $schedule->job(BirthdayWiseJob::dispatch())->dailyAt('00:00');
     }
 
     /**

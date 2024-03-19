@@ -37,6 +37,12 @@ Route::get('/xclean', function () {
     dd('CACHE-CLEARED, VIEW-CLEARED,ROUTE-CLEARED & CONFIG-CACHED WAS SUCCESSFUL!');
 });
 
+
+Route::get('/attendance',function (){
+    Artisan::call('attendance:dispatch');
+});
+
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
