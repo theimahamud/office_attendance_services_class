@@ -16,7 +16,15 @@
                             <td>{{ isset($today_attendance->check_in_out_date) ? $today_attendance->check_in_out_date : '' }}</td>
                             <td>{{ isset($today_attendance->check_in) ? date('h:i A', strtotime($today_attendance->check_in)) : '' }}</td>
                             <td>{{ isset($today_attendance->check_out) ? date('h:i A', strtotime($today_attendance->check_out)) : '' }}</td>
-                            <td>{{ isset($today_attendance->check_in) && isset($today_attendance->check_out) ? workHour($today_attendance->check_in, $today_attendance->check_out) : '' }}</td>
+                            <td>
+                                @if($today_attendance)
+                                    @if(isset($today_attendance->check_out))
+                                        {{ \Carbon\Carbon::parse($today_attendance->check_in)->diff(\Carbon\Carbon::parse($today_attendance->check_out))->format('%H:%I') }}
+                                    @else
+                                        {{ \Carbon\Carbon::parse($today_attendance->check_in)->diffForHumans(\Carbon\Carbon::now(), ['parts' => 2]) }}
+                                    @endif
+                                @endif
+                            </td>
                         </tr>
                         </tbody>
                     </table>
