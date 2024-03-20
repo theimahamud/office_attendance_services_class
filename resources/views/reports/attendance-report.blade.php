@@ -31,7 +31,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ route('settings.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('report-generate') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -39,12 +39,20 @@
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="user_id">User</label>
-                                                    <select class="form-control select2" name="user_id" id="user_id">
+                                                    @if($currentUser->isAdmin())
+                                                    <select class="form-control select2" name="user_id" id="user_id" required>
+                                                        <option value="" selected disabled>Select User</option>
                                                         @foreach($users as $user)
                                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('title')
+
+                                                    @else
+                                                        <input type="text" class="form-control" readonly name="name" value="{{ $users->name }}" required>
+                                                        <input type=hidden readonly name="user_id" value="{{ $users->id }}">
+                                                    @endif
+
+                                                    @error('user_id')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -53,7 +61,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="year">Year</label>
-                                                <select class="form-control select2" name="year" id="year">
+                                                <select class="form-control select2" name="year" id="year" required>
                                                     @foreach($years as $year)
                                                         <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                                                     @endforeach
@@ -66,7 +74,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="month">Month</label>
-                                                <select class="form-control select2" name="month" id="month">
+                                                <select class="form-control select2" name="month" id="month" required>
                                                     @for ($month = 1; $month <= 12; $month++)
                                                         <option value="{{ $month }}" {{ $month == date('n') ? 'selected' : '' }}>
                                                             {{ date("F", mktime(0, 0, 0, $month, 1)) }}
@@ -89,12 +97,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
 
 @section('script')

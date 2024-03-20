@@ -29,6 +29,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+
+
 Route::get('/xclean', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
@@ -66,6 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('reports')->group(function () {
         Route::get('office', [ReportController::class, 'officeReport'])->name('office.reports');
         Route::get('attendance', [ReportController::class, 'attendanceReport'])->name('attendance.reports');
+        Route::post('report-generate', [ReportController::class, 'reportGenerate'])->name('report-generate');
+        Route::get('download-attendance-report', [ReportController::class, 'downloadAttendanceReport'])->name('download-attendance-report');
     });
 
     Route::post('check-in-attendance', [AttendanceController::class, 'checkInAttendanceStore'])->name('check-in-attendance');

@@ -113,8 +113,8 @@
                                                     <td>{{ \Illuminate\Support\Str::limit($designation->description) ?? '' }}</td>
                                                     <td>{{ $designation->created_at ?? '' }}</td>
                                                     <td>
-                                                        <a href="{{ route('designations.edit',$designation->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        <button data-delete-route="{{ route('designations.destroy', $designation->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                        <a href="{{ route('designations.edit',$designation->id) }}" class="btn btn-info btn-sm mb-2 mb-sm-0"><i class="fas fa-edit"></i></a>
+                                                        <button data-delete-route="{{ route('designations.destroy', $designation->id) }}" class="btn btn-danger btn-sm delete-item-btn mb-2 mb-sm-0"><i class="fas fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             @endforeach

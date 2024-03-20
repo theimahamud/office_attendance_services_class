@@ -2,11 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Constants\Status;
-use App\Jobs\HolidayNoticeJob;
-use App\Models\Holiday;
 use App\Services\CreateNoticeService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class DispatchHolidayNoticeJob extends Command

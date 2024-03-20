@@ -40,6 +40,34 @@ class DashboardService
             ->count();
     }
 
+    public function holidayAttendance($current_month, $current_year)
+    {
+        return Attendance::where('user_id', Auth::id())
+            ->where('status', AttendanceStatus::HOLIDAY)
+            ->whereMonth('check_in_out_date', $current_month)
+            ->whereYear('check_in_out_date', $current_year)
+            ->count();
+    }
+
+    public function leaveAttendance($current_month, $current_year)
+    {
+        return Attendance::where('user_id', Auth::id())
+            ->where('status', AttendanceStatus::LEAVE)
+            ->whereMonth('check_in_out_date', $current_month)
+            ->whereYear('check_in_out_date', $current_year)
+            ->count();
+    }
+
+    public function weekendAttendance($current_month, $current_year)
+    {
+        return Attendance::where('user_id', Auth::id())
+            ->where('status', AttendanceStatus::WEEKEND)
+            ->whereMonth('check_in_out_date', $current_month)
+            ->whereYear('check_in_out_date', $current_year)
+            ->count();
+    }
+
+
     public function totalAttendance($current_month, $current_year)
     {
         return Attendance::where('user_id', Auth::id())

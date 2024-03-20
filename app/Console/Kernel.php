@@ -11,10 +11,11 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
 
-//    protected $commands = [
-//        Commands\CreateAttendanceCommand::class,
-//        Commands\DispatchHolidayNoticeJob::class,
-//    ];
+    protected $commands = [
+        Commands\CreateAttendanceCommand::class,
+        Commands\BirthdayWiseCommand::class,
+        Commands\DispatchHolidayNoticeJob::class,
+    ];
 
 
     /**
@@ -24,7 +25,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->hourly();
         //$schedule->command('holiday:dispatch')->everyMinute();
-        //$schedule->command('attendance:dispatch')->dailyAt('00:00');
+        //$schedule->command('attendance:dispatch')->everyMinute();
 
         $schedule->job(CreateNoticeJob::dispatch())->hourly();
         $schedule->job(CreateAttendanceJob::dispatch())->dailyAt('00:00');

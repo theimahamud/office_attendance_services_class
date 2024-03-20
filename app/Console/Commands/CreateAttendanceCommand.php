@@ -2,15 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Constants\AttendanceStatus;
-use App\Models\Attendance;
-use App\Models\Settings;
-use App\Models\User;
 use App\Services\CreateAttendanceService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CreateAttendanceCommand extends Command
 {

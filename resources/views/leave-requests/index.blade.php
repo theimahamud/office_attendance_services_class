@@ -77,15 +77,15 @@
                                                     <td>{{ \Illuminate\Support\Str::limit($leave_request->comment,20) ?? '' }}</td>
                                                     <td>
                                                         @if(auth()->user()->role === \App\Constants\Role::ADMIN || (auth()->user()->role === \App\Constants\Role::USER && ($leave_request->status !== \App\Constants\LeaveStatus::APPROVED && $leave_request->status !== \App\Constants\LeaveStatus::REJECTED)))
-                                                            <a href="{{ route('leave-request.edit', $leave_request->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                                            <a href="{{ route('leave-request.edit', $leave_request->id) }}" class="btn btn-info btn-sm mb-2 mb-sm-0"><i class="fas fa-edit"></i></a>
                                                         @else
-                                                            <button disabled class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button>
+                                                            <button disabled class="btn btn-info btn-sm mb-2 mb-sm-0"><i class="fas fa-edit"></i></button>
                                                         @endif
 
-                                                        <a href="{{ route('leave-request.show',$leave_request->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{ route('leave-request.show',$leave_request->id) }}" class="btn btn-primary btn-sm mb-2 mb-sm-0"><i class="fas fa-eye"></i></a>
 
                                                         @if(auth()->user()->isAdmin())
-                                                        <button data-delete-route="{{ route('leave-request.destroy', $leave_request->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                        <button data-delete-route="{{ route('leave-request.destroy', $leave_request->id) }}" class="btn btn-danger btn-sm delete-item-btn mb-2 mb-sm-0"><i class="fas fa-trash"></i></button>
                                                         @endif
                                                     </td>
                                                 </tr>

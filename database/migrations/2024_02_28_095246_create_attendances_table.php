@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('check_out')->nullable();
             $table->string('check_in_out_date');
             $table->string('status');
+            $table->string('work_hours')->nullable();
             $table->foreignId('deleted_by')->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();

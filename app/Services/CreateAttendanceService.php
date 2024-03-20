@@ -25,8 +25,7 @@ class CreateAttendanceService
             $working_day = Settings::get('working_days');
             $working_day = unserialize($working_day);
 
-            $isWorkingDay = in_array(Carbon::now()->dayOfWeek, $working_day);
-
+            $isWorkingDay = in_array(strtolower(Carbon::now()->englishDayOfWeek), $working_day);
 
             $existingAttendance = Attendance::where('user_id', $user->id)
                 ->where('check_in_out_date', $currentDate)

@@ -33,6 +33,12 @@ class DashboardController extends Controller
 
         $late = $dashboardService->lateAttendance($check_in_time, $current_month, $current_year);
 
+        $holiday_percent = $dashboardService->holidayAttendance($current_month, $current_year);
+
+        $leave_percent = $dashboardService->leaveAttendance($current_month, $current_year);
+
+        $weekend_percent = $dashboardService->weekendAttendance($current_month, $current_year);
+
         $total_attendance = $dashboardService->totalAttendance($current_month, $current_year);
 
         $today_attendance = $dashboardService->todayAttendance($current_date);
@@ -43,15 +49,16 @@ class DashboardController extends Controller
 
         $joining_announcement = $dashboardService->joiningAnnouncement($current_day, $current_month);
 
-        //        dd($leave_announcement);
-
         $on_time_percentage = $total_attendance == 0 ? 0 : round(($on_time / $total_attendance) * 100);
         $absent_percentage = $total_attendance == 0 ? 0 : round(($absent / $total_attendance) * 100);
         $late_percentage = $total_attendance == 0 ? 0 : round(($late / $total_attendance) * 100);
+        $holiday_percentage = $total_attendance == 0 ? 0 : round(($holiday_percent / $total_attendance) * 100);
+        $leave_percentage = $total_attendance == 0 ? 0 : round(($leave_percent / $total_attendance) * 100);
+        $weekend_percentage = $total_attendance == 0 ? 0 : round(($weekend_percent / $total_attendance) * 100);
 
         $chartData = [
-            'labels' => ["On Time({$on_time_percentage}%)", "Absent({$absent_percentage}%)", "Late({$late_percentage}%)"],
-            'data' => [$on_time_percentage, $absent_percentage, $late_percentage],
+            'labels' => ["On Time ({$on_time_percentage}%)", "Absent ({$absent_percentage}%)", "Late ({$late_percentage}%)", "Holiday ({$holiday_percentage}%)", "Leave ({$leave_percentage}%)", "Weekend ({$weekend_percentage}%)"],
+            'data' => [$on_time_percentage, $absent_percentage, $late_percentage, $holiday_percentage, $leave_percentage, $weekend_percentage],
         ];
 
         $holidays = Holiday::all();
@@ -69,6 +76,9 @@ class DashboardController extends Controller
                 'on_time',
                 'absent',
                 'late',
+                'holiday_percent',
+                'leave_percent',
+                'weekend_percent',
                 'events',
                 'today_attendance',
                 'leave_announcement',

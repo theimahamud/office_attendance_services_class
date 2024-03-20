@@ -87,10 +87,11 @@ body.dark-mode {
     background: pink!important;
 }
 
-.attendance_chart{
-    width: 70%!important;
-    height: 380px!important;
+.attendance_chart {
+    width: 100%;
+    height: 380px;
     margin: auto;
+    display: block; /* Set display to block */
 }
 
 .announcement_card {
@@ -104,4 +105,7 @@ body.dark-mode {
 .not_check_in_out{
     font-size: 14px;
     font-weight: 600;
+}
+.user_info_attendance_report td{
+    border-top: unset !important;
 }

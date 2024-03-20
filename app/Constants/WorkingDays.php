@@ -4,7 +4,6 @@ namespace App\Constants;
 
 class WorkingDays
 {
-    public const SATURDAY = 'saturday';
 
     public const SUNDAY = 'sunday';
 
@@ -18,13 +17,15 @@ class WorkingDays
 
     public const FRIDAY = 'friday';
 
+    public const SATURDAY = 'saturday';
+
     public const WORKINGDAYS = [
-        self::SATURDAY,
         self::SUNDAY,
         self::MONDAY,
         self::TUESDAY,
         self::WEDNESDAY,
         self::THURSDAY,
         self::FRIDAY,
+        self::SATURDAY,
     ];
 }

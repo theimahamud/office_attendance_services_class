@@ -48,14 +48,20 @@
                 datasets: [{
                     data: @json($chartData['data']),
                     backgroundColor: [
-                        'rgba(75, 192, 192, 0.7)',  // On Time (Green)
-                        'rgba(255, 99, 132, 0.7)',  // Absent (Red)
-                        'rgba(255, 206, 86, 0.7)',  // Late (Yellow/Orange)
+                        'rgba(40, 167, 69, 0.7)',   // On Time (Success)
+                        'rgba(220, 53, 69, 0.7)',   // Absent (Danger)
+                        'rgba(255, 193, 7, 0.7)',   // Late (Warning)
+                        'rgba(23, 162, 184, 0.7)', // Holiday (Info)
+                        'rgba(0, 123, 255, 0.7)',  // Leave (Primary)
+                        'rgba(108, 117, 125, 0.7)',// Weekend (Secondary)
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
+                        'rgba(40, 167, 69, 1)',    // On Time (Success)
+                        'rgba(220, 53, 69, 1)',    // Absent (Danger)
+                        'rgba(255, 193, 7, 1)',    // Late (Warning)
+                        'rgba(23, 162, 184, 1)',   // Holiday (Info)
+                        'rgba(0, 123, 255, 1)',    // Leave (Primary)
+                        'rgba(108, 117, 125, 1)',  // Weekend (Secondary)
                     ],
                     borderWidth: 1
                 }]

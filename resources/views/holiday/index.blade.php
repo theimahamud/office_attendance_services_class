@@ -74,9 +74,9 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('holiday.edit',$holiday->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-                                                        <a href="{{ route('holiday.show',$holiday->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                                        <button data-delete-route="{{ route('holiday.destroy', $holiday->id) }}" class="btn btn-danger btn-sm delete-item-btn"><i class="fas fa-trash"></i></button>
+                                                        <a href="{{ route('holiday.edit',$holiday->id) }}" class="btn btn-info btn-sm mb-2 mb-sm-0"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('holiday.show',$holiday->id) }}" class="btn btn-primary btn-sm mb-2 mb-sm-0"><i class="fas fa-eye"></i></a>
+                                                        <button data-delete-route="{{ route('holiday.destroy', $holiday->id) }}" class="btn btn-danger btn-sm delete-item-btn mb-2 mb-sm-0"><i class="fas fa-trash"></i></button>
 
                                                     </td>
                                                 </tr>

@@ -4,7 +4,7 @@
             <h4 class="card-header announcement_title text-center"><i class="far fa-bell"></i> Leave Announcement</h4>
             @forelse ($leave_announcement as $leave_announce)
                 <div class="card-body announcement_card d-flex">
-                    <img src="{{ asset($leave_announce->user->getFirstMediaUrl()) }}" class="rounded-circle mr-3" alt="" style="width: 50px; height: 50px;">
+                    <img src="{{ asset($leave_announce->user->image_url) }}" class="rounded-circle mr-3" alt="" style="width: 50px; height: 50px;">
                     <div>
                         <p class="card-text mb-3">
                             <strong>Dear {{ $leave_announce->user->department->title  }} Team,</strong> <br>
@@ -36,7 +36,7 @@
             <h4 class="card-header announcement_title text-center"><i class="far fa-bell"></i> Birthday Announcement</h4>
             @forelse ($birthday_announcement as $birthday)
                 <div class="card-body announcement_card d-flex">
-                    <img src="{{ asset($birthday->getFirstMediaUrl()) }}" class="rounded-circle mr-3" alt="" style="width: 50px; height: 50px;">
+                    <img src="{{ asset($birthday->image_url) }}" class="rounded-circle mr-3" alt="" style="width: 50px; height: 50px;">
                     <div>
                         <p class="card-text anniversary_font_size">
                             <strong class="text-bold user_name_customize">Happy
@@ -67,7 +67,7 @@
             <h4 class="card-header announcement_title text-center"><i class="far fa-bell"></i> Joining Announcement</h4>
             @forelse ($joining_announcement as $joining)
                 <div class="card-body announcement_card d-flex">
-                    <img src="{{ asset($joining->getFirstMediaUrl()) }}" class="rounded-circle mr-3" alt="" style="width: 50px; height: 50px;">
+                    <img src="{{ asset($joining->image_url) }}" class="rounded-circle mr-3" alt="" style="width: 50px; height: 50px;">
                     <div>
                         <p class="card-text anniversary_font_size">
                             <strong class="text-bold user_name_customize">{{ ucfirst($joining->name) }}</strong>,<br>
