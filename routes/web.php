@@ -30,7 +30,6 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/xclean', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
@@ -65,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('see-all-notification', [DashboardController::class, 'seeAllNotification'])->name('see-all-notification');
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('settings/store', [SettingsController::class, 'store'])->name('settings.store');
+
     Route::prefix('reports')->group(function () {
         Route::get('office', [ReportController::class, 'officeReport'])->name('office.reports');
         Route::get('attendance', [ReportController::class, 'attendanceReport'])->name('attendance.reports');
@@ -74,6 +74,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('check-in-attendance', [AttendanceController::class, 'checkInAttendanceStore'])->name('check-in-attendance');
     Route::post('check-out-attendance', [AttendanceController::class, 'checkOutAttendanceUpdate'])->name('check-out-attendance');
+    Route::get('attendance-summary', [AttendanceController::class, 'attendanceSummary'])->name('attendance-summary');
+    Route::get('attendance-update-date-wise/{id}', [AttendanceController::class, 'attendanceUpdateDateWise'])->name('attendance-update-date-wise');
+    Route::post('attendance-update-by-date/{id}', [AttendanceController::class, 'attendanceUpdateByDate'])->name('attendance-update-by-date');
+    Route::delete('attendance/delete/{id}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
 
     Route::get('/user/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

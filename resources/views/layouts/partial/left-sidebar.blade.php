@@ -210,7 +210,7 @@
                 {{-- attendance start section--}}
                 @php
                     $current_route = Illuminate\Support\Facades\Route::currentRouteName();
-                    $routes = ['all-attendance', 'my-attendance'];
+                    $routes = ['all-attendance', 'my-attendance','attendance-summery'];
                 @endphp
 
                 <li class="nav-item {{ in_array($current_route, $routes) ? 'menu-open' : '' }}">
@@ -223,8 +223,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @foreach([
-                                auth()->user()->isAdmin() ? 'all-attendance' : 'my-attendance' => auth()->user()->isAdmin() ? 'All Attendance' : 'My Attendance'] as $route => $label)
+                        @foreach([ auth()->user()->isAdmin() ? 'all-attendance' : 'my-attendance' => auth()->user()->isAdmin() ? 'All Attendance' : 'My Attendance','attendance-summary' => 'Attendance Summary'] as $route => $label)
                             <li class="nav-item">
                                 <a href="{{ route($route) }}"
                                    class="nav-link {{ $current_route == $route ? 'active' : '' }}">

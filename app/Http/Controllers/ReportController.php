@@ -47,64 +47,13 @@ class ReportController extends Controller
         $company_name = Settings::get('title') ?? 'Uibarn Ltd';
         $attendance_report = AttendanceReport::generateAttendance($request);
 
-        $totalWorkingDays = 0;
-        $totalWorkTime = 0;
-        $totalPresent = 0;
-        $totalAbsent = 0;
-        $totalHoliday = 0;
-        $totalLeave = 0;
-        $totalWeekend = 0;
-
-        foreach ($attendance_report as $attendance){
-
-            $totalWorkingDays ++;
-
-            if (!empty($attendance->check_in) && !empty($attendance->check_out)) {
-                $checkIn = Carbon::parse($attendance->check_in);
-                $checkOut = Carbon::parse($attendance->check_out);
-
-                // Calculate difference between check-out and check-in times
-                $workDuration = $checkOut->diff($checkIn);
-
-                // Add the work duration to total work time
-                $totalWorkTime += $workDuration->format('%H') * 3600 + $workDuration->format('%I') * 60;
-            }
-
-            if ($attendance->status === AttendanceStatus::PRESENT) {
-                $totalPresent++;
-            }
-
-            if ($attendance->status === AttendanceStatus::ABSENT) {
-                $totalAbsent++;
-            }
-
-            if ($attendance->status === AttendanceStatus::HOLIDAY) {
-                $totalHoliday++;
-            }
-
-            if ($attendance->status === AttendanceStatus::LEAVE) {
-                $totalLeave++;
-            }
-
-            if ($attendance->status === AttendanceStatus::WEEKEND) {
-                $totalWeekend++;
-            }
-        }
-
         // Pass the calculated values to the view
         return view('reports.generate-report', compact(
             'attendance_report',
             'user',
             'month',
             'year',
-            'company_name',
-            'totalWorkingDays',
-            'totalWorkTime',
-            'totalPresent',
-            'totalAbsent',
-            'totalHoliday',
-            'totalLeave',
-            'totalWeekend'
+            'company_name'
         ));
     }
 

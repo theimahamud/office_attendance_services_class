@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1>Settings Create Form</h1>
+                        <h1>Attendance Report</h1>
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
@@ -38,7 +38,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="user_id">User</label>
+                                                    <label for="user_id">User <span class="text-danger">*</span></label>
                                                     @if($currentUser->isAdmin())
                                                     <select class="form-control select2" name="user_id" id="user_id" required>
                                                         <option value="" selected disabled>Select User</option>
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="year">Year</label>
+                                                <label for="year">Year <span class="text-danger">*</span></label>
                                                 <select class="form-control select2" name="year" id="year" required>
                                                     @foreach($years as $year)
                                                         <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="month">Month</label>
+                                                <label for="month">Month <span class="text-danger">*</span></label>
                                                 <select class="form-control select2" name="month" id="month" required>
                                                     @for ($month = 1; $month <= 12; $month++)
                                                         <option value="{{ $month }}" {{ $month == date('n') ? 'selected' : '' }}>
