@@ -62,11 +62,11 @@
                                         </tr>
                                         <tr>
                                             <th>Birth Date</th>
-                                            <td>{{ $user->birth_date ? \Carbon\Carbon::createFromFormat('d/m/Y', $user->birth_date)->format('d F, Y') : '' }}</td>
+                                            <td>{{ $user->birth_date ? \Carbon\Carbon::createFromFormat('Y-m-d', $user->birth_date)->format('d F, Y') : '' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Hire Date</th>
-                                            <td>{{ $user->hire_date ? \Carbon\Carbon::createFromFormat('d/m/Y', $user->hire_date)->format('d F, Y') : '' }}</td>
+                                            <td>{{ $user->hire_date ? \Carbon\Carbon::createFromFormat('Y-m-d', $user->hire_date)->format('d F, Y') : '' }}</td>
                                         </tr>
 
                                         <tr>
