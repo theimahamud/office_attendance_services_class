@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Constants\LeaveStatus;
 use App\Models\LeaveRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -36,7 +37,9 @@ class LeaveRequestApprovedRejectedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->view('emails.leave-request-approved-rejected', ['data' => $this->data])->subject("Leave Request {$this->data->status}");
+        $template = $this->data->status === LeaveStatus::APPROVED ? 'emails.leave-request-approved' : 'emails.leave-request-rejected';
+
+        return (new MailMessage)->view($template, ['data' => $this->data])->subject("Leave Request {$this->data->status}");
         //                    ->line('The introduction to the notification.')
         //                    ->action('Notification Action', url('/'))
         //                    ->line('Thank you for using our application!');

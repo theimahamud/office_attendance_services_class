@@ -1,14 +1,11 @@
 <?php
 
-
-
 namespace App\Services;
-
 
 use App\Models\Attendance;
 
-class AttendanceReport{
-
+class AttendanceReport
+{
     public static function generateAttendance($request)
     {
 
@@ -25,5 +22,4 @@ class AttendanceReport{
 
         return $attendance_report;
     }
-
 }

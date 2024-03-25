@@ -67,7 +67,6 @@ class DashboardService
             ->count();
     }
 
-
     public function totalAttendance($current_month, $current_year)
     {
         return Attendance::where('user_id', Auth::id())

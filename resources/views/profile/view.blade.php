@@ -51,20 +51,24 @@
 
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
-                                        <b>Department</b> <a
-                                            class="float-right">{{ isset($user->department->title) ? ucfirst($user->department->title) : '' }}</a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <b>Role</b> <a
-                                            class="float-right">{{ isset($user->role) ? ucfirst($user->role) : '' }}</a>
-                                    </li>
-                                    <li class="list-group-item">
                                         <b>Email</b> <a
                                             class="float-right">{{ isset($user->email) ? $user->email : '' }}</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>Username</b> <a
                                             class="float-right">{{ isset($user->username) ? $user->username : '' }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Department</b> <a
+                                            class="float-right">{{ isset($user->department->title) ? ucfirst($user->department->title) : '' }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Designation</b> <a
+                                            class="float-right">{{ isset($user->designation->title) ? ucfirst($user->designation->title) : '' }}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Role</b> <a
+                                            class="float-right">{{ isset($user->role) ? ucfirst($user->role) : '' }}</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>Birth Date</b> <a

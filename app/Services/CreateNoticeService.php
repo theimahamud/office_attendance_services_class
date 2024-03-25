@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Constants\Status;
 use App\Jobs\HolidayNoticeJob;
@@ -11,7 +9,6 @@ use Carbon\Carbon;
 
 class CreateNoticeService
 {
-
     public function createNotice()
     {
         $draftHolidays = Holiday::where('status', Status::DRAFT)
@@ -25,5 +22,4 @@ class CreateNoticeService
 
         }
     }
-
 }

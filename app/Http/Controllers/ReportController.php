@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Constants\AttendanceStatus;
 use App\Constants\Role;
 use App\Models\Attendance;
 use App\Models\Settings;
 use App\Models\User;
 use App\Services\AttendanceReport;
 use App\Services\OfficeReportService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Dompdf\Dompdf;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -25,9 +22,9 @@ class ReportController extends Controller
 
     public function attendanceReport()
     {
-        if(auth()->user()->role === Role::ADMIN){
+        if (auth()->user()->role === Role::ADMIN) {
             $users = User::all();
-        }else{
+        } else {
             $users = auth()->user();
         }
 
@@ -35,9 +32,8 @@ class ReportController extends Controller
             ->distinct()
             ->pluck('year');
 
-        return view('reports.attendance-report',compact('users','years'));
+        return view('reports.attendance-report', compact('users', 'years'));
     }
-
 
     public function reportGenerate(Request $request)
     {
@@ -57,13 +53,11 @@ class ReportController extends Controller
         ));
     }
 
-
-
     public function downloadAttendanceReport(Request $request)
     {
         $month = $request->month;
         $year = $request->year;
-        $user = User::where('id',$request->user_id)->first();
+        $user = User::where('id', $request->user_id)->first();
         $company_name = Settings::get('company_name') ?? 'Uibarn Ltd';
         $attendance_report = AttendanceReport::generateAttendance($request);
 
@@ -86,5 +80,4 @@ class ReportController extends Controller
         // Download the PDF file
         return $dompdf->stream($fileName);
     }
-
 }

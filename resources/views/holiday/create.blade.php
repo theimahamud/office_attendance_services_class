@@ -50,8 +50,8 @@
                                             <div class="form-group">
                                                 <label for="status">Status</label>
                                                 <select class="form-control select2" name="status" id="status">
-                                                    <option {{ old('status') == \App\Constants\Status::DRAFT ? 'selected' : '' }} value="{{ \App\Constants\Status::DRAFT }}">{{ \App\Constants\Status::DRAFT }}</option>
-                                                    <option {{ old('status') == \App\Constants\Status::PUBLISHED ? 'selected' : '' }} value="\App\Constants\Status::DRAFT">{{ \App\Constants\Status::PUBLISHED }}</option>
+                                                    <option {{ old('status') === \App\Constants\Status::DRAFT ? 'selected' : '' }} value="{{ \App\Constants\Status::DRAFT }}">{{ \App\Constants\Status::DRAFT }}</option>
+                                                    <option {{ old('status') === \App\Constants\Status::PUBLISHED ? 'selected' : '' }} value="{{ \App\Constants\Status::PUBLISHED }}">{{ \App\Constants\Status::PUBLISHED }}</option>
                                                 </select>
                                                 @error('status')
                                                 <span class="text-danger">{{ $message }}</span>

@@ -223,7 +223,11 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @foreach([ auth()->user()->isAdmin() ? 'all-attendance' : 'my-attendance' => auth()->user()->isAdmin() ? 'All Attendance' : 'My Attendance','attendance-summary' => 'Attendance Summary'] as $route => $label)
+                    @foreach([
+                        'all-attendance' => auth()->user()->isAdmin() ? 'All Attendance' : '',
+                        'attendance-summary' => 'Attendance Summary'
+                    ] as $route => $label)
+                        @if($label !== '')
                             <li class="nav-item">
                                 <a href="{{ route($route) }}"
                                    class="nav-link {{ $current_route == $route ? 'active' : '' }}">
@@ -231,6 +235,7 @@
                                     <p>{{ $label }}</p>
                                 </a>
                             </li>
+                            @endif
                         @endforeach
                     </ul>
                 </li>

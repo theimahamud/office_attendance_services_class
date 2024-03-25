@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Mail\BirthdayWiseMail;
 use App\Models\User;
-use App\Services\BirthdayWiseService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,7 +31,7 @@ class BirthdayWiseJob implements ShouldQueue
     {
         $current_date = Carbon::now()->format('Y-m-d');
 
-        $users = User::whereDate('birth_date',$current_date)->get();
+        $users = User::whereDate('birth_date', $current_date)->get();
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new BirthdayWiseMail($user));

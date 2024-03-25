@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Constants\Gender;
 use App\Models\Department;
@@ -61,7 +59,7 @@ class OfficeReportService
 
         $departments = Department::pluck('title')->toArray();
         foreach ($departments as $department) {
-            if (!isset($departmentCounts[$department])) {
+            if (! isset($departmentCounts[$department])) {
                 $departmentCounts[$department] = 0;
             }
         }
@@ -80,7 +78,7 @@ class OfficeReportService
 
         $designations = Designation::pluck('title')->toArray();
         foreach ($designations as $designation) {
-            if (!isset($designationCounts[$designation])) {
+            if (! isset($designationCounts[$designation])) {
                 $designationCounts[$designation] = 0;
             }
         }
@@ -133,7 +131,7 @@ class OfficeReportService
         $red = mt_rand(0, 255);
         $green = mt_rand(0, 255);
         $blue = mt_rand(0, 255);
-        return sprintf("#%02x%02x%02x", $red, $green, $blue);
-    }
 
+        return sprintf('#%02x%02x%02x', $red, $green, $blue);
+    }
 }

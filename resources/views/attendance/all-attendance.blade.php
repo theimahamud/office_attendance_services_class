@@ -140,9 +140,11 @@
                                             @endforeach
                                             </tbody>
                                         </table>
+                                        @if(filled($absent_attendance))
                                         <div class="">
                                             <button class="btn btn-primary" type="submit">Update</button>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </form>

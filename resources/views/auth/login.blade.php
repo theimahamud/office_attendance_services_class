@@ -20,15 +20,15 @@
 
             <form action="{{ route('login') }}" method="post">
                 @csrf
-                <div class="input-group @error('email') mb-0 @else mb-3 @enderror">
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
+                <div class="input-group @error('login') mb-0 @else mb-3 @enderror">
+                    <input type="text" name="login" class="form-control" value="{{ old('login') }}" placeholder="Email Or Username">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
                 </div>
-                @error('email')
+                @error('login')
                 <p class="text-danger mt-1">{{ $message }}</p>
                 @enderror
                 <div class="input-group @error('email') mb-0 @else mb-3 @enderror">

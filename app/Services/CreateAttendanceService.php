@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Constants\AttendanceStatus;
 use App\Constants\LeaveStatus;
@@ -20,7 +18,7 @@ class CreateAttendanceService
         $currentDate = Carbon::now()->format('Y-m-d');
         $users = User::all();
 
-        foreach ($users as $user){
+        foreach ($users as $user) {
 
             $working_day = Settings::get('working_days');
             $working_day = unserialize($working_day);
@@ -31,7 +29,7 @@ class CreateAttendanceService
                 ->where('check_in_out_date', $currentDate)
                 ->first();
 
-            if (!$existingAttendance) {
+            if (! $existingAttendance) {
                 $leaveRequest = LeaveRequest::where('user_id', $user->id)
                     ->whereDate('start_date', '<=', $currentDate)
                     ->whereDate('end_date', '>=', $currentDate)
@@ -42,11 +40,9 @@ class CreateAttendanceService
                     ->whereDate('end_date', '>=', $currentDate)
                     ->first();
 
-
                 $attendance = new Attendance();
                 $attendance->user_id = $user->id;
                 $attendance->check_in_out_date = Carbon::now()->format('Y-m-d');
-
 
                 if ($leaveRequest) {
 
@@ -56,11 +52,10 @@ class CreateAttendanceService
 
                     $attendance->status = AttendanceStatus::HOLIDAY;
 
-                }elseif (!$isWorkingDay) {
+                } elseif (! $isWorkingDay) {
 
                     $attendance->status = AttendanceStatus::WEEKEND;
-                }
-                else {
+                } else {
 
                     $attendance->status = AttendanceStatus::ABSENT;
 
@@ -70,5 +65,4 @@ class CreateAttendanceService
             }
         }
     }
-
 }

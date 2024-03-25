@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -29,7 +28,7 @@ class BirthdayWiseMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = 'Happy Birthday, ' . $this->user->name . '!';
+        $subject = 'Happy Birthday, '.ucfirst($this->user->name).'!';
 
         return new Envelope(
             subject: $subject,

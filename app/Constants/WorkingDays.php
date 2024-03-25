@@ -4,7 +4,6 @@ namespace App\Constants;
 
 class WorkingDays
 {
-
     public const SUNDAY = 'sunday';
 
     public const MONDAY = 'monday';

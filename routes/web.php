@@ -29,7 +29,6 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-
 Route::get('/xclean', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');
@@ -38,11 +37,13 @@ Route::get('/xclean', function () {
     dd('CACHE-CLEARED, VIEW-CLEARED,ROUTE-CLEARED & CONFIG-CACHED WAS SUCCESSFUL!');
 });
 
-
-Route::get('/attendance',function (){
+Route::get('/attendance', function () {
     Artisan::call('attendance:dispatch');
 });
 
+Route::get('/test', function () {
+   return view('emails.leave-request-approved');
+});
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

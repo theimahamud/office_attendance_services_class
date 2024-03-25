@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Wise</title>
+    <title>Leave Approved</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -112,7 +112,7 @@
         }
 
         .contain-img img {
-            width: 300px;
+            width: 160px;
             object-fit: cover;
         }
 
@@ -180,10 +180,6 @@
             padding: 0px 35px 65px 35px;
         }
 
-        .ramadan-link {
-            color: #2763FE;
-            text-decoration: none;
-        }
     </style>
 </head>
 
@@ -194,16 +190,15 @@
     </div>
 
     <div class="email-contain">
-        <h2 class="contain-title">Happy Birthday {{ ucfirst($user->name) }}!</h2>
+        <h2 class="contain-title">Leave Approved!</h2>
         <div class="contain-img">
-            <img src="{{ asset('assets/admin/mail/birthday.svg') }}" alt="birthday">
+            <img src="{{ asset('assets/admin/mail/approved.svg') }}" alt="approved">
         </div>
         <div class="email-content">
-            <h3>Hello {{ ucfirst($user->name) }},</h3>
-            <p>Wishing a very happy birthday to an awesome member of our <a href="https://www.uibarn.com">Ui Barn</a>
-                family! 🎁 Today, we celebrate you and the amazing person you are. May your birthday be blessed with
-                happiness, good health, and countless blessings. 🎉 Here's to another year of making dreams come true!
-                🌟
+            <h3>Hello {{ $data->user->name }},</h3>
+            <p>We're delighted to inform you that your leave request has been approved for the requested dates. Your dedication and hard work at our company are greatly appreciated, and we believe this break will allow you to return with renewed energy and enthusiasm.
+                If there are any handovers or preparations needed before your leave, please ensure they are taken care of in a timely manner.
+                Wishing you a restful and enjoyable time away from work.
             </p>
 
             <hr class="email-hr">
