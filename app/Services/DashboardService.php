@@ -101,7 +101,7 @@ class DashboardService
     public function joiningAnnouncement($current_day, $current_month)
     {
         return User::whereMonth('hire_date', $current_month)
-            ->whereDay('birth_date', $current_day)
+            ->whereDay('hire_date', $current_day)
             ->get();
     }
 }

@@ -42,7 +42,7 @@ Route::get('/attendance', function () {
 });
 
 Route::get('/test', function () {
-   return view('emails.leave-request-approved');
+   return view('emails.leave-request-send');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

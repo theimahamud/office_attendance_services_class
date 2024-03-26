@@ -29,9 +29,9 @@
                 @endif
 
                 @include('common.dashboard.attendance-graph')
-                @include('common.dashboard.calendar')
                 @include('common.dashboard.today-attendance')
                 @include('common.dashboard.announcement')
+                    @include('common.dashboard.calendar')
 
             </div>
         </section>

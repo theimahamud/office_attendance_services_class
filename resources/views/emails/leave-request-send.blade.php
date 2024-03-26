@@ -145,7 +145,7 @@
             margin-top: 12px;
         }
 
-        li {
+       .social-icon li {
             list-style: none;
             display: contents;
         }
@@ -179,19 +179,45 @@
 
             padding: 0px 35px 65px 35px;
         }
-
-        .ramadan-link {
-            color: #2763FE;
-            text-decoration: none;
+        .leave-info{
+            margin-top: 10px;
         }
+
+        .leave-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .leave-info ul li {
+            font-family: 'Inter';
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 25px;
+            color: #6A6F7D;
+        }
+
+        .leave-info ul li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #3498db;
+        }
+
     </style>
 </head>
 
 <body>
 <section class="email">
-    <div class="email-logo">
-        <img src="{{ asset('assets/admin/mail/logo.svg') }}" alt="logo">
-    </div>
+    @include('emails.header')
 
     <div class="email-contain">
         <h2 class="contain-title">Leave Application</h2>
@@ -199,12 +225,20 @@
             <img src="{{ asset('assets/admin/mail/leave-request.svg') }}" alt="birthday">
         </div>
         <div class="email-content">
-            <h3>Hello Babor,</h3>
-            <p>Wishing a very happy birthday to an awesome member of our <a href="https://www.uibarn.com">Ui Barn</a>
-                family! 🎁 Today, we celebrate you and the amazing person you are. May your birthday be blessed with
-                happiness, good health, and countless blessings. 🎉 Here's to another year of making dreams come true!
-                🌟
-            </p>
+            <h3>Dear HR,</h3>
+            <p>You have receive a leave request from {{ $data->user->name ?? 'an employee' }}.</p>
+
+            <div class="leave-info">
+                <ul>
+                    <li>From: {{ isset($data->start_date) ? \Carbon\Carbon::parse($data->start_date)->format('d-m-Y') : 'Unknown' }}</li>
+                    <li>To: {{ isset($data->end_date) ? \Carbon\Carbon::parse($data->end_date)->format('d-m-Y') : 'Unknown' }}</li>
+                    <li>Number of Leave: {{ isset($data->days) ? $data->days . ' Days' : 'Unknown' }}</li>
+                    <li>Referred By: {{ isset($data->referredBy->name) ? $data->referredBy->name : 'Unknown' }}</li>
+                    <li>Leave Type: {{ isset($data->leavePolicy->title) ? $data->leavePolicy->title : 'Unknown' }}</li>
+                </ul>
+            </div>
+
+            <p><span>Leave Reason: </span><span>{{ isset($data->leave_reason) ? $data->leave_reason : 'No reason provided No reason provided No reason provided No reason provided' }}</span></p>
 
             <hr class="email-hr">
             <p>
@@ -215,33 +249,7 @@
         </div>
     </div>
 
-    <div class="social-icon">
-        <ul>
-            <li>
-                <a href="#"><img src="{{ asset('assets/admin/mail/facebook.svg') }}" alt=""></a>
-            </li>
-            <li>
-                <a href="#"><img src="{{ asset('assets/admin/mail/twitter.svg') }}" alt=""></a>
-            </li>
-            <li>
-                <a href="#"><img src="{{ asset('assets/admin/mail/instagram.svg') }}" alt=""></a>
-            </li>
-            <li>
-                <a href="#"><img src="{{ asset('assets/admin/mail/web.svg') }}" alt=""></a>
-            </li>
-            <li>
-                <a href="#"><img src="{{ asset('assets/admin/mail/BE.svg') }}" alt=""></a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="email-footer">
-        <h5>© 2022 All Rights Reserved By Uibarn LLC</h5>
-        <h5>You received this email because you signed up for uibarn</h5>
-    </div>
-    <div class="email-footer-logo">
-        <img src="{{ asset('assets/admin/mail/logofooter.svg') }}" alt="">
-    </div>
+    @include('emails.footer')
 </section>
 </body>
 

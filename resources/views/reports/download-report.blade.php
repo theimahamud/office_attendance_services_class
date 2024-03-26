@@ -156,7 +156,7 @@
                 <tr>
                     <td><strong>Date</strong></td>
                     <td>:</td>
-                    <td><span id="currentDate"></span></td>
+                    <td>{{ date('d-m-Y') }}</td>
                 </tr>
             </table>
             <div class="table-responsive">
@@ -195,14 +195,4 @@
     </div>
 </div>
 </body>
-<script>
-    // JavaScript to get and display the current date in "Y-m-d" format
-    const currentDateElement = document.getElementById('currentDate');
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${day}-${month}-${year}`;
-    currentDateElement.textContent = formattedDate;
-</script>
 </html>
