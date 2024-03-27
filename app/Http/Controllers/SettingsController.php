@@ -25,6 +25,8 @@ class SettingsController extends Controller
         Settings::set('grace_time', $request->get('grace_time'));
         Settings::set('ip_address', serialize($request->get('ip_address')));
         Settings::set('working_days', serialize($request->get('working_days')));
+        Settings::set('leave_request_approved_comment', $request->get('leave_request_approved_comment'));
+        Settings::set('leave_request_rejected_comment', $request->get('leave_request_rejected_comment'));
 
         // Save logo using Spatie Media Library
         if ($request->hasFile('logo')) {

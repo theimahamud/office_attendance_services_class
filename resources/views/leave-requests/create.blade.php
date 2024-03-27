@@ -35,6 +35,26 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
+                                        @if(auth()->user()->isAdmin())
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="user_id">Employee <span class="text-danger">*</span></label>
+                                                        <select class="form-control select2" name="user_id"
+                                                                id="user_id">
+                                                            <option value="" selected disabled>Select One</option>
+                                                            @foreach($users as $user)
+                                                                <option
+                                                                    {{ old('user_id') == $user->id ? 'selected':'' }} value="{{ $user->id }}">{{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('user_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="form-group">
@@ -99,27 +119,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        @if(auth()->user()->isAdmin())
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label for="user_id">Employee <span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" name="user_id"
-                                                                id="user_id">
-                                                            <option value="" selected disabled>Select One</option>
-                                                            @foreach($users as $user)
-                                                                <option
-                                                                    {{ old('user_id') == $user->id ? 'selected':'' }} value="{{ $user->id }}">{{ $user->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('user_id')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
 
                                         <div class="col-md-6">
                                             <div class="form-group">

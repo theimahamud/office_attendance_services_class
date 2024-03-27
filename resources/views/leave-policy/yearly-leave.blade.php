@@ -56,8 +56,9 @@
                                                 <th>Leave Spent</th>
                                                 <th>Available Days</th>
                                                 <th>Leave Period (From-To)</th>
-                                                <th>In Days</th>
                                                 <th>Status</th>
+                                                <th>In Days</th>
+                                                <th>Availability</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -80,13 +81,20 @@
                                                         <h5><span class="badge badge-warning">{{ $available_days }}</span></h5>
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($leavePolicy->start_date)->format('d-m-Y') .' - '.\Carbon\Carbon::parse($leavePolicy->end_date)->format('d-m-Y') ?? '' }}</td>
+                                                    <td>
+                                                        <span class="badge @if($leavePolicy->status === \App\Constants\Status::ACTIVE) badge-success @else badge-warning @endif p-2">
+                                                             {{ $leavePolicy->status ?? '' }}
+                                                        </span>
+                                                    </td>
                                                     <td>{{ $total_days }}</td>
                                                     <td>
                                                         <div>
-                                                            @if($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date)
-                                                                <h5><span class="badge badge-success">Active</span></h5>
+                                                            @if($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date && $leavePolicy->status === \App\Constants\Status::ACTIVE)
+                                                                <h5><span class="badge badge-success p-2">Available</span></h5>
+                                                            @elseif($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date && $leavePolicy->status === \App\Constants\Status::INACTIVE)
+                                                                <h5><span class="badge badge-warning p-2">Inactive</span></h5>
                                                             @else
-                                                                <h5><span class="badge badge-danger">Expired</span></h5>
+                                                                <h5><span class="badge badge-danger p-2">Expired</span></h5>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -97,16 +105,7 @@
 
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6">
-                                        Showing {{ $yearlyLeave->firstItem() }} to {{ $yearlyLeave->lastItem() }} of {{ $yearlyLeave->total() }} entries
-                                    </div>
-                                    <div class="col-sm-6 col-md-6">
-                                        <div class="float-right">
-                                            {{ $yearlyLeave->links() }}
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         @endif
                     </div>

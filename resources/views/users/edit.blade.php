@@ -50,19 +50,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @if(auth()->user()->isAdmin())
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="username">Username <span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="username"
-                                                           value="{{ old('username',$user->username) }}" id="username"
-                                                           placeholder="Enter username">
-                                                    @error('username')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="username">Username <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="username"
+                                                       value="{{ old('username',$user->username) }}" id="username"
+                                                       placeholder="Enter username">
+                                                @error('username')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
+                                        </div>
+                                        @if(auth()->user()->isAdmin())
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="email">Email <span class="text-danger">*</span></label>

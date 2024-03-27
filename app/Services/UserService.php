@@ -39,7 +39,7 @@ class UserService
         }
 
         $data['birth_date'] = Carbon::parse($data['birth_date'])->format('Y-m-d');
-        $data['hire_date'] = Carbon::parse($data['hire_date'])->format('Y-m-d');
+        $data['hire_date'] = isset($data['hire_date']) ? Carbon::parse($data['hire_date'])->format('Y-m-d') : $user->hire_date;
 
         $user = tap($user)->update($data);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Constants\Status;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -55,9 +56,20 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages([
                 'login' => trans('auth.failed'),
             ]);
+
         }
 
-        RateLimiter::clear($this->throttleKey());
+        $user = auth()->user();
+
+        if ($user && $user->status === Status::ACTIVE) {
+            RateLimiter::clear($this->throttleKey());
+        } else {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'login' => trans('auth.failed'),
+            ]);
+        }
+
     }
 
     /**

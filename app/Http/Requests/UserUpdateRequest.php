@@ -32,16 +32,11 @@ class UserUpdateRequest extends FormRequest
     {
         $userId = $this->route('user');
 
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($userId)],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255',  Rule::unique(User::class)->ignore($userId)],
             'password' => ['nullable', Password::defaults()],
             'birth_date' => ['required', 'date'],
-            'hire_date' => ['required', 'date'],
-            'role' => ['required', 'string', 'in:'.implode(',', Role::roles)],
-            'department_id' => ['required', 'exists:departments,id'],
-            'designation_id' => ['required', 'exists:designations,id'],
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', 'in:'.implode(',', Status::status)],
@@ -51,5 +46,22 @@ class UserUpdateRequest extends FormRequest
             'marital_status' => ['nullable', 'in:'.implode(',', MaritalStatus::marital_status)],
             'country_id' => ['nullable', 'exists:countries,id'],
         ];
+
+        if (auth()->user()->isAdmin()) {
+            $rules['email'] = ['required', 'string', 'lowercase', 'email', 'max:255',  Rule::unique(User::class)->ignore($userId)];
+            $rules['hire_date'] = ['required', 'date'];
+            $rules['role'] = ['required', 'string', 'in:'.implode(',', Role::roles)];
+            $rules['department_id'] = ['required', 'exists:departments,id'];
+            $rules['designation_id'] = ['required', 'exists:designations,id'];
+        } else {
+            $rules['email'] = ['nullable', 'string', 'lowercase', 'email', 'max:255',  Rule::unique(User::class)->ignore($userId)];
+            $rules['hire_date'] = ['nullable', 'date'];
+            $rules['role'] = ['nullable', 'string', 'in:'.implode(',', Role::roles)];
+            $rules['department_id'] = ['nullable', 'exists:departments,id'];
+            $rules['designation_id'] = ['nullable', 'exists:designations,id'];
+        }
+
+        return $rules;
+
     }
 }

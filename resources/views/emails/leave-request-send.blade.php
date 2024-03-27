@@ -136,7 +136,7 @@
         }
 
         .email-button {
-            text-align: center;
+            text-align: left;
             margin-top: 40px;
             margin-bottom: 30px;
         }
@@ -239,6 +239,10 @@
             </div>
 
             <p><span>Leave Reason: </span><span>{{ isset($data->leave_reason) ? $data->leave_reason : 'No reason provided No reason provided No reason provided No reason provided' }}</span></p>
+
+            <div class="email-button">
+                <a href="{{ route('leave-request.show',$data->id) }}"><button class="btn-1">View Request</button></a>
+            </div>
 
             <hr class="email-hr">
             <p>

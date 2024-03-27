@@ -129,6 +129,28 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="leave_request_approved_comment">Leave Request Approved Comment</label>
+                                                    <textarea name="leave_request_approved_comment" class="form-control" id="leave_request_approved_comment" cols="30" rows="3">{{ \App\Models\Settings::get('leave_request_approved_comment') }}</textarea>
+                                                    @error('leave_request_approved_comment')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="leave_request_rejected_comment">Leave Request Rejected Comment</label>
+                                                    <textarea name="leave_request_rejected_comment" class="form-control" id="leave_request_rejected_comment" cols="30" rows="3">{{ \App\Models\Settings::get('leave_request_rejected_comment') }}</textarea>
+                                                    @error('leave_request_rejected_comment')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
                                                 <label for="image">Logo</label>
                                                 <div class="input-group">
                                                     <div class="custom-file">

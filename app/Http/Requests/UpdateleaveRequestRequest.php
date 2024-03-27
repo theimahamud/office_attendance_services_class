@@ -31,12 +31,6 @@ class UpdateleaveRequestRequest extends FormRequest
             'status' => ['nullable'],
         ];
 
-        if (auth()->user()->isAdmin()) {
-            $rules['comment'] = ['required'];
-        } else {
-            $rules['comment'] = ['nullable'];
-        }
-
         return $rules;
     }
 }

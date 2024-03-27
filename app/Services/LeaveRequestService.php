@@ -2,8 +2,12 @@
 
 namespace App\Services;
 
+use App\Constants\LeaveStatus;
+use App\Constants\Role;
+use App\Constants\Status;
 use App\Models\Leavepolicy;
 use App\Models\leaveRequest;
+use App\Models\Settings;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +35,24 @@ class LeaveRequestService
             'end_date' => $endDateFormatted,
         ]);
 
-        // Create and store the leave request
-        $leaveRequest = LeaveRequest::create($data);
+        if(auth()->user()->role === Role::ADMIN){
+            $totalLeaveDays = LeaveRequest::where('user_id',$data['user_id'])
+                ->where('leave_policy_id', $data['leave_policy_id'])
+                ->where('status', LeaveStatus::APPROVED)
+                ->sum('days');
+
+            $leavePolicy = Leavepolicy::where('id',$data['leave_policy_id'])->where('status',Status::ACTIVE)->first();
+
+            if ($totalLeaveDays >= $leavePolicy->maximum_in_year) {
+
+              return "vacation_is_over";
+
+            }else{
+                $leaveRequest = LeaveRequest::create($data);
+            }
+        }else{
+            $leaveRequest = LeaveRequest::create($data);
+        }
 
         return $leaveRequest;
     }
@@ -50,12 +70,23 @@ class LeaveRequestService
         $startDateFormatted = $startDate->format('Y-m-d');
         $endDateFormatted = $endDate->format('Y-m-d');
 
+        if($data['status'] === LeaveStatus::APPROVED){
+
+            $comment = $data['comment'] ?? Settings::get('leave_request_approved_comment');
+
+        }elseif($data['status'] === LeaveStatus::REJECTED){
+
+            $comment = $data['comment'] ?? Settings::get('leave_request_rejected_comment');
+
+        }
+
         // Merge default data with provided data
         $data = array_merge($data, [
             'user_id' => $data['user_id'] ?? Auth::id(),
             'days' => $days,
             'start_date' => $startDateFormatted,
             'end_date' => $endDateFormatted,
+            'comment' => $comment,
         ]);
 
         $leaveRequest = $leaveRequest->update($data);

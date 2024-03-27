@@ -28,7 +28,7 @@
                             <h3 id="current_time"></h3>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-around align-items-center flex-wrap"> <!-- Add flex-wrap class for form responsiveness -->
+                    <div class="d-flex justify-content-around align-items-center flex-wrap">
                         @php
                             $ip_address = \App\Models\Settings::get('ip_address');
                             $current_ip = $_SERVER['REMOTE_ADDR'];

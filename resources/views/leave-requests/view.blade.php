@@ -38,8 +38,20 @@
                                 <h3 class="card-title">Leave Request</h3>
                             </div>
                             <div class="col-md-6 text-right">
+                                @if(auth()->user()->isAdmin())
+
+                                    <button data-approved-route="{{ route('leave-request-approved', $leaveRequest->id) }}" class="btn btn-success leave_request_approved"><i class="fas fa-check"></i>
+                                        Approved</button>
+
+                                    <button data-rejected-route="{{ route('leave-request-rejected', $leaveRequest->id) }}"  class="btn btn-danger ml-2 leave_request_rejected"><i class="fa fa-window-close"></i>
+                                        Rejected</button>
+
+                                    <a href="{{ route('leave-request.edit',$leaveRequest->id) }}" class="btn btn-info ml-2"><i class="fa fa-arrow-left"></i>
+                                        Update Leave Request</a>
+                                @else
                                 <a href="{{ url()->previous() }}" class="btn btn-info"><i class="fas fa-arrow-left"></i>
                                     Back</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -104,8 +116,9 @@
                                                     <th>Leave Spent</th>
                                                     <th>Available Days</th>
                                                     <th>Leave Period (From-To)</th>
-                                                    <th>In Days</th>
                                                     <th>Status</th>
+                                                    <th>In Days</th>
+                                                    <th>Availability</th>
                                                 </tr>
                                                 </thead>
                                                 @if(filled($yearlyLeave))
@@ -135,17 +148,20 @@
                                                                 </h5>
                                                             </td>
                                                             <td>{{ \Carbon\Carbon::parse($leavePolicy->start_date)->format('d-m-Y') .' - '.\Carbon\Carbon::parse($leavePolicy->end_date)->format('d-m-Y') ?? '' }}</td>
+                                                            <td>
+                                                        <span class="badge @if($leavePolicy->status === \App\Constants\Status::ACTIVE) badge-success @else badge-warning @endif p-2">
+                                                             {{ $leavePolicy->status ?? '' }}
+                                                        </span>
+                                                            </td>
                                                             <td>{{ $total_days }}</td>
                                                             <td>
                                                                 <div>
-                                                                    @if($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date)
-                                                                        <h5><span
-                                                                                class="badge badge-success p-2">Active</span>
-                                                                        </h5>
+                                                                    @if($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date && $leavePolicy->status === \App\Constants\Status::ACTIVE)
+                                                                        <h5><span class="badge badge-success p-2">Available</span></h5>
+                                                                    @elseif($current_date >= $leavePolicy->start_date && $current_date <= $leavePolicy->end_date && $leavePolicy->status === \App\Constants\Status::INACTIVE)
+                                                                        <h5><span class="badge badge-warning p-2">Inactive</span></h5>
                                                                     @else
-                                                                        <h5><span
-                                                                                class="badge badge-danger p-2">Expired</span>
-                                                                        </h5>
+                                                                        <h5><span class="badge badge-danger p-2">Expired</span></h5>
                                                                     @endif
                                                                 </div>
                                                             </td>
@@ -172,6 +188,73 @@
 
 @section('script')
 
-    @include('layouts.assets.delete-script')
+    <script>
+        $(document).ready(function() {
+            function handleLeaveRequest(route, titleText, successText) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This action can not be undone!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ok',
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: '#d33',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: titleText,
+                            text: 'Please wait while we are processing the request!',
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            willOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        $.ajax({
+                            url: route,
+                            type: 'PUT',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: successText,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                }).then(() => {
+                                    console.log(response)
+                                    location.reload();
+                                });
+                            },
+                            error: function(error) {
+                                Swal.fire({
+                                    title: 'Error processing!',
+                                    text: 'Please try again!',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+            $('.leave_request_approved').on('click', function(e) {
+                e.preventDefault();
+                const approvedRoute = $(this).data('approved-route');
+                handleLeaveRequest(approvedRoute, 'Approved leave request...', 'Leave Request Approved!');
+            });
+
+            $('.leave_request_rejected').on('click', function(e) {
+                e.preventDefault();
+                const rejectedRoute = $(this).data('rejected-route');
+                handleLeaveRequest(rejectedRoute, 'Rejected leave request...', 'Leave Request Rejected!');
+            });
+        });
+    </script>
+
+
 
 @endsection

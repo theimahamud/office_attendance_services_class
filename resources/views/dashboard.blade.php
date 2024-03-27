@@ -31,7 +31,7 @@
                 @include('common.dashboard.attendance-graph')
                 @include('common.dashboard.today-attendance')
                 @include('common.dashboard.announcement')
-                    @include('common.dashboard.calendar')
+                @include('common.dashboard.calendar')
 
             </div>
         </section>
@@ -40,6 +40,14 @@
 
 @section('script')
     <script>
+
+        function updateTime() {
+            var date = new Date();
+            var formattedTime = date.toLocaleTimeString('en-US', { hour12: true });
+            $('#current_time').text(formattedTime);
+        }
+        setInterval(updateTime, 1000);
+
         var ctx = document.getElementById('doughnutChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'doughnut',
@@ -67,14 +75,6 @@
                 }]
             },
         });
-
-        function updateTime() {
-            var date = new Date();
-            var formattedTime = date.toLocaleTimeString('en-US', { hour12: true });
-            $('#current_time').text(formattedTime);
-        }
-        // Update the time every second (1000 milliseconds)
-        setInterval(updateTime, 1000);
     </script>
 
     <script>
@@ -92,8 +92,8 @@
                 selectable: true,
                 selectHelper: true,
                 displayEventTime: false,
-                height: 600, // Set the height as per your requirement
-                aspectRatio: 1.5 // Set the aspect ratio to control the width (width = height * aspectRatio)
+                height: 600,
+                aspectRatio: 1.5
             });
         });
     </script>

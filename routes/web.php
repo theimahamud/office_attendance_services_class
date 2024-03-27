@@ -42,7 +42,29 @@ Route::get('/attendance', function () {
 });
 
 Route::get('/test', function () {
-   return view('emails.leave-request-send');
+//   return view('emails.leave-request-send');
+
+    $client = new GuzzleHttp\Client();
+    $res = $client->request('GET', 'https://api.github.com/rubel9997', [
+        'auth' => ['user', 'pass']
+    ]);
+    echo $res->getStatusCode();
+
+
+// "200"
+    echo $res->getHeader('content-type')[0];
+// 'application/json; charset=utf8'
+    echo $res->getBody();
+// {"type":"User"...'
+
+// Send an asynchronous request.
+    $request = new \GuzzleHttp\Psr7\Request('GET', 'http://httpbin.org');
+    $promise = $client->sendAsync($request)->then(function ($response) {
+        echo 'I completed! ' . $response->getBody();
+    });
+    $promise->wait();
+
+
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -55,6 +77,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('holiday', HolidayController::class);
     Route::resource('leave-policy', LeavepolicyController::class);
     Route::resource('leave-request', LeaveRequestController::class);
+
+    Route::put('leave-request-approved/{id}', [LeaveRequestController::class, 'leaveRequestApproved'])->name('leave-request-approved');
+    Route::put('leave-request-rejected/{id}', [LeaveRequestController::class, 'leaveRequestRejected'])->name('leave-request-rejected');
+
     Route::get('my-leave-request', [LeaveRequestController::class, 'myLeaveRequest'])->name('my-leave-request');
     Route::get('yearly-leave', [LeavepolicyController::class, 'yearlyLeave'])->name('yearly-leave');
     Route::get('all-attendance', [AttendanceController::class, 'allAttendance'])->name('all-attendance');

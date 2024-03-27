@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $current_month = Carbon::now()->month;
         $current_year = Carbon::now()->year;
         $current_date = Carbon::now()->format('Y-m-d');
-        $check_in_time = Settings::get('check_in');
+        $check_in_time = Settings::get('check_in') ?? '09:00';
 
         $user = User::all();
         $department = Department::all();

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Constants\LeaveStatus;
 use App\Constants\Role;
+use App\Constants\Status;
 use App\Http\Requests\StoreleaveRequestRequest;
 use App\Http\Requests\UpdateleaveRequestRequest;
 use App\Mail\LeaveRequestSend;
 use App\Models\Leavepolicy;
 use App\Models\LeaveRequest;
+use App\Models\Settings;
 use App\Models\User;
 use App\Notifications\LeaveRequestApprovedRejectedNotification;
 use App\Notifications\LeaveRequestSendNotification;
@@ -54,7 +56,21 @@ class LeaveRequestController extends Controller
         $this->authorize('create', LeaveRequest::class);
 
         $users = User::orderBy('name')->get();
-        $leavePolicies = Leavepolicy::orderBy('title')->get();
+
+        $leavePolicies = Leavepolicy::where('status', Status::ACTIVE)->orderBy('title')->get();
+
+        $authUser = auth()->user();
+
+        foreach ($leavePolicies as $key => $leavePolicy){
+            $totalLeaveDays = LeaveRequest::where('user_id', $authUser->id)
+                ->where('leave_policy_id', $leavePolicy->id)
+                ->where('status', LeaveStatus::APPROVED)
+                ->sum('days');
+
+            if ($totalLeaveDays >= $leavePolicy->maximum_in_year) {
+                unset($leavePolicies[$key]);
+            }
+        }
 
         return view('leave-requests.create', compact('users', 'leavePolicies'));
     }
@@ -72,8 +88,10 @@ class LeaveRequestController extends Controller
 
         if ($result) {
 
-            // Mail::to(config('mail.admin_email'))->send(new LeaveRequestSend($data));  //This code is for email send
-            //$data = (object)$leaveRequestService->getEmailData($result);
+            if($result == "vacation_is_over"){
+                Session::flash('error', 'This user has no leave for this type of leave.');
+                return redirect()->back();
+            }
 
             $leave_request_data = $result->load('user', 'leavePolicy', 'referredBy');
 
@@ -101,7 +119,7 @@ class LeaveRequestController extends Controller
 
         $leaveRequest->load(['user', 'referredBy', 'leavePolicy']);
 
-        $current_date = Carbon::now()->format('m/d/y');
+        $current_date = Carbon::now()->format('Y-m-d');
 
         $yearlyLeave = Leavepolicy::orderBy('created_at', 'DESC')->get();
 
@@ -170,4 +188,32 @@ class LeaveRequestController extends Controller
 
         return response('Leave Request Deleted.');
     }
+
+
+    public function leaveRequestApproved($id)
+    {
+        return $this->processLeaveRequest($id, LeaveStatus::APPROVED, 'leave_request_approved_comment', "Your leave request has been approved!");
+    }
+
+    public function leaveRequestRejected($id)
+    {
+        return $this->processLeaveRequest($id, LeaveStatus::REJECTED, 'leave_request_rejected_comment', "Your leave request has been rejected!");
+    }
+
+    public function processLeaveRequest($id, $status, $commentKey, $defaultComment)
+    {
+        $leave_request = LeaveRequest::with('user', 'leavePolicy', 'referredBy')->findOrFail($id);
+        $leave_request->status = $status;
+        $leave_request->comment = Settings::get($commentKey) ?? $defaultComment;
+        $status = $leave_request->save();
+        if ($status) {
+            $leave_request->user->notify(new LeaveRequestApprovedRejectedNotification($leave_request));
+            return response("Leave Request $status!");
+        } else {
+            return response('Something went wrong');
+        }
+    }
+
+
+
 }
