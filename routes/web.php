@@ -42,29 +42,7 @@ Route::get('/attendance', function () {
 });
 
 Route::get('/test', function () {
-//   return view('emails.leave-request-send');
-
-    $client = new GuzzleHttp\Client();
-    $res = $client->request('GET', 'https://api.github.com/rubel9997', [
-        'auth' => ['user', 'pass']
-    ]);
-    echo $res->getStatusCode();
-
-
-// "200"
-    echo $res->getHeader('content-type')[0];
-// 'application/json; charset=utf8'
-    echo $res->getBody();
-// {"type":"User"...'
-
-// Send an asynchronous request.
-    $request = new \GuzzleHttp\Psr7\Request('GET', 'http://httpbin.org');
-    $promise = $client->sendAsync($request)->then(function ($response) {
-        echo 'I completed! ' . $response->getBody();
-    });
-    $promise->wait();
-
-
+   return view('emails.leave-request-send');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
