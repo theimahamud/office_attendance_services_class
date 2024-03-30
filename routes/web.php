@@ -37,13 +37,13 @@ Route::get('/xclean', function () {
     dd('CACHE-CLEARED, VIEW-CLEARED,ROUTE-CLEARED & CONFIG-CACHED WAS SUCCESSFUL!');
 });
 
-Route::get('/attendance', function () {
-    Artisan::call('attendance:dispatch');
-});
+//Route::get('/attendance', function () {
+//    Artisan::call('attendance:dispatch');
+//});
 
-Route::get('/test', function () {
-   return view('emails.leave-request-send');
-});
+//Route::get('/test', function () {
+//   return view('emails.leave-request-send');
+//});
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

@@ -12,6 +12,6 @@ class DesignationSeeder extends Seeder
      */
     public function run(): void
     {
-        Designation::factory()->count(10)->create();
+        Designation::factory()->count(1)->create();
     }
 }
